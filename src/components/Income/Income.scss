@@ -1,0 +1,38 @@
+@import url("https://cdn.syncfusion.com/ej2/material.css");
+@import "../../scss/variables";
+
+.income-container {
+  border: 1px solid red;
+
+  .search-bar {
+    border: 1px solid blue;
+  }
+
+  .chart-table-section {
+    border: 1px solid orangered;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+
+    .income-table {
+      border: 2px solid deeppink;
+      width: 45%;
+      padding: 20px;
+      @media(max-width: 850px) {
+        width: 100%;
+      }
+    }
+
+    .income-chart {
+      border: 2px solid purple;
+          width: 45%;
+      padding: 20px;
+      @media(max-width: 850px) {
+        width: 100%;
+
+      }
+
+    }
+  }
+}
