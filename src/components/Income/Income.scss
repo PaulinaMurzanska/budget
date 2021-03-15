@@ -2,21 +2,20 @@
 @import "../../scss/variables";
 
 .income-container {
-  border: 1px solid red;
+  padding: 40px 20px;
 
   .search-bar {
-    border: 1px solid blue;
+    border: 1px solid red;
+    margin-bottom: 30px;
   }
 
   .chart-table-section {
-    border: 1px solid orangered;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 
 
     .income-table {
-      border: 2px solid deeppink;
       width: 45%;
       padding: 20px;
       @media(max-width: 850px) {
@@ -25,7 +24,6 @@
     }
 
     .income-chart {
-      border: 2px solid purple;
           width: 45%;
       padding: 20px;
       @media(max-width: 850px) {

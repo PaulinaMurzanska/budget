@@ -22,6 +22,7 @@ import {AiOutlineLineChart} from "react-icons/ai";
 import {GiTakeMyMoney, GiPayMoney} from "react-icons/gi";
 import {RiAccountBoxLine} from "react-icons/ri";
 import {FiLogOut} from "react-icons/fi";
+import moment from "moment";
 
 const useStyles = makeStyles({
     list: {
@@ -99,6 +100,8 @@ const Header = ({onLogout, pageName}) => {
         </div>
     );
     const icon = <MenuIcon style={{color: "#e78200", fontSize: "3rem"}}/>;
+    const date = moment(new Date().getTime()).format('MMMM Do YY');
+    console.log(date);
 
     return (
         <div className='menu-top-wrap'>
@@ -116,6 +119,8 @@ const Header = ({onLogout, pageName}) => {
             </div>
             <div className='horizontal-tab-label'>
                <span>{pageName}</span>
+                <p>today </p>
+                <p>{date}</p>
             </div>
         </div>
 
