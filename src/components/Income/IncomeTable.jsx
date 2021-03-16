@@ -4,7 +4,7 @@ import {Table} from "reactstrap";
 import "./IncomeTable.scss";
 import {BiSort} from "react-icons/bi";
 
-const IncomeTable = ({incomes, handleSort, handleSortDate}) => {
+const IncomeTable = ({incomes, handleSort, handleSortDate,handleUpdate}) => {
 
 
     return (
@@ -34,6 +34,7 @@ const IncomeTable = ({incomes, handleSort, handleSortDate}) => {
                     <IncomeItem
                         income={income}
                         key={income.id}
+                        handleUpdate={handleUpdate}
 
                     />
                 )

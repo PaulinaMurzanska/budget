@@ -5,7 +5,10 @@ import IncomeChart from "components/Income/MyChart";
 import IncomeDatepicker from "components/Income/IncomeDatepicker";
 import IncomeTable from "components/Income/IncomeTable";
 import moment from "moment";
-
+import {MdYoutubeSearchedFor} from "react-icons/md";
+import {ROUTE_INCOME_FORM} from "Constants/Routes";
+import {Link} from "react-router-dom";
+import {Button, NavItem, NavLink} from "reactstrap";
 
 
 class Income extends React.PureComponent {
@@ -13,8 +16,10 @@ class Income extends React.PureComponent {
 
     render() {
 
-        const {handleStartDate,handleEndDate,handleFilter,names,numbers,
-            incomes,handleSort,handleSortDate, startDate,endDate,handleSubmit}=this.props;
+        const {
+            handleStartDate, handleEndDate, handleFilter, names, numbers,
+            incomes, handleSort, handleSortDate, startDate, endDate,handleUpdate,incomesErrorMessage
+        } = this.props;
 
         const dateFrom = moment(startDate).format("MMM Do YY");
         const dateTo = moment(endDate).format("MMM Do YY");
@@ -27,19 +32,24 @@ class Income extends React.PureComponent {
                     <div className='search-bar'>
                         <div className='income-datepicker'>
 
-                                <IncomeDatepicker
+                            <IncomeDatepicker
                                 handleStartDate={handleStartDate}
                                 handleEndDate={handleEndDate}
                                 // handleFilter={handleFilter}
+                                startDate={startDate}
+                                endDate={endDate}
                             />
-                             <button id2={startDate} id={endDate} onClick={handleFilter}>search</button>
 
 
                         </div>
-                        <div className='income-page-title'>
-                            <p>Selected period of time {dateFrom} to {dateTo}</p>
+                        <div className="search-icon">
+                            <MdYoutubeSearchedFor
+                                onClick={handleFilter}
+                            />
                         </div>
+
                     </div>
+                    <h4>{incomesErrorMessage}</h4>
                     <div className='chart-table-section'>
                         <div className='income-chart'>
                             <IncomeChart
@@ -49,10 +59,15 @@ class Income extends React.PureComponent {
                         </div>
 
                         <div className='income-table'>
+                            <Button>
+                                <Link to={ROUTE_INCOME_FORM}>add new</Link>
+                            </Button>
+
                             <IncomeTable
                                 incomes={incomes}
                                 handleSort={handleSort}
                                 handleSortDate={handleSortDate}
+                                handleUpdate={handleUpdate}
                             />
                         </div>
                     </div>

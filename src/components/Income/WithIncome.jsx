@@ -1,6 +1,9 @@
 import React from "react";
 import axios from "axios";
 import {Api} from "Services/Api";
+import {withRouter,generatePath} from "react-router-dom";
+import {ROUTE_INCOME} from "Constants/Routes";
+
 
 const fetch_delay_simulator = 500;
 const delayFetch = (ms, func) => {
@@ -10,16 +13,17 @@ const monthInMilSec = 2582000000;
 
 const withIncome = (WrappedComponent) => {
     return class extends React.Component {
-            state = {
-                incomeInProgress: false,
-                incomes: [],
-                incomesFilteredInFetch: [],
-                incomesSuccess: undefined,
-                startDate: Date.now() - monthInMilSec,
-                endDate: Date.now(),
-                isFiltered: false,
-                filteredIncomes: [],
-            }
+        state = {
+            incomeInProgress: false,
+            incomes: [],
+            incomesFilteredInFetch: [],
+            incomesSuccess: undefined,
+            startDate: Date.now() - monthInMilSec,
+            endDate: Date.now(),
+            isFiltered: false,
+            filteredIncomes: [],
+            // incomesErrorMessage: "",
+        }
 
         fetchIncome = () => {
             console.log('fetch triggered');
@@ -48,6 +52,29 @@ const withIncome = (WrappedComponent) => {
                 this.setState({incomeInProgress: false});
             })
         }
+
+        // onSubmitIncomeCreate = (income) => {
+        //     console.log('income create triggered');
+        //     console.log(income);
+        //     const path = generatePath(ROUTE_INCOME);
+        //
+        //     axios.post(Api.INCOME, income)
+        //         .then((response) => {
+        //             const data = response.data;
+        //             const income = data;
+        //             const incomes = [...this.props.incomes];
+        //             incomes.push(income);
+        //             this.setState({incomes: incomes});
+        //             this.props.history.push(path);
+        //         })
+        //         .catch((error) => {
+        //             const incomesErrorMessage = "Error creating income";
+        //             this.props.history.push(path);
+        //             this.setState({
+        //                 incomesErrorMessage: incomesErrorMessage,
+        //             });
+        //         });
+        // };
 
         handleIncomesFilter = (e) => {
             console.log("income filter triggered");
@@ -82,7 +109,7 @@ const withIncome = (WrappedComponent) => {
         }
 
         render() {
-            const {isFiltered, incomes, filteredIncomes} = this.state;
+            const {isFiltered, incomes, filteredIncomes, startDate, endDate,incomesErrorMessage} = this.state;
             const incomesToDisplay = isFiltered ? filteredIncomes : incomes;
             return (
                 <WrappedComponent
@@ -92,7 +119,11 @@ const withIncome = (WrappedComponent) => {
                     handleIncomesFilter={this.handleIncomesFilter}
                     handleSelectedStartDate={this.handleSelectedStartDate}
                     handleSelectedEndDate={this.handleSelectedEndDate}
+                    // onSubmitIncomeCreate={this.onSubmitIncomeCreate}
                     incomes={incomesToDisplay}
+                    startDate={startDate}
+                    endDate={endDate}
+                    // incomesErrorMessage={incomesErrorMessage}
                 />
             )
         }
