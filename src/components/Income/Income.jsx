@@ -6,25 +6,47 @@ import IncomeDatepicker from "components/Income/IncomeDatepicker";
 import IncomeTable from "components/Income/IncomeTable";
 import moment from "moment";
 import {MdYoutubeSearchedFor} from "react-icons/md";
-import {ROUTE_INCOME_FORM} from "Constants/Routes";
-import {Link} from "react-router-dom";
+import {ROUTE_INCOME, ROUTE_INCOME_FORM} from "Constants/Routes";
+import {generatePath, Link, withRouter} from "react-router-dom";
 import {Button, NavItem, NavLink} from "reactstrap";
+import axios from "axios";
+import {Api} from "Services/Api";
+import SimpleButton from "SharedComponents/SimpleButton";
 
 
 class Income extends React.PureComponent {
+
+    onIncomeDelete = (event) => {
+        console.log("delete triggered");
+        const idToDelete = parseInt(event.target.id);
+        console.log(idToDelete);
+        const incomeToDelete = this.props.incomes.find(obj => obj.id === idToDelete);
+        console.log(incomeToDelete);
+
+        const index = this.props.incomes.findIndex((income) => income.id === idToDelete);
+        if (index !== -1) this.props.incomes.splice(index, 1);
+        const path = generatePath(ROUTE_INCOME);
+        axios.delete(Api.INCOME + incomeToDelete.id + '/', incomeToDelete)
+            .then(response => {
+                this.props.history.push(path);
+                this.setState(this.state);
+            })
+
+
+    }
 
 
     render() {
 
         const {
             handleStartDate, handleEndDate, handleFilter, names, numbers,
-            incomes, handleSort, handleSortDate, startDate, endDate,handleUpdate,incomesErrorMessage
+            incomes, handleSort, handleSortDate, startDate, endDate, handleUpdate,
+            incomesErrorMessage, onDelete,onSubmit,initialValues
         } = this.props;
 
         const dateFrom = moment(startDate).format("MMM Do YY");
         const dateTo = moment(endDate).format("MMM Do YY");
-        console.log(dateTo);
-        console.log(dateFrom);
+
 
         return (
             <Container maxWidth="lg">
@@ -59,15 +81,15 @@ class Income extends React.PureComponent {
                         </div>
 
                         <div className='income-table'>
-                            <Button>
-                                <Link to={ROUTE_INCOME_FORM}>add new</Link>
-                            </Button>
-
                             <IncomeTable
                                 incomes={incomes}
                                 handleSort={handleSort}
                                 handleSortDate={handleSortDate}
                                 handleUpdate={handleUpdate}
+                                onDelete={this.onIncomeDelete}
+                                initialValues={initialValues}
+                                onSubmit={onSubmit}
+
                             />
                         </div>
                     </div>
@@ -78,4 +100,4 @@ class Income extends React.PureComponent {
     }
 }
 
-export default Income;
+export default withRouter(Income);

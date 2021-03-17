@@ -4,10 +4,12 @@ import IncomeForm from "components/Income/IncomeForm/IncomeForm";
 import {Container} from "@material-ui/core";
 import Buttons from "SharedComponents/Buttons";
 import {ROUTE_INCOME} from "Constants/Routes";
+import "./IncomeForm.scss";
+
 
 class IncomeFormCard extends React.Component {
     render() {
-        const {incomes, initialValues} = this.props;
+        const {incomes, initialValues, title} = this.props;
         const key = initialValues.id;
 
         const onSubmit = (values) => {
@@ -26,13 +28,17 @@ class IncomeFormCard extends React.Component {
                         <Form className='income-form'>
                             <IncomeForm
                                 incomes={incomes}
+                                title={title}
                             />
-                            <Buttons
-                                route={ROUTE_INCOME}
-                                cancelLabel="Cancel"
-                                submitDisabled={!isValid}
-                                submitLabel={key===0 ?'Create new income' : 'Save changes'  }
-                            />
+                            <div className='form-buttons'>
+                                <Buttons
+                                    route={ROUTE_INCOME}
+                                    cancelLabel="Cancel"
+                                    submitDisabled={!isValid}
+                                    submitLabel={key === 0 ? 'Create new income' : 'Save changes'}
+                                />
+                            </div>
+
                         </Form>
                     )}
 

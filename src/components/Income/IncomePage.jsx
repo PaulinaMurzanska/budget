@@ -19,12 +19,12 @@ class IncomePage extends React.PureComponent {
             incomesErrorMessage: "",
             incomesFilteredInFetch: [],
             isCreatedOrUpdated: false,
-            isUpdated:false,
-            incomeIdToUpdate:undefined,
-            selectedIncomeToUpdate:[],
+            isUpdated: false,
+            incomeIdToUpdate: undefined,
+            selectedIncomeToUpdate: [],
 
 
-            name:"Income",
+            name: "Income",
             id: 0,
             amount: 0,
             timestamp: Date.now(),
@@ -67,17 +67,16 @@ class IncomePage extends React.PureComponent {
             });
     };
 
-    handleUpdate=(event)=>{
-        console.log(" handle update trigererd");
-       const targetId= parseInt(event.target.id);
-       const incomeToUpdate =this.props.incomes.find(obj => obj.id===targetId);
-       console.log(incomeToUpdate);
-       this.setState({
-           incomeIdToUpdate:targetId,
-           selectedIncomeToUpdate:incomeToUpdate,
-       })
+    handleUpdate = (event) => {
+        const targetId = parseInt(event.target.id);
+        const incomeToUpdate = this.props.incomes.find(obj => obj.id === targetId);
+        console.log(incomeToUpdate);
+        this.setState({
+            incomeIdToUpdate: targetId,
+            selectedIncomeToUpdate: incomeToUpdate,
+        })
 
-}
+    }
 
     onSubmitMyIncomeUpdate = (income) => {
 
@@ -92,7 +91,7 @@ class IncomePage extends React.PureComponent {
                 incomes[getIndex] = income;
                 this.setState({
                     incomesFilteredInFetch: incomes,
-                    isCreatedOrUpdated:true,
+                    isCreatedOrUpdated: true,
                 });
                 this.props.history.push(path);
             })
@@ -105,10 +104,11 @@ class IncomePage extends React.PureComponent {
             });
     };
 
+
     render() {
-        const {sortDirection, isCreatedOrUpdated,selectedIncomeToUpdate,incomeIdToUpdate,incomesErrorMessage} = this.state;
-        const {name, id, timestamp, amount}=selectedIncomeToUpdate;
-        console.log(name, id, timestamp, amount,incomeIdToUpdate);
+        const {sortDirection, isCreatedOrUpdated, selectedIncomeToUpdate, incomeIdToUpdate, incomesErrorMessage} = this.state;
+        const {name, id, timestamp, amount} = selectedIncomeToUpdate;
+        console.log(name, id, timestamp, amount, incomeIdToUpdate);
         const {
             incomes, handleIncomesFilter, handleSelectedEndDate,
             handleSelectedStartDate, isFiltered, startDate, endDate, incomesFilteredInFetch
@@ -158,10 +158,10 @@ class IncomePage extends React.PureComponent {
             timestamp: moment(this.state.timestamp).format('MM-DD-YYYY'),
         }
         const initialValuesToUpdate = {
-            name:name,
-            id:id,
-            amount:amount,
-            timestamp:timestamp,
+            name: name,
+            id: id,
+            amount: amount,
+            timestamp: timestamp,
         }
         const initialValues = incomeIdToUpdate === undefined ? initialValuesToCreate : initialValuesToUpdate;
 
@@ -180,10 +180,12 @@ class IncomePage extends React.PureComponent {
                         endDate={endDate}
                         handleUpdate={this.handleUpdate}
                         incomesErrorMessage={incomesErrorMessage}
+                        onDelete={this.onIncomeDelete}
                     />
                 </Route>
                 <Route exact path={ROUTE_INCOME_FORM}>
                     <IncomeFormCard
+                        title="Create new income"
                         incomes={incomes}
                         initialValues={initialValues}
                         onSubmit={this.onSubmitIncomeCreate}
@@ -191,11 +193,12 @@ class IncomePage extends React.PureComponent {
                 </Route>
                 <Route exact path={ROUTE_INCOME_FORM_UPDATE}>
                     <IncomeFormCard
+                        title="Update income"
                         incomes={incomes}
                         initialValues={initialValues}
                         onSubmit={this.onSubmitMyIncomeUpdate}
                     />
-                    <p>update</p>
+
                 </Route>
 
 

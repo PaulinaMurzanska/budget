@@ -5,18 +5,53 @@
   margin: 0 auto;
   width: 100%;
   text-align: center;
-  th{
-    text-transform: uppercase;
-    font-size: .7rem;
-    color:#636363;
+  @media(max-width: 850px) {
+   border-spacing: 5px;
+
   }
 
-  td {
-    background-color: rgba(220, 217, 217, 0.29);
-    padding: 5px;
+  th {
+    text-transform: uppercase;
     font-size: .7rem;
     color: #636363;
   }
 
+  td {
+    background-color: rgba(220, 217, 217, 0.29);
+    padding: 5px 15px;
+    font-size: .7rem;
+    color: #636363;
+
+  }
+
 
 }
+
+.income-delete {
+  .delete {
+    color: $projectNavyColor;
+    font-size: 1.3rem;
+
+    &:hover {
+      color: $projectOrangeColor;
+      transform: scale(1.1);
+    }
+
+
+  }
+}
+
+.income-update {
+  a {
+    color: $projectNavyColor;
+    font-size: 1.3rem;
+
+    &:hover {
+      color: $projectOrangeColor;
+      transform: scale(1.1);
+
+    }
+
+  }
+}
+

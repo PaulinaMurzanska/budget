@@ -1,0 +1,27 @@
+@import "../scss/variables";
+
+.simple-button {
+  background-color: $projectOrangeColor;
+  padding: 6px;
+  border-radius: 3px;
+  border: none;
+
+  &:hover {
+    transition: 0.3s;
+
+    a {
+      color: white;
+
+    }
+  }
+
+  a {
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: $projectNavyColor;
+    font-size: .6rem;
+
+
+  }
+}

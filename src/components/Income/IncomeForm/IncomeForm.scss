@@ -1,0 +1,41 @@
+@import'../../../scss/variables';
+
+.income-form{
+  padding: 20px 20%;
+  display: flex;
+  flex-direction: column;
+  .form-header{
+    text-transform: uppercase;
+    color:$projectNavyColor;
+    font-weight: bolder;
+    letter-spacing: 1px;
+
+  }
+  .income-fields{
+    .income-field{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      label{
+        text-transform: uppercase;
+        font-size: .8rem;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+        color: $projectNavyColor;
+      }
+      input{
+        padding: 10px;
+        text-align: center;
+        font-size: 1.5rem;
+        width: 100%;
+        border: none;
+
+        background: radial-gradient(circle, rgba(9,42,165,1) 0%,
+                rgba(9,42,165,0.2413340336134454) 100%);
+        color:$projectOrangeColor;
+      }
+    }
+  }
+}

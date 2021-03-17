@@ -3,8 +3,10 @@ import IncomeItem from "components/Income/IncomeItem";
 import {Table} from "reactstrap";
 import "./IncomeTable.scss";
 import {BiSort} from "react-icons/bi";
+import SimpleButton from "SharedComponents/SimpleButton";
+import {ROUTE_INCOME_FORM} from "Constants/Routes";
 
-const IncomeTable = ({incomes, handleSort, handleSortDate,handleUpdate}) => {
+const IncomeTable = ({incomes, handleSort, handleSortDate, handleUpdate, onDelete}) => {
 
 
     return (
@@ -26,6 +28,13 @@ const IncomeTable = ({incomes, handleSort, handleSortDate,handleUpdate}) => {
                 <th id='timestamp' onClick={handleSort}>Date of income
                     <BiSort style={{marginLeft: "15px", fontSize: ".7rem"}}/>
                 </th>
+                <th colSpan={2}>
+                    <SimpleButton
+                    path={ROUTE_INCOME_FORM}
+                    label="New income"
+                />
+
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -35,7 +44,7 @@ const IncomeTable = ({incomes, handleSort, handleSortDate,handleUpdate}) => {
                         income={income}
                         key={income.id}
                         handleUpdate={handleUpdate}
-
+                        onDelete={onDelete}
                     />
                 )
             }

@@ -1,0 +1,29 @@
+@import '../scss/variables';
+
+.submit-btn {
+  //border: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+
+  .action-btn {
+    border-radius: 3px;
+    border: none;
+    width: 150px;
+    padding: 10px;
+
+    &.ok {
+      background-color: $projectOrangeColor;
+      color: $projectNavyColor;
+    }
+
+    &.cancel {
+      background-color: $projectNavyColor;
+      color: $projectOrangeColor;
+    }
+    &:hover{
+      color: white;
+    }
+
+
+  }
+}
