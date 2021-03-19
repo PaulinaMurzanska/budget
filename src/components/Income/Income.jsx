@@ -39,13 +39,19 @@ class Income extends React.PureComponent {
     render() {
 
         const {
-            handleStartDate, handleEndDate, handleFilter, names, numbers,
+            handleStartDate, handleEndDate, handleFilter,
             incomes, handleSort, handleSortDate, startDate, endDate, handleUpdate,
-            incomesErrorMessage, onDelete,onSubmit,initialValues
+            incomesErrorMessage, onSubmit, initialValues,
+            handleCreate, handleIsCreated,
         } = this.props;
-
         const dateFrom = moment(startDate).format("MMM Do YY");
         const dateTo = moment(endDate).format("MMM Do YY");
+
+
+        const numbers = incomes.map((income) => income.amount);
+        const names = incomes.map((income) => income.name);
+
+        const displayLength = incomes.length;
 
 
         return (
@@ -55,9 +61,9 @@ class Income extends React.PureComponent {
                         <div className='income-datepicker'>
 
                             <IncomeDatepicker
+
                                 handleStartDate={handleStartDate}
                                 handleEndDate={handleEndDate}
-                                // handleFilter={handleFilter}
                                 startDate={startDate}
                                 endDate={endDate}
                             />
@@ -66,33 +72,58 @@ class Income extends React.PureComponent {
                         </div>
                         <div className="search-icon">
                             <MdYoutubeSearchedFor
-                                onClick={handleFilter}
+
+                                onClick={function (event) {
+                                    handleFilter();
+                                    handleIsCreated()
+                                }}
+
                             />
                         </div>
 
                     </div>
                     <h4>{incomesErrorMessage}</h4>
-                    <div className='chart-table-section'>
-                        <div className='income-chart'>
-                            <IncomeChart
-                                names={names}
-                                numbers={numbers}
-                            />
-                        </div>
 
-                        <div className='income-table'>
-                            <IncomeTable
-                                incomes={incomes}
-                                handleSort={handleSort}
-                                handleSortDate={handleSortDate}
-                                handleUpdate={handleUpdate}
-                                onDelete={this.onIncomeDelete}
-                                initialValues={initialValues}
-                                onSubmit={onSubmit}
+                    {
+                        displayLength === 0 && (
+                            <div>
+                                <p>No data matching selected period <i><u>{dateFrom} {dateTo}.</u></i>  Please select different
+                                    dates.</p>
+                                <SimpleButton
+                                    path={ROUTE_INCOME_FORM}
+                                    label="New income"
+                                    onClick={handleCreate}
+                                />
+                            </div>
+                        )
+                    }
+                    {
+                        displayLength > 0 && (
+                            <div className='chart-table-section'>
+                                <div className='income-chart'>
+                                    <IncomeChart
+                                        names={names}
+                                        numbers={numbers}
+                                    />
+                                </div>
 
-                            />
-                        </div>
-                    </div>
+                                <div className='income-table'>
+                                    <IncomeTable
+                                        incomes={incomes}
+                                        handleSort={handleSort}
+                                        handleSortDate={handleSortDate}
+                                        handleUpdate={handleUpdate}
+                                        onDelete={this.onIncomeDelete}
+                                        initialValues={initialValues}
+                                        onSubmit={onSubmit}
+                                        handleCreate={handleCreate}
+
+                                    />
+                                </div>
+                            </div>
+                        )
+                    }
+
 
                 </div>
             </Container>

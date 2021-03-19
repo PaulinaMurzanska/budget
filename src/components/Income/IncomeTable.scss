@@ -6,7 +6,7 @@
   width: 100%;
   text-align: center;
   @media(max-width: 850px) {
-   border-spacing: 5px;
+    border-spacing: 5px;
 
   }
 
@@ -41,17 +41,75 @@
   }
 }
 
-.income-update {
-  a {
-    color: $projectNavyColor;
-    font-size: 1.3rem;
+.update {
+  color: $projectNavyColor;
+  font-size: 1.3rem;
 
-    &:hover {
-      color: $projectOrangeColor;
-      transform: scale(1.1);
+  &:hover {
+    color: $projectOrangeColor;
+    transform: scale(1.1);
+  }
 
+}
+
+.delete {
+  position: relative;
+}
+
+.delete-modal {
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+  position: fixed;
+  top: 30vh;
+  right: 10vw;
+  background-color: rgb(252, 251, 250);
+  box-shadow: $projectBoxShadow;
+  height: 300px;
+  @media(max-width: 850px) {
+    height: 50vh;
+    bottom: 0;
+    transform: translateY(10%);
+    right: 10vw;
+  }
+
+  .modal-container {
+    padding: 20px 50px;
+    .modal-header {
+      button.close {
+        display: none;
+      }
+
+      .modal-title {
+        color: $projectNavyColor;
+        letter-spacing: 1px;
+        font-size: 1rem;
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+
+        .name-to-delete {
+          font-size: 1.5rem;
+          font-weight: bolder;
+          margin-top: 20px;
+          font-style: italic;
+        }
+      }
     }
 
+    .modal-body {
+      color: $projectNavyColor;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+
+    .modal-footer {
+      color: rebeccapurple;
+    }
   }
+
+
 }
+
 

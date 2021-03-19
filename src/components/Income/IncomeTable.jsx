@@ -6,7 +6,7 @@ import {BiSort} from "react-icons/bi";
 import SimpleButton from "SharedComponents/SimpleButton";
 import {ROUTE_INCOME_FORM} from "Constants/Routes";
 
-const IncomeTable = ({incomes, handleSort, handleSortDate, handleUpdate, onDelete}) => {
+const IncomeTable = ({incomes, handleSort, handleSortDate, handleUpdate, onDelete,handleCreate}) => {
 
 
     return (
@@ -32,6 +32,7 @@ const IncomeTable = ({incomes, handleSort, handleSortDate, handleUpdate, onDelet
                     <SimpleButton
                     path={ROUTE_INCOME_FORM}
                     label="New income"
+                    onClick={handleCreate}
                 />
 
                 </th>

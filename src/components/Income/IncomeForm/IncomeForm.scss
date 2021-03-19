@@ -7,7 +7,7 @@
   .form-header{
     text-transform: uppercase;
     color:$projectNavyColor;
-    font-weight: bolder;
+    font-size: 1.5rem;
     letter-spacing: 1px;
 
   }
@@ -31,10 +31,11 @@
         font-size: 1.5rem;
         width: 100%;
         border: none;
+        background-color: $projectOrangeColor;
 
-        background: radial-gradient(circle, rgba(9,42,165,1) 0%,
-                rgba(9,42,165,0.2413340336134454) 100%);
-        color:$projectOrangeColor;
+        //background: radial-gradient(circle, rgba(9,42,165,1) 0%,
+        //        rgba(9,42,165,0.2413340336134454) 100%);
+        color:$projectNavyColor;
       }
     }
   }

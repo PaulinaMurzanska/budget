@@ -9,6 +9,12 @@ import {
     ModalHeader, ModalBody, ModalFooter, Modal, NavItem, NavLink
 } from "reactstrap";
 import "./IncomeTable.scss";
+import SimpleButton from "SharedComponents/SimpleButton";
+import ModalButtons from "SharedComponents/ModalButtons";
+import {Container} from "@material-ui/core";
+import {faEdit} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
 
 
 const IncomeItem = ({income, onDelete, handleUpdate}) => {
@@ -26,14 +32,15 @@ const IncomeItem = ({income, onDelete, handleUpdate}) => {
             <td>{name}</td>
             <td>{amount}</td>
             <td>{dateOfIncome}</td>
-            <td>
+            <td id={id}>
                 <div className="income-update">
-                    <NavLink tag={Link}
-                             to={ROUTE_INCOME_FORM_UPDATE}>
-                        <AiOutlineEdit
-                            id={id}
-                            onClick={handleUpdate}
-                        />
+                    <NavLink className="update"
+                       tag={Link}
+                       to={ROUTE_INCOME_FORM_UPDATE}
+                       id={id}
+                        onClick={handleUpdate}
+                    >
+                        <AiOutlineEdit/>
                     </NavLink>
                 </div>
             </td>
@@ -45,23 +52,31 @@ const IncomeItem = ({income, onDelete, handleUpdate}) => {
 
 
                     />
-                    <Modal isOpen={modal} toggle={toggle}>
-                        <ModalHeader toggle={toggle}>You are about to delete {name}</ModalHeader>
-                        <ModalBody>
-                                    <span style={{
-                                        fontSize: '1.5rem',
-                                        fontWeight: "700"
-                                    }}>! Are you sure ? ! </span>
-                            if you delete, this action is irreversible.
+                    <Modal isOpen={modal} toggle={toggle} className="delete-modal">
+                        <Container className="modal-container">
+                            <ModalHeader toggle={toggle}>You are about to delete <span className="name-to-delete">
+                            {name}</span>
+                            </ModalHeader>
+                            <ModalBody>
+                                Are you sure ?
+                                This action will be irreversible.
+                            </ModalBody>
+                            <ModalFooter>
 
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="primary" id={id}
+                                <ModalButtons
+                                    id={id}
                                     onClick={onDelete}
-                                    tag={Link} to={ROUTE_INCOME}
-                            >Yes,delete</Button>{' '}
-                            <Button color="secondary" onClick={toggle}>Cancel</Button>
-                        </ModalFooter>
+                                    toggle={toggle}
+                                    label1="Delete"
+                                    label2='Cancel'
+
+                                />
+
+
+                            </ModalFooter>
+
+                        </Container>
+
                     </Modal>
 
                 </div>

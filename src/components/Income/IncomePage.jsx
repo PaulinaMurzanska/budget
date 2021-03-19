@@ -15,25 +15,30 @@ class IncomePage extends React.PureComponent {
         this.state = {
             sortBy: undefined,
             sortDirection: true,
-            // incomes:this.props.incomes,
             incomesErrorMessage: "",
             incomesFilteredInFetch: [],
             isCreatedOrUpdated: false,
             isUpdated: false,
+
             incomeIdToUpdate: undefined,
             selectedIncomeToUpdate: [],
+            incomesToDisplay: [],
 
-
-            name: "Income",
-            id: 0,
-            amount: 0,
-            timestamp: Date.now(),
+            nameCreate: "",
+            idCreate: 0,
+            amountCreate: 0,
+            timestampCreate: Date.now(),
         }
+
     }
 
     componentDidMount() {
-        console.log("component did mount");
         this.props.fetchIncome()
+
+    }
+    handleIsCreated=()=>{
+        console.log("is created handler trigered");
+        this.setState({isCreatedOrUpdated:false})
     }
 
     handleSort = (event) => {
@@ -43,19 +48,23 @@ class IncomePage extends React.PureComponent {
             sortDirection: !this.state.sortDirection,
         })
     }
+    handleCreate = () => {
+        this.setState({incomeIdToUpdate: undefined})
+    }
 
     onSubmitIncomeCreate = (income) => {
-        console.log('income create triggered');
-        console.log(income);
         const path = generatePath(ROUTE_INCOME);
 
         axios.post(Api.INCOME, income)
             .then((response) => {
                 const data = response.data;
                 const income = data;
-                const incomes = [...this.props.incomesFilteredInFetch];
-                incomes.push(income);
-                this.setState({incomesFilteredInFetch: incomes, isCreatedOrUpdated: true,});
+                const incomesCopy = [...this.props.incomes];
+                incomesCopy.push(income);
+                this.setState({
+                    incomesToDisplay: incomesCopy, isCreatedOrUpdated: true,
+
+                });
                 this.props.history.push(path);
             })
             .catch((error) => {
@@ -63,35 +72,51 @@ class IncomePage extends React.PureComponent {
                 this.props.history.push(path);
                 this.setState({
                     incomesErrorMessage: incomesErrorMessage,
+                    isCreatedOrUpdated: true
                 });
             });
     };
 
     handleUpdate = (event) => {
-        const targetId = parseInt(event.target.id);
-        const incomeToUpdate = this.props.incomes.find(obj => obj.id === targetId);
+        const targetId = parseInt(event.currentTarget.id);
+        const createdOrUpdated =this.state.isCreatedOrUpdated;
+        const incomesToDisplay = this.state.incomesToDisplay;
+        const incomes= this.props.incomes;
+           console.log(createdOrUpdated);
+
+        console.log(incomesToDisplay);
+        console.log(incomes);
+
+        const incomeToUpdate = createdOrUpdated ?
+              incomesToDisplay.find(obj =>obj.id === targetId) :
+            incomes.find(obj=>obj.id===targetId);
         console.log(incomeToUpdate);
         this.setState({
-            incomeIdToUpdate: targetId,
             selectedIncomeToUpdate: incomeToUpdate,
-        })
+            incomeIdToUpdate: targetId,
 
-    }
+        });
+    };
 
     onSubmitMyIncomeUpdate = (income) => {
-
         const path = generatePath(ROUTE_INCOME);
 
         axios.put(Api.INCOME + income.id + '/', income)
             .then((response) => {
                 const data = response.data;
                 const income = data;
-                const incomes = [...this.props.incomesFilteredInFetch];
-                const getIndex = incomes.findIndex(item => item.id === income.id);
-                incomes[getIndex] = income;
+                console.log(this.state.isCreatedOrUpdated );
+                const incomesCopy = this.state.isCreatedOrUpdated ?
+                    [...this.state.incomesToDisplay] :
+                    [...this.props.incomes];
+                console.log(incomesCopy);
+                const getIndex = incomesCopy.findIndex(item => item.id === income.id);
+                console.log(getIndex);
+                incomesCopy[getIndex] = income;
                 this.setState({
-                    incomesFilteredInFetch: incomes,
-                    isCreatedOrUpdated: true,
+                    incomesToDisplay: incomesCopy,
+                    isCreatedOrUpdated:true,
+
                 });
                 this.props.history.push(path);
             })
@@ -106,26 +131,37 @@ class IncomePage extends React.PureComponent {
 
 
     render() {
-        const {sortDirection, isCreatedOrUpdated, selectedIncomeToUpdate, incomeIdToUpdate, incomesErrorMessage} = this.state;
-        const {name, id, timestamp, amount} = selectedIncomeToUpdate;
-        console.log(name, id, timestamp, amount, incomeIdToUpdate);
         const {
-            incomes, handleIncomesFilter, handleSelectedEndDate,
-            handleSelectedStartDate, isFiltered, startDate, endDate, incomesFilteredInFetch
+            sortDirection, selectedIncomeToUpdate, incomeIdToUpdate,
+            incomesToDisplay, incomesErrorMessage,isCreatedOrUpdated
+        } = this.state;
+        const {
+            incomes, handleIncomesFilter, handleSelectedEndDate,isFiltered,
+            handleSelectedStartDate,startDate, endDate, incomesFilteredInFetch
         } = this.props;
 
-        const numbersDefault = incomesFilteredInFetch.map((income) => income.amount);
-        const namesDefault = incomesFilteredInFetch.map((income) => income.name);
-        const numbersFiltered = incomes.map((income) => income.amount);
-        const namesFiltered = incomes.map((income) => income.name);
-        const numbers = isFiltered ? numbersFiltered : numbersDefault;
-        const names = isFiltered ? namesFiltered : namesDefault;
-        const incomeToDisplayDefault = isFiltered ? incomes : incomesFilteredInFetch;
-        const incomeToDisplayIfCreated = this.state.incomesFilteredInFetch;
-        const incomeToDisplay = isCreatedOrUpdated ? incomeToDisplayIfCreated : incomeToDisplayDefault;
-        const multiplier = sortDirection ? 1 : -1;
+        const preSort = ()=>{
+            if(isCreatedOrUpdated===true){
+                return incomesToDisplay;
+            }
+            if(isCreatedOrUpdated===false){
+                return incomes;
+            }
+            if(isCreatedOrUpdated===true && isFiltered===true){
+                return incomesToDisplay;
+            }
+            if(isCreatedOrUpdated===false && isFiltered===true){
+                return incomes
+            }
+            if(isCreatedOrUpdated===false && isFiltered===false){
+                return incomes
+            }
+        };
 
-        const sortedIncomes = incomeToDisplay.sort((item1, item2) => {
+        const incomesToDisplayToSort=preSort();
+
+        const multiplier = sortDirection ? 1 : -1;
+        const sortedIncomes = incomesToDisplayToSort.sort((item1, item2) => {
             if (this.state.sortBy === "timestamp") {
                 const a = new Date(item1.timestamp).getTime();
                 const b = new Date(item2.timestamp).getTime();
@@ -136,7 +172,6 @@ class IncomePage extends React.PureComponent {
                     return -1 * multiplier;
                 }
                 return 0;
-
             }
             const sortBy = this.state.sortBy;
             const a = item1[sortBy];
@@ -150,12 +185,18 @@ class IncomePage extends React.PureComponent {
             return 0;
         });
 
+        console.log(sortedIncomes.length);
 
+
+
+
+
+        const {name, id, timestamp, amount} = selectedIncomeToUpdate;
         const initialValuesToCreate = {
-            name: this.state.name,
-            id: this.state.id,
-            amount: this.state.amount,
-            timestamp: moment(this.state.timestamp).format('MM-DD-YYYY'),
+            name: "",
+            id: undefined,
+            amount: undefined,
+            timestamp: moment(Date.now()).format('MM-DD-YYYY'),
         }
         const initialValuesToUpdate = {
             name: name,
@@ -173,14 +214,20 @@ class IncomePage extends React.PureComponent {
                         handleEndDate={handleSelectedEndDate}
                         handleFilter={handleIncomesFilter}
                         handleSort={this.handleSort}
-                        names={names}
-                        numbers={numbers}
                         incomes={sortedIncomes}
                         startDate={startDate}
                         endDate={endDate}
                         handleUpdate={this.handleUpdate}
                         incomesErrorMessage={incomesErrorMessage}
                         onDelete={this.onIncomeDelete}
+                        incomesFilteredInFetch={incomesFilteredInFetch}
+                        isFiltered={isFiltered}
+                        isCreatedOrUpdated={isCreatedOrUpdated}
+                        handleCreate={this.handleCreate}
+                        handleIsCreated={this.handleIsCreated}
+                        incomeToChartDisplay={incomesToDisplayToSort}
+
+
                     />
                 </Route>
                 <Route exact path={ROUTE_INCOME_FORM}>

@@ -1,0 +1,32 @@
+@import '../scss/variables';
+
+.buttons-wrapper {
+  display: flex;
+  justify-content: center;
+
+  .modal-button {
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    text-transform: uppercase;
+
+    &.accept {
+      background-color: $projectOrangeColor;
+      color: $projectNavyColor;
+      margin-right: 20px;
+      border: 1px solid $projectNavyColor;
+    }
+
+    &.cancel {
+      background-color: $projectNavyColor;
+      color: $projectOrangeColor;
+      border: 1px solid $projectOrangeColor;
+
+    }
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+}

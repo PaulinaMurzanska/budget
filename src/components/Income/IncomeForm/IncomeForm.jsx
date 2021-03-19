@@ -3,6 +3,8 @@ import {Card, Label, FormGroup} from "reactstrap";
 import {Field, Form} from "formik";
 import FormHeader from "SharedComponents/FormHeader";
 import FormInput from "SharedComponents/FormInput";
+import moment from "moment";
+import {DatePickerComponent} from "@syncfusion/ej2-react-calendars";
 
 const IncomeForm = ({title}) => {
     return (
@@ -36,11 +38,12 @@ const IncomeForm = ({title}) => {
                 <div className='income-field'>
                     <Label for='id'>Date of income: </Label>
                     <Field
-                        component={FormInput}
+                        // component={FormInput}
                         id='timestamp'
-                        placeholder="Salary"
+                        placeholder={moment(Date.now()).format('MM-DD-YYYY')}
                         type='date'
                         name="timestamp"
+
                     />
                 </div>
 

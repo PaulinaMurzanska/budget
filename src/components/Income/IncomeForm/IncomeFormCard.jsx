@@ -27,15 +27,17 @@ class IncomeFormCard extends React.Component {
                     {({isValid}) => (
                         <Form className='income-form'>
                             <IncomeForm
+
                                 incomes={incomes}
                                 title={title}
+                                value={initialValues.timestamp}
                             />
                             <div className='form-buttons'>
                                 <Buttons
                                     route={ROUTE_INCOME}
                                     cancelLabel="Cancel"
                                     submitDisabled={!isValid}
-                                    submitLabel={key === 0 ? 'Create new income' : 'Save changes'}
+                                    submitLabel={key === undefined ? 'Create new income' : 'Save changes'}
                                 />
                             </div>
 
