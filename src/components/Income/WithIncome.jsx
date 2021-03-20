@@ -51,7 +51,6 @@ const withIncome = (WrappedComponent) => {
             })
         }
         handleSelectedStartDate = (e) => {
-            // console.log("start date trigered");
             const startDate = e.target.value;
             const startDateFormat = new Date(startDate).getTime();
             this.setState({
@@ -61,7 +60,6 @@ const withIncome = (WrappedComponent) => {
         }
 
         handleSelectedEndDate = (e) => {
-            // console.log("end date trigered");
             const endDate = e.target.value;
             const endDateFormat = new Date(endDate).getTime();
             this.setState({
@@ -72,11 +70,6 @@ const withIncome = (WrappedComponent) => {
         }
 
         handleIncomesFilter = (e) => {
-            console.log("income filter triggered");
-            console.log(`start date${moment(this.state.startDate)}`)
-            console.log(`end date${moment(this.state.endDate)}`)
-            console.log(`is filtered${this.state.isFiltered}`);
-
             const newIncomes = this.state.incomes;
             const endDate = new Date(this.state.endDate).getTime();
             const startDate = new Date(this.state.startDate).getTime();
@@ -86,19 +79,15 @@ const withIncome = (WrappedComponent) => {
                     return time
                 }
             })
-            console.log(filteredData);
-
             this.setState({
                 filteredIncomes: filteredData,
                 isFiltered: true,
-
             })
-
         }
 
 
         render() {
-            const {isFiltered, incomesFilteredInFetch, filteredIncomes, startDate, endDate} = this.state;
+            const {isFiltered, incomesFilteredInFetch, filteredIncomes, startDate, endDate,incomeInProgress,incomesSuccess} = this.state;
             const incomesToDisplay = isFiltered ? filteredIncomes : incomesFilteredInFetch;
             return (
                 <WrappedComponent
@@ -111,6 +100,8 @@ const withIncome = (WrappedComponent) => {
                     incomes={incomesToDisplay}
                     startDate={startDate}
                     endDate={endDate}
+                    incomeInProgress={incomeInProgress}
+                    incomesSuccess={incomesSuccess}
 
                 />
             )

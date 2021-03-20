@@ -8,6 +8,11 @@ import moment from "moment";
 import axios from "axios";
 import {Api} from "Services/Api";
 
+const errorCreate =" An error occured while creating new income. It may be caused by one of the following causes:" +
+    "1. You haven't completed all required fields.Try again."+
+    "2. An internal server error occured. Check your Internet connection."+
+    "3. An external server occured. Try to reload the page one or several times."
+
 
 class IncomePage extends React.PureComponent {
     constructor(props) {
@@ -68,10 +73,9 @@ class IncomePage extends React.PureComponent {
                 this.props.history.push(path);
             })
             .catch((error) => {
-                const incomesErrorMessage = "Error creating income";
                 this.props.history.push(path);
                 this.setState({
-                    incomesErrorMessage: incomesErrorMessage,
+                    incomesErrorMessage: errorCreate,
                     isCreatedOrUpdated: true
                 });
             });
@@ -136,8 +140,8 @@ class IncomePage extends React.PureComponent {
             incomesToDisplay, incomesErrorMessage,isCreatedOrUpdated
         } = this.state;
         const {
-            incomes, handleIncomesFilter, handleSelectedEndDate,isFiltered,
-            handleSelectedStartDate,startDate, endDate, incomesFilteredInFetch
+            incomes, handleIncomesFilter, handleSelectedEndDate,isFiltered,incomesSuccess,
+            handleSelectedStartDate,startDate, endDate, incomesFilteredInFetch,incomeInProgress,
         } = this.props;
 
         const preSort = ()=>{
@@ -185,12 +189,6 @@ class IncomePage extends React.PureComponent {
             return 0;
         });
 
-        console.log(sortedIncomes.length);
-
-
-
-
-
         const {name, id, timestamp, amount} = selectedIncomeToUpdate;
         const initialValuesToCreate = {
             name: "",
@@ -226,7 +224,6 @@ class IncomePage extends React.PureComponent {
                         handleCreate={this.handleCreate}
                         handleIsCreated={this.handleIsCreated}
                         incomeToChartDisplay={incomesToDisplayToSort}
-
 
                     />
                 </Route>

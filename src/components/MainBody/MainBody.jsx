@@ -7,6 +7,7 @@ import Categories from "components/Categories/Categories";
 import {ROUTE_CATEGORY, ROUTE_DASHBOARD, ROUTE_EXPENSES, ROUTE_INCOME, ROUTE_MAIN} from "Constants/Routes";
 import Header from "components/Header/Header";
 import IncomePage from "components/Income/IncomePage";
+import CategoriesPage from "components/Categories/CategoriesPage";
 
 
 class MainBody extends React.PureComponent {
@@ -42,7 +43,7 @@ class MainBody extends React.PureComponent {
                     </Route>
                     <Route path={ROUTE_CATEGORY}>
                         <Header onLogout={onLogout}/>
-                        <Categories/>
+                        <CategoriesPage/>
                     </Route>
                 </Switch>
             </>

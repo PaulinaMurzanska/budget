@@ -4,6 +4,9 @@
   padding: 20px 20%;
   display: flex;
   flex-direction: column;
+  @media(max-width: 850px){
+    padding: 20px 5%;
+  }
   .form-header{
     text-transform: uppercase;
     color:$projectNavyColor;
@@ -32,11 +35,9 @@
         width: 100%;
         border: none;
         background-color: $projectOrangeColor;
-
-        //background: radial-gradient(circle, rgba(9,42,165,1) 0%,
-        //        rgba(9,42,165,0.2413340336134454) 100%);
         color:$projectNavyColor;
       }
     }
+
   }
 }
