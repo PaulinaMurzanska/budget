@@ -3,7 +3,7 @@ import {DatePickerComponent} from "@syncfusion/ej2-react-calendars";
 import moment from "moment";
 import "./Income.scss";
 
-const IncomeDatepicker = ({handleStartDate, handleEndDate, startDate,endDate}) => {
+const AppDatepicker = ({handleStartDate, handleEndDate, startDate,endDate}) => {
     const dateFrom = moment(startDate).format("MMM Do YY");
     const dateTo = moment(endDate).format("MMM Do YY");
 
@@ -30,4 +30,4 @@ const IncomeDatepicker = ({handleStartDate, handleEndDate, startDate,endDate}) =
 
     )
 }
-export default IncomeDatepicker;
+export default AppDatepicker;

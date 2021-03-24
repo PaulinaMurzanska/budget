@@ -29,7 +29,9 @@ class Categories extends React.PureComponent{
                    }
                    </tbody>
                </Table>
-                <CategoriesSelectOptions/>
+                <CategoriesSelectOptions
+
+                />
             </React.Fragment>
         )
     }

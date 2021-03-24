@@ -1,13 +1,134 @@
 import React from "react";
+import {Container} from "@material-ui/core";
+import IncomeDatepicker from "components/Income/IncomeDatepicker";
+import {MdYoutubeSearchedFor} from "react-icons/md";
+import AppDatepicker from "components/Income/IncomeDatepicker";
+import './Expenses.scss';
+import ExpensesTable from "components/Expenses/ExpensesTable";
+import "./ExpensesTable.scss";
+import IncomeTable from "components/Income/IncomeTable";
+import ExpensesChart from "components/Expenses/ExpensesChart";
+import {BiAddToQueue} from "react-icons/bi";
+import CategoriesSelectOptions from "SharedComponents/CategoriesSelectOptions";
+import ExpensesPieCategoryChart from "components/Expenses/ExpensesPieCategoryChart";
 
-class Expenses extends React.PureComponent{
+
+class Expenses extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            selectedCategoryId: undefined,
+        }
     }
+
+    handleSelectCategory = (event) => {
+        console.log(event.target);
+        console.log(event.target.value);
+        const categoryId = parseInt(event.target.value);
+        this.setState({selectedCategoryId: categoryId})
+    }
+
+
     render() {
-        return(
-            <p>expenses</p>
+        const {selectedCategoryId} = this.state;
+        console.log(selectedCategoryId);
+        const {
+            endDate, startDate, handleStartDate, handleEndDate, handleFilter, expenses,
+            categories, handleSort
+        } = this.props;
+        const filteredByCategory = expenses.filter(item => item.category === selectedCategoryId);
+
+        const dataToTableDisplay = selectedCategoryId === undefined ? expenses : filteredByCategory;
+        console.log(dataToTableDisplay);
+        const chartLabels = categories.map((category) => category.name);
+        const chartValues = [];
+
+        const chartLabelsIfCategorySelected = dataToTableDisplay.map(item => item.name);
+        const chartNumbersIfCategorySelected = dataToTableDisplay.map(item => item.amount);
+
+
+        for (let i = 0; i < categories.length; i++) {
+            const barPre = expenses.filter(item => item.category === categories[i].id);
+            const barMap = barPre.map(item => item.amount);
+            const barSum = barMap.reduce((a, b) => a + b, 0);
+            chartValues.push(barSum);
+        }
+        ;
+
+
+        return (
+            <Container maxWidth="lg">
+                <div className="expenses-container">
+                    <div className='search-bar'>
+                        <div className='expenses-datepicker'>
+
+                            <AppDatepicker
+
+                                handleStartDate={handleStartDate}
+                                handleEndDate={handleEndDate}
+                                startDate={startDate}
+                                endDate={endDate}
+                            />
+                        </div>
+                        <div className="search-icon">
+                            <MdYoutubeSearchedFor
+                                onClick={handleFilter}
+
+                                // onClick={function (event) {
+                                //     handleFilter();
+                                //     handleIsCreated()
+                                // }}
+
+                            />
+                        </div>
+
+                    </div>
+                    <div className='chart-browser-section'>
+                        <div className='chart-section'>
+                            {
+                                selectedCategoryId === undefined &&
+                                <ExpensesChart
+                                    chartLabels={chartLabels}
+                                    chartValues={chartValues}
+                                />
+                            }
+                            {
+                                selectedCategoryId !== undefined &&
+                                <ExpensesPieCategoryChart
+                                    numbers={chartNumbersIfCategorySelected}
+                                    names={chartLabelsIfCategorySelected}
+                                />
+                            }
+
+
+                        </div>
+                        <div className='browser-section'>
+                            <div className="add-section">add new
+                                <BiAddToQueue
+                                    className="add-icon"
+                                />
+                            </div>
+                            <div className="search-section">
+                                <CategoriesSelectOptions
+                                    onChange={this.handleSelectCategory}
+                                    title="Search by category"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className='table-section'>
+                        <ExpensesTable
+                            expenses={dataToTableDisplay}
+                            categories={categories}
+                            handleSort={handleSort}
+                        />
+                    </div>
+                </div>
+
+
+            </Container>
         )
     }
 }
-export default  Expenses;
+
+export default Expenses;

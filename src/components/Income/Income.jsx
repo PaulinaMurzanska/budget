@@ -2,16 +2,15 @@ import React from "react";
 import "./Income.scss";
 import {Container} from "@material-ui/core";
 import IncomeChart from "components/Income/MyChart";
-import IncomeDatepicker from "components/Income/IncomeDatepicker";
 import IncomeTable from "components/Income/IncomeTable";
 import moment from "moment";
 import {MdYoutubeSearchedFor} from "react-icons/md";
 import {ROUTE_INCOME, ROUTE_INCOME_FORM} from "Constants/Routes";
 import {generatePath, Link, withRouter} from "react-router-dom";
-import {Button, NavItem, NavLink} from "reactstrap";
 import axios from "axios";
 import {Api} from "Services/Api";
 import SimpleButton from "SharedComponents/SimpleButton";
+import AppDatepicker from "components/Income/IncomeDatepicker";
 
 
 class Income extends React.PureComponent {
@@ -60,7 +59,7 @@ class Income extends React.PureComponent {
                     <div className='search-bar'>
                         <div className='income-datepicker'>
 
-                            <IncomeDatepicker
+                            <AppDatepicker
 
                                 handleStartDate={handleStartDate}
                                 handleEndDate={handleEndDate}

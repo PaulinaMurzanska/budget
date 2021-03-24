@@ -1,0 +1,152 @@
+@import "../../scss/variables";
+
+.expenses-container {
+  border: 1px solid red;
+  padding: 20px;
+  @media(max-width: 850px) {
+    padding: 10px;
+  }
+
+  .search-bar {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    @media(max-width: 850px) {
+      margin-bottom: 0;
+    }
+
+    .search-icon {
+      margin-left: 35px;
+      font-size: 3rem;
+      color: $projectNavyColor;
+      position: absolute;
+      right: 10%;
+      top: 45%;
+      transform: translateY(-50%);
+      @media(max-width: 850px) {
+        font-size: 4rem;
+      }
+    }
+
+    .expenses-datepicker {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      border-top: 3px solid $projectOrangeColor;
+      background: $orangeBackgroundGradient;
+      margin-bottom: 20px;
+      @media(max-width: 850px) {
+        justify-content: flex-start;
+        margin-bottom: 0;
+      }
+
+      .my-datepicker {
+        align-items: center;
+        display: flex;
+        width: 30%;
+        @media(max-width: 850px) {
+          width: 70%;
+          margin-bottom: 20px;
+
+        }
+
+        &:first-child {
+          margin-right: 25px;
+
+        }
+
+        p {
+          margin-right: 20px;
+          color: $projectNavyColor;
+          font-weight: bolder;
+        }
+      }
+
+    }
+
+  }
+
+  .chart-browser-section {
+    display: flex;
+
+    .chart-section {
+      width: 50%;
+      padding: 20px;
+
+    }
+
+    .browser-section {
+      width: 50%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+
+      .add-section {
+        height: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: $projectBoxShadow;
+        text-transform: uppercase;
+        color: $projectNavyColor;
+        letter-spacing: 1px;
+        .add-icon{
+          font-size: 2rem;
+          margin-left: 20px;
+        }
+        &:hover{
+          background-color: $projectOrangeColor;
+          color: #fff;
+          transition: .3s;
+          border: 1px solid $projectNavyColor;
+          box-shadow: none;
+        }
+
+      }
+
+      .search-section {
+        margin-top: 15px;
+        height: 60%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: $projectBoxShadow;
+
+        label {
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-bottom: 10px;
+          color: $projectNavyColor;
+        }
+
+        select {
+          padding: 10px;
+          width: 90%;
+          text-align-last: center;
+          text-transform: uppercase;
+          color: $projectNavyColor;
+          font-size: 1rem;
+          letter-spacing: 1px;
+          background-color: $projectOrangeColor;
+
+
+        }
+        &:hover{
+            transition: .3s;
+          border: 1px solid $projectNavyColor;
+          box-shadow: none;
+        }
+
+      }
+    }
+  }
+
+  .table-section {
+    border: 2px solid pink;
+  }
+}

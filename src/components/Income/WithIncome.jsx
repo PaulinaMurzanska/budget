@@ -27,7 +27,6 @@ const withIncome = (WrappedComponent) => {
         }
 
         fetchIncome = () => {
-            console.log('fetch triggered');
             this.setState({incomeInProgress: true});
             return delayFetch(fetch_delay_simulator, (resolve, reject) => {
                 return axios.get(Api.INCOME)
@@ -51,6 +50,7 @@ const withIncome = (WrappedComponent) => {
             })
         }
         handleSelectedStartDate = (e) => {
+            console.log('start date triggered');
             const startDate = e.target.value;
             const startDateFormat = new Date(startDate).getTime();
             this.setState({
@@ -60,6 +60,8 @@ const withIncome = (WrappedComponent) => {
         }
 
         handleSelectedEndDate = (e) => {
+            console.log('end date triggered');
+
             const endDate = e.target.value;
             const endDateFormat = new Date(endDate).getTime();
             this.setState({
@@ -70,6 +72,8 @@ const withIncome = (WrappedComponent) => {
         }
 
         handleIncomesFilter = (e) => {
+            console.log('filter triggered');
+
             const newIncomes = this.state.incomes;
             const endDate = new Date(this.state.endDate).getTime();
             const startDate = new Date(this.state.startDate).getTime();
@@ -87,7 +91,7 @@ const withIncome = (WrappedComponent) => {
 
 
         render() {
-            const {isFiltered, incomesFilteredInFetch, filteredIncomes, startDate, endDate,incomeInProgress,incomesSuccess} = this.state;
+            const {isFiltered, incomesFilteredInFetch, filteredIncomes, startDate, endDate, incomeInProgress, incomesSuccess} = this.state;
             const incomesToDisplay = isFiltered ? filteredIncomes : incomesFilteredInFetch;
             return (
                 <WrappedComponent

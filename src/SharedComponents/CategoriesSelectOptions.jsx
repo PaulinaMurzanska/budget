@@ -12,26 +12,22 @@ class CategoriesSelectOptions extends React.Component {
         this.props.fetchCategories();
     }
 
-
     render() {
-        const {categories} = this.props;
-        console.log(categories);
-        const category = categories.map((item, index) => item.name);
-        console.log(category);
-
-
+        const {categories,onChange, title} = this.props
+        const undef=undefined;
         return (
             <React.Fragment>
-                <label htmlFor="categories">Select Category</label>
-                <select name='categories' id='categories'>
+                <label htmlFor="categories">{title}</label>
+                <select name='categories' id='categories' onChange={onChange}>
+                     <option value="reset">select category</option>
                     {
                         categories.map((category, index) =>
-                            <option value={category.name} key={category.id}>
+
+                            <option value={category.id} key={category.id} >
                                 {category.name}
                             </option>
                         )
                     }
-
                 </select>
 
             </React.Fragment>
