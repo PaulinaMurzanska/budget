@@ -8,19 +8,24 @@ const ExpensesPieCategoryChart = ({numbers, names}) => {
     console.log(labels);
     const chartOptions = {
         labels: labels,
-        // plotOptions: {
-        //     pie: {
-        //         donut: {
-        //             size: '65%',
-        //             labels: {
-        //                 show: true,
-        //                 total: {
-        //                     show: true,
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        plotOptions: {
+            pie: {
+                donut: {
+                    size: '65%',
+                    labels: {
+                        show: true,
+                        total: {
+                            show: true,
+                        }
+                    },
+
+                }
+            }
+        },
+        chart: {
+            background: 'rgba(220, 217, 217, 0.29)',
+
+        }
 
     }
 
@@ -32,7 +37,8 @@ const ExpensesPieCategoryChart = ({numbers, names}) => {
             series={series}
             type="donut"
             height="auto"
-            width="100%"
+            width="90%"
+
 
         />
 

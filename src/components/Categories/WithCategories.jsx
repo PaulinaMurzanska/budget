@@ -18,7 +18,6 @@ const withCategories=(WrappedComponent)=>{
 
 
         fetchCategories = () => {
-            console.log('fetch categoriestriggered');
             this.setState({categoryInProgress: true});
             return delayFetch(fetch_delay_simulator, (resolve, reject) => {
                 return axios.get(Api.CATEGORY)

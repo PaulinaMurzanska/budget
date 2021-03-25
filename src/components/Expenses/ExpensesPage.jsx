@@ -1,11 +1,12 @@
 import React from "react";
 import {generatePath, Route, Switch, withRouter} from "react-router-dom";
-import {ROUTE_EXPENSES} from "Constants/Routes";
+import {ROUTE_EXPENSES, ROUTE_EXPENSES_FORM} from "Constants/Routes";
 import Expenses from "components/Expenses/Expenses";
 import WithExpenses from "components/Expenses/WithExpenses";
 import withCategories from "components/Categories/WithCategories";
 import Income from "components/Income/Income";
-
+import ExpensesFormCard from "components/Expenses/ExpensesForm/ExpensesFormCard";
+import moment from "moment";
 
 
 class ExpensesPage extends React.Component {
@@ -64,8 +65,14 @@ class ExpensesPage extends React.Component {
             }
             return 0;
         });
-        console.log(sortedExpenses);
 
+        const initialValuesToCreate = {
+            name: "",
+            id: undefined,
+            amount: 0,
+            timestamp: moment(Date.now()).format('MM-DD-YYYY'),
+            category:"",
+        };
 
         return (
             <Switch>
@@ -84,6 +91,12 @@ class ExpensesPage extends React.Component {
 
                     />
                 </Route>
+                <Route exact path={ROUTE_EXPENSES_FORM}>
+                    <ExpensesFormCard
+                    initialValue={initialValuesToCreate}
+                    />
+                </Route>
+
             </Switch>
 
         )

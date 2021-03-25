@@ -1,7 +1,6 @@
 @import "../../scss/variables";
 
 .expenses-container {
-  border: 1px solid red;
   padding: 20px;
   @media(max-width: 850px) {
     padding: 10px;
@@ -72,37 +71,53 @@
 
   .chart-browser-section {
     display: flex;
+    flex-wrap: wrap;
+    //flex-direction: row-reverse;
+    //justify-content: space-around;
+    @media(max-width: 850px) {
+      flex-direction: column-reverse;
+    }
 
     .chart-section {
-      width: 50%;
+      width: 45%;
       padding: 20px;
+      @media(max-width: 850px) {
+        width: 90%;
+        overflow: hidden;
+        margin: 0 auto;
+      }
 
     }
 
     .browser-section {
-      width: 50%;
+      width: 45%;
       padding: 20px;
       display: flex;
       flex-direction: column;
+      @media(max-width: 850px) {
+        width: 90%;
+      }
 
       .add-section {
         height: 40%;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: $projectBoxShadow;
         text-transform: uppercase;
         color: $projectNavyColor;
         letter-spacing: 1px;
-        .add-icon{
+        //border: 1px solid $projectOrangeColor;
+        background-color: $tableCellBackgroundColor;
+
+        .add-icon {
           font-size: 2rem;
           margin-left: 20px;
         }
-        &:hover{
+
+        &:hover {
           background-color: $projectOrangeColor;
           color: #fff;
           transition: .3s;
-          border: 1px solid $projectNavyColor;
           box-shadow: none;
         }
 
@@ -115,7 +130,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        box-shadow: $projectBoxShadow;
+        background-color: $tableCellBackgroundColor;
+
 
         label {
           text-transform: uppercase;
@@ -136,17 +152,15 @@
 
 
         }
-        &:hover{
-            transition: .3s;
-          border: 1px solid $projectNavyColor;
-          box-shadow: none;
+
+        &:hover {
+          transition: .3s;
+
         }
 
       }
     }
   }
 
-  .table-section {
-    border: 2px solid pink;
-  }
+
 }

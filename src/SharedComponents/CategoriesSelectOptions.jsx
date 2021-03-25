@@ -13,13 +13,15 @@ class CategoriesSelectOptions extends React.Component {
     }
 
     render() {
-        const {categories,onChange, title} = this.props
+        const {categories,onChange, title,} = this.props
         const undef=undefined;
         return (
             <React.Fragment>
                 <label htmlFor="categories">{title}</label>
                 <select name='categories' id='categories' onChange={onChange}>
-                     <option value="reset">select category</option>
+                     <option
+                         value="reset"
+                     >select category</option>
                     {
                         categories.map((category, index) =>
 

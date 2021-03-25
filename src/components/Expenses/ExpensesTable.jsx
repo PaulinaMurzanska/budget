@@ -6,7 +6,6 @@ import {BiSort} from "react-icons/bi";
 
 
 const ExpensesTable = ({expenses, categories, handleSort}) => {
-    console.log(expenses);
     return (
         <Table className='expenses-exact-table'>
             <thead>

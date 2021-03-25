@@ -4,7 +4,7 @@ import Chart from "react-apexcharts";
 const ExpensesChart = ({chartValues, chartLabels}) => {
     const options = {
         chart: {
-            background: '#f4f4f4',
+            background: 'rgba(220, 217, 217, 0.29)',
             foreColor: "#333",
         },
         xaxis: {

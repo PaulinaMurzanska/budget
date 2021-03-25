@@ -87,7 +87,6 @@ const WithExpenses = (WrappedComponent) => {
                 expensesInProgress, expenses, expensesSuccess, startDate, endDate, expensesFilteredInFetch,
                 isFiltered, filteredExpenses
             } = this.state;
-            console.log(filteredExpenses);
             const expensesToDisplay = isFiltered ? filteredExpenses : expensesFilteredInFetch;
             return (
                 <WrappedComponent

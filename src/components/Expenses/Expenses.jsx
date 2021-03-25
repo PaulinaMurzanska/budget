@@ -6,7 +6,6 @@ import AppDatepicker from "components/Income/IncomeDatepicker";
 import './Expenses.scss';
 import ExpensesTable from "components/Expenses/ExpensesTable";
 import "./ExpensesTable.scss";
-import IncomeTable from "components/Income/IncomeTable";
 import ExpensesChart from "components/Expenses/ExpensesChart";
 import {BiAddToQueue} from "react-icons/bi";
 import CategoriesSelectOptions from "SharedComponents/CategoriesSelectOptions";
@@ -22,16 +21,14 @@ class Expenses extends React.Component {
     }
 
     handleSelectCategory = (event) => {
-        console.log(event.target);
-        console.log(event.target.value);
-        const categoryId = parseInt(event.target.value);
-        this.setState({selectedCategoryId: categoryId})
+        const targetValue = event.target.value;
+        const categoryId = parseInt(targetValue);
+        const target = targetValue === "reset" ? undefined : categoryId;
+        this.setState({selectedCategoryId: target})
     }
-
 
     render() {
         const {selectedCategoryId} = this.state;
-        console.log(selectedCategoryId);
         const {
             endDate, startDate, handleStartDate, handleEndDate, handleFilter, expenses,
             categories, handleSort
@@ -39,7 +36,6 @@ class Expenses extends React.Component {
         const filteredByCategory = expenses.filter(item => item.category === selectedCategoryId);
 
         const dataToTableDisplay = selectedCategoryId === undefined ? expenses : filteredByCategory;
-        console.log(dataToTableDisplay);
         const chartLabels = categories.map((category) => category.name);
         const chartValues = [];
 
