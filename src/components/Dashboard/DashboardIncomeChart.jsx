@@ -23,7 +23,21 @@ class DashboardIncomeChart extends React.Component {
 
         const chartOptions = {
             labels: labels,
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '65%',
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                            }
+                        }
+                    }
+                }
+            }
         }
+
 
         return (
             <React.Fragment>
@@ -32,8 +46,8 @@ class DashboardIncomeChart extends React.Component {
                     options={chartOptions}
                     series={series}
                     type="donut"
-                    height='500'
-                    width='600'
+                    height='auto'
+                    width='100%'
 
                 />
 

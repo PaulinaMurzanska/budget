@@ -10,6 +10,8 @@ import ExpensesChart from "components/Expenses/ExpensesChart";
 import {BiAddToQueue} from "react-icons/bi";
 import CategoriesSelectOptions from "SharedComponents/CategoriesSelectOptions";
 import ExpensesPieCategoryChart from "components/Expenses/ExpensesPieCategoryChart";
+import {ROUTE_EXPENSES_FORM} from "Constants/Routes";
+import {Link} from "react-router-dom";
 
 
 class Expenses extends React.Component {
@@ -31,7 +33,7 @@ class Expenses extends React.Component {
         const {selectedCategoryId} = this.state;
         const {
             endDate, startDate, handleStartDate, handleEndDate, handleFilter, expenses,
-            categories, handleSort
+            categories, handleSort, handleIsCreated,balance
         } = this.props;
         const filteredByCategory = expenses.filter(item => item.category === selectedCategoryId);
 
@@ -68,12 +70,10 @@ class Expenses extends React.Component {
                         </div>
                         <div className="search-icon">
                             <MdYoutubeSearchedFor
-                                onClick={handleFilter}
-
-                                // onClick={function (event) {
-                                //     handleFilter();
-                                //     handleIsCreated()
-                                // }}
+                                onClick={function (event) {
+                                    handleFilter();
+                                    handleIsCreated()
+                                }}
 
                             />
                         </div>
@@ -99,11 +99,16 @@ class Expenses extends React.Component {
 
                         </div>
                         <div className='browser-section'>
+
                             <div className="add-section">add new
-                                <BiAddToQueue
-                                    className="add-icon"
-                                />
+                                <Link to={ROUTE_EXPENSES_FORM}>
+                                    <BiAddToQueue
+                                        className="add-icon"
+                                    />
+                                </Link>
                             </div>
+
+
                             <div className="search-section">
                                 <CategoriesSelectOptions
                                     onChange={this.handleSelectCategory}

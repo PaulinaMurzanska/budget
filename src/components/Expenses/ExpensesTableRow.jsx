@@ -14,12 +14,7 @@ const getCategoryName = (categories, category) => {
 
 const ExpensesTableRow = ({expense, categories}) => {
     const {name, category, amount, timestamp} = expense;
-    const date = moment(timestamp).format("MMM do YY");
-
-
-
-
-
+    const date = moment(timestamp).format("MMM Do YY");
     return (
         <React.Fragment>
             <tr>

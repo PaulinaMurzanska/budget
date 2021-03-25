@@ -94,6 +94,7 @@ const WithExpenses = (WrappedComponent) => {
                     {...this.props}
                     fetchExpenses={this.fetchExpenses}
                     expenses={expensesToDisplay}
+                    expensesTotal={expenses}
                     startDate={startDate}
                     endDate={endDate}
                     handleEndDate={this.handleSelectedEndDate}

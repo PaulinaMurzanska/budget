@@ -26,7 +26,6 @@ const IncomeChart = ({numbers, names}) => {
     return (
         <Chart
             options={chartOptions}
-            // labels={labels}
             series={series}
             type="donut"
             height="auto"

@@ -27,7 +27,6 @@ class IncomeFormCard extends React.Component {
                     {({isValid}) => (
                         <Form className='income-form'>
                             <IncomeForm
-
                                 incomes={incomes}
                                 title={title}
                                 value={initialValues.timestamp}

@@ -1,0 +1,23 @@
+@import "../../scss/variables";
+
+.my-container {
+  border: 1px solid red;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 20px;
+  grid-gap: 5px;
+
+  @media(max-width: 850px) {
+    grid-template-columns: repeat(1, 1fr);
+
+  }
+  .section {
+    border: 1px solid green;
+    height: 50vh;
+    padding: 20px;
+    overflow: hidden;
+    @media(max-width: 850px){
+      height: 30vh;
+    }
+  }
+}

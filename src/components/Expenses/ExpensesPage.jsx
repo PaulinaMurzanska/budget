@@ -7,6 +7,8 @@ import withCategories from "components/Categories/WithCategories";
 import Income from "components/Income/Income";
 import ExpensesFormCard from "components/Expenses/ExpensesForm/ExpensesFormCard";
 import moment from "moment";
+import axios from "axios";
+import {Api} from "Services/Api";
 
 
 class ExpensesPage extends React.Component {
@@ -16,6 +18,9 @@ class ExpensesPage extends React.Component {
             sortBy: undefined,
             sortDirections: true,
             chartValues: [],
+            expensesToDisplay: [],
+            expensesErrorMessage: "",
+            isCreatedOrUpdated: false,
         }
     }
 
@@ -34,15 +39,65 @@ class ExpensesPage extends React.Component {
             sortDirection: !this.state.sortDirection,
         })
     }
+    handleIsCreated = () => {
+        this.setState({isCreatedOrUpdated: false})
+    }
+    onSubmitExpenseCreated = (expense) => {
+        console.log("on submit triggered");
+        const path = generatePath(ROUTE_EXPENSES);
+        axios.post(Api.EXPENSES, expense)
+            .then((response) => {
+                const data = response.data;
+                const expense = data;
+                const expensesCopy = [...this.props.expenses];
+                expensesCopy.push(expense);
+                this.setState({
+                    expensesToDisplay: expensesCopy,
+                    isCreatedOrUpdated: true,
+                });
+                this.props.history.push(path);
+            })
+            .catch((error) => {
+                this.props.history.push(path);
+                this.setState({
+                    expensesErrorMessage: "error creating new expenses"
+                })
+            })
+
+    }
 
     render() {
 
 
-        const {endDate, startDate, handleStartDate, handleEndDate, handleFilter, expenses, categories} = this.props;
-        const {sortBy, sortDirection} = this.state;
-        const multiplier = sortDirection ? 1 : -1;
+        const {
+            endDate, startDate, handleStartDate, handleEndDate, handleFilter, expenses,
+            categories, isFiltered,
+        } = this.props;
+        const {sortBy, sortDirection, expensesToDisplay, isCreatedOrUpdated} = this.state;
 
-        const sortedExpenses = expenses.sort((item1, item2) => {
+
+        const multiplier = sortDirection ? 1 : -1;
+        const preSort = () => {
+            if (isCreatedOrUpdated === true) {
+                return expensesToDisplay;
+            }
+            if (isCreatedOrUpdated === false) {
+                return expenses;
+            }
+            if (isCreatedOrUpdated === true && isFiltered === true) {
+                return expensesToDisplay;
+            }
+            if (isCreatedOrUpdated === false && isFiltered === true) {
+                return expenses
+            }
+            if (isCreatedOrUpdated === false && isFiltered === false) {
+                return expenses
+            }
+        };
+
+        const expensesToDisplayToSort = preSort();
+
+        const sortedExpenses = expensesToDisplayToSort.sort((item1, item2) => {
             if (this.state.sortBy === "timestamp") {
                 const a = new Date(item1.timestamp).getTime();
                 const b = new Date(item2.timestamp).getTime();
@@ -69,9 +124,9 @@ class ExpensesPage extends React.Component {
         const initialValuesToCreate = {
             name: "",
             id: undefined,
-            amount: 0,
+            amount: "",
             timestamp: moment(Date.now()).format('MM-DD-YYYY'),
-            category:"",
+            category: "",
         };
 
         return (
@@ -84,16 +139,18 @@ class ExpensesPage extends React.Component {
                         handleEndDate={handleEndDate}
                         handleFilter={handleFilter}
                         expenses={sortedExpenses}
-                        // sortedExpenses={sortedExpenses}
                         categories={categories}
                         handleSort={this.handleSort}
-                        // handleIsCreated={this.handleIsCreated}
+                        handleIsCreated={this.handleIsCreated}
 
                     />
                 </Route>
                 <Route exact path={ROUTE_EXPENSES_FORM}>
                     <ExpensesFormCard
-                    initialValue={initialValuesToCreate}
+                        initialValues={initialValuesToCreate}
+                        title='Create new expense'
+                        onSubmit={this.onSubmitExpenseCreated}
+                        categories={categories}
                     />
                 </Route>
 
@@ -103,4 +160,4 @@ class ExpensesPage extends React.Component {
     }
 }
 
-export default WithExpenses(withCategories(ExpensesPage));
+export default withRouter(WithExpenses(withCategories(ExpensesPage)));

@@ -91,7 +91,8 @@ const withIncome = (WrappedComponent) => {
 
 
         render() {
-            const {isFiltered, incomesFilteredInFetch, filteredIncomes, startDate, endDate, incomeInProgress, incomesSuccess} = this.state;
+            const {isFiltered, incomesFilteredInFetch, filteredIncomes, startDate, endDate, incomeInProgress,
+                incomesSuccess,incomes} = this.state;
             const incomesToDisplay = isFiltered ? filteredIncomes : incomesFilteredInFetch;
             return (
                 <WrappedComponent
@@ -102,6 +103,7 @@ const withIncome = (WrappedComponent) => {
                     handleSelectedStartDate={this.handleSelectedStartDate}
                     handleSelectedEndDate={this.handleSelectedEndDate}
                     incomes={incomesToDisplay}
+                    incomesTotal={incomes}
                     startDate={startDate}
                     endDate={endDate}
                     incomeInProgress={incomeInProgress}
