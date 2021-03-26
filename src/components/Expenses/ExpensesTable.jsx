@@ -3,9 +3,10 @@ import {Table} from "reactstrap";
 import ExpensesTableRow from "components/Expenses/ExpensesTableRow";
 import "./ExpensesTable.scss";
 import {BiSort} from "react-icons/bi";
+import IncomeItem from "components/Income/IncomeItem";
 
 
-const ExpensesTable = ({expenses, categories, handleSort}) => {
+const ExpensesTable = ({expenses, categories, handleSort,handleUpdate,onDelete}) => {
     return (
         <Table className='expenses-exact-table'>
             <thead>
@@ -37,6 +38,9 @@ const ExpensesTable = ({expenses, categories, handleSort}) => {
                         expense={item}
                         key={item.id}
                         categories={categories}
+                        handleUpdate={handleUpdate}
+                        onDelete={onDelete}
+
                     />
                 )
             }

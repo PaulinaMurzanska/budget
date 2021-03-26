@@ -13,38 +13,43 @@ import ExpensesPage from "components/Expenses/ExpensesPage";
 
 class MainBody extends React.PureComponent {
 
+
+
     render() {
-        const {onLogout}=this.props;
+        const {onLogout} = this.props;
         return (
             <>
                 <Switch>
                     <Route exact path={ROUTE_MAIN}>
                         <Header onLogout={onLogout}
-                        pageName="Dashboard"
+                                pageName="Dashboard"
                         />
                         <Dashboard/>
                     </Route>
                     <Route exact path={ROUTE_DASHBOARD}>
                         <Header onLogout={onLogout}
-                        pageName="Dashboard"
+                                pageName="Dashboard"
                         />
                         <Dashboard/>
                     </Route>
                     <Route path={ROUTE_EXPENSES}>
                         <Header onLogout={onLogout}
-                        pageName="Expenses"
+                                pageName="Expenses"
                         />
-                        <ExpensesPage/>
+                        <ExpensesPage
+
+                        />
                     </Route>
                     <Route path={ROUTE_INCOME}>
                         <Header onLogout={onLogout}
-                        pageName="Income"
+                                pageName="Income"
                         />
                         <IncomePage/>
                     </Route>
                     <Route path={ROUTE_CATEGORY}>
                         <Header onLogout={onLogout}/>
-                        <CategoriesPage/>
+                        <CategoriesPage
+                        />
                     </Route>
                 </Switch>
             </>

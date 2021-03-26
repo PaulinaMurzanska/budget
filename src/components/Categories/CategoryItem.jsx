@@ -1,13 +1,51 @@
 import React from "react";
+import {NavLink} from "reactstrap";
+import {Link} from "react-router-dom";
+import {ROUTE_CATEGORY_FORM_UPDATE, ROUTE_INCOME_FORM_UPDATE} from "Constants/Routes";
+import {AiOutlineEdit} from "react-icons/ai";
+import ModalDelete from "SharedComponents/ModalDelete";
 
-const CategoryItem =({category})=>{
-    const {name, id}=category;
-    return(
+const CategoryItem = ({category, handleCategoryUpdate, onDelete, errorMessage,isCreatedOrUpdated,handleDelIcone}) => {
+    const {name, id} = category;
+
+    return (
         <React.Fragment>
+
             <tr>
                 <td>{name}</td>
+                <td>{id}</td>
+                <td id={id}>
+                    <div className="category-update">
+                        <NavLink className="update"
+                                 tag={Link}
+                                 to={ROUTE_CATEGORY_FORM_UPDATE}
+                                 id={id}
+                                 onClick={handleCategoryUpdate}
+                        >
+                            <AiOutlineEdit
+                            />
+                        </NavLink>
+                    </div>
+                </td>
+                <td>
+                    {/*{*/}
+                    {/*  isCreatedOrUpdated===true && <p>można usunąc wyświetl modal</p>*/}
+                    {/*}*/}
+                    {/*{*/}
+                    {/*   isCreatedOrUpdated===false && <p> nie można usunąc wyświetl inny komunikat</p>*/}
+                    {/*}*/}
+
+                        <ModalDelete
+                            name={name}
+                            id={id}
+                            onDelete={onDelete}
+                            errorMessage={errorMessage}
+                        />
+
+
+                </td>
             </tr>
         </React.Fragment>
     )
 }
-export default  CategoryItem;
+export default CategoryItem;

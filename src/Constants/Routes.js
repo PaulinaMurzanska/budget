@@ -7,6 +7,8 @@ const ROUTE_EXPENSES_FORM_UPDATE='/expenses/form/update';
 
 
 const ROUTE_CATEGORY="/category";
+const ROUTE_CATEGORY_FORM="/category/form";
+const ROUTE_CATEGORY_FORM_UPDATE="/category/form/update";
 const ROUTE_INCOME_FORM ="/income/form";
 const ROUTE_INCOME_FORM_UPDATE ="/income/form/update";
 export {
@@ -18,5 +20,7 @@ export {
     ROUTE_INCOME_FORM,
     ROUTE_INCOME_FORM_UPDATE,
     ROUTE_EXPENSES_FORM,
-    ROUTE_EXPENSES_FORM_UPDATE
+    ROUTE_EXPENSES_FORM_UPDATE,
+    ROUTE_CATEGORY_FORM,
+    ROUTE_CATEGORY_FORM_UPDATE,
 }

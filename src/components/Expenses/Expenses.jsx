@@ -10,8 +10,10 @@ import ExpensesChart from "components/Expenses/ExpensesChart";
 import {BiAddToQueue} from "react-icons/bi";
 import CategoriesSelectOptions from "SharedComponents/CategoriesSelectOptions";
 import ExpensesPieCategoryChart from "components/Expenses/ExpensesPieCategoryChart";
-import {ROUTE_EXPENSES_FORM} from "Constants/Routes";
-import {Link} from "react-router-dom";
+import {ROUTE_EXPENSES, ROUTE_EXPENSES_FORM, ROUTE_INCOME} from "Constants/Routes";
+import {generatePath, Link,withRouter} from "react-router-dom";
+import axios from "axios";
+import {Api} from "Services/Api";
 
 
 class Expenses extends React.Component {
@@ -28,12 +30,30 @@ class Expenses extends React.Component {
         const target = targetValue === "reset" ? undefined : categoryId;
         this.setState({selectedCategoryId: target})
     }
+    onExpenseDelete = (event) => {
+        console.log("delete triggered");
+        const idToDelete = parseInt(event.target.id);
+        console.log(idToDelete);
+        const expenseToDelete = this.props.expenses.find(obj => obj.id === idToDelete);
+        console.log(expenseToDelete);
+
+        const index = this.props.expenses.findIndex((expense) => expense.id === idToDelete);
+        if (index !== -1) this.props.expenses.splice(index, 1);
+        const path = generatePath(ROUTE_EXPENSES);
+        axios.delete(Api.EXPENSES + expenseToDelete.id + '/', expenseToDelete)
+            .then(response => {
+                this.props.history.push(path);
+                this.setState(this.state);
+            })
+
+
+    }
 
     render() {
         const {selectedCategoryId} = this.state;
         const {
             endDate, startDate, handleStartDate, handleEndDate, handleFilter, expenses,
-            categories, handleSort, handleIsCreated,balance
+            categories, handleSort, handleIsCreated, balance, handleUpdate
         } = this.props;
         const filteredByCategory = expenses.filter(item => item.category === selectedCategoryId);
 
@@ -122,6 +142,8 @@ class Expenses extends React.Component {
                             expenses={dataToTableDisplay}
                             categories={categories}
                             handleSort={handleSort}
+                            handleUpdate={handleUpdate}
+                            onDelete={this.onExpenseDelete}
                         />
                     </div>
                 </div>
@@ -132,4 +154,4 @@ class Expenses extends React.Component {
     }
 }
 
-export default Expenses;
+export default withRouter(Expenses);

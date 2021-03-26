@@ -8,7 +8,7 @@ import {ROUTE_EXPENSES, ROUTE_INCOME} from "Constants/Routes";
 
 class ExpensesFormCard extends React.Component {
     render() {
-        const {initialValues, title,categories} = this.props;
+        const {initialValues, title, categories,} = this.props;
         const key = initialValues.id;
         console.log(initialValues);
 

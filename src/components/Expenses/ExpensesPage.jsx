@@ -1,6 +1,6 @@
 import React from "react";
 import {generatePath, Route, Switch, withRouter} from "react-router-dom";
-import {ROUTE_EXPENSES, ROUTE_EXPENSES_FORM} from "Constants/Routes";
+import {ROUTE_EXPENSES, ROUTE_EXPENSES_FORM, ROUTE_EXPENSES_FORM_UPDATE, ROUTE_INCOME} from "Constants/Routes";
 import Expenses from "components/Expenses/Expenses";
 import WithExpenses from "components/Expenses/WithExpenses";
 import withCategories from "components/Categories/WithCategories";
@@ -9,6 +9,7 @@ import ExpensesFormCard from "components/Expenses/ExpensesForm/ExpensesFormCard"
 import moment from "moment";
 import axios from "axios";
 import {Api} from "Services/Api";
+import CategoriesPage from "components/Categories/CategoriesPage";
 
 
 class ExpensesPage extends React.Component {
@@ -21,6 +22,14 @@ class ExpensesPage extends React.Component {
             expensesToDisplay: [],
             expensesErrorMessage: "",
             isCreatedOrUpdated: false,
+            selectedExpenseToUpdate: [],
+            expenseIdToUpdate: undefined,
+
+            nameExpense: "",
+            idExpense: undefined,
+            amountExpense: "",
+            timestampExpense: moment(Date.now()).format('MM-DD-YYYY'),
+            categoryExpense: "",
         }
     }
 
@@ -66,14 +75,60 @@ class ExpensesPage extends React.Component {
 
     }
 
+    handleUpdate = (event) => {
+        console.log(event.currentTarget);
+        const targetId = parseInt(event.currentTarget.id);
+        const createdOrUpdated = this.state.isCreatedOrUpdated;
+        const expensesToDisplay = this.state.expensesToDisplay;
+        const expenses = this.props.expenses;
+        const expenseToUpdate = createdOrUpdated ?
+            expensesToDisplay.find(obj => obj.id === targetId) :
+            expenses.find(obj => obj.id === targetId);
+        this.setState({
+            selectedExpenseToUpdate: expenseToUpdate,
+            expenseIdToUpdate: targetId,
+        });
+    };
+    onSubmitExpenseUpdated = (expense) => {
+        const path = generatePath(ROUTE_EXPENSES);
+
+        axios.put(Api.EXPENSES + expense.id + '/', expense)
+            .then((response) => {
+                const data = response.data;
+                const expense = data;
+                const expensesCopy = this.state.isCreatedOrUpdated ?
+                    [...this.state.expensesToDisplay] :
+                    [...this.props.expenses];
+                const getIndex = expensesCopy.findIndex(item => item.id === expense.id);
+                expensesCopy[getIndex] = expense;
+                this.setState({
+                    expensesToDisplay: expensesCopy,
+                    isCreatedOrUpdated: true,
+
+                });
+                this.props.history.push(path);
+            })
+            .catch((error) => {
+                const expenseErrorMessage = "Error updating expense";
+                this.props.history.push(path);
+                this.setState({
+                    expensesErrorMessage: expenseErrorMessage,
+                });
+            });
+    };
+
     render() {
 
 
         const {
             endDate, startDate, handleStartDate, handleEndDate, handleFilter, expenses,
-            categories, isFiltered,
+            categories, isFiltered, handleCategoryUpdate
+
         } = this.props;
-        const {sortBy, sortDirection, expensesToDisplay, isCreatedOrUpdated} = this.state;
+        const {
+            sortBy, sortDirection, expensesToDisplay, isCreatedOrUpdated, selectedExpenseToUpdate,
+            expenseIdToUpdate
+        } = this.state;
 
 
         const multiplier = sortDirection ? 1 : -1;
@@ -121,6 +176,14 @@ class ExpensesPage extends React.Component {
             return 0;
         });
 
+        const {name, id, amount, category, timestamp} = selectedExpenseToUpdate;
+        const initialValuesToUpdate = {
+            name: name,
+            id: id,
+            amount: amount,
+            timestamp: timestamp,
+        }
+
         const initialValuesToCreate = {
             name: "",
             id: undefined,
@@ -128,6 +191,9 @@ class ExpensesPage extends React.Component {
             timestamp: moment(Date.now()).format('MM-DD-YYYY'),
             category: "",
         };
+        const initialValues = expenseIdToUpdate === undefined ? initialValuesToCreate : initialValuesToUpdate;
+        console.log(initialValues);
+
 
         return (
             <Switch>
@@ -142,14 +208,23 @@ class ExpensesPage extends React.Component {
                         categories={categories}
                         handleSort={this.handleSort}
                         handleIsCreated={this.handleIsCreated}
+                        handleUpdate={this.handleUpdate}
 
                     />
                 </Route>
                 <Route exact path={ROUTE_EXPENSES_FORM}>
                     <ExpensesFormCard
-                        initialValues={initialValuesToCreate}
+                        initialValues={initialValues}
                         title='Create new expense'
                         onSubmit={this.onSubmitExpenseCreated}
+                        categories={categories}
+                    />
+                </Route>
+                <Route exact path={ROUTE_EXPENSES_FORM_UPDATE}>
+                    <ExpensesFormCard
+                        initialValues={initialValues}
+                        title='update expense'
+                        onSubmit={this.onSubmitExpenseUpdated}
                         categories={categories}
                     />
                 </Route>
