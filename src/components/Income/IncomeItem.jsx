@@ -32,19 +32,20 @@ const IncomeItem = ({income, onDelete, handleUpdate}) => {
             <td>{name}</td>
             <td>{amount}</td>
             <td>{dateOfIncome}</td>
-            <td id={id}>
-                <div className="income-update">
+            <td id={id} >
+                <div className="income-update" >
                     <NavLink className="update"
                        tag={Link}
                        to={ROUTE_INCOME_FORM_UPDATE}
                        id={id}
                         onClick={handleUpdate}
+
                     >
                         <AiOutlineEdit/>
                     </NavLink>
                 </div>
             </td>
-            <td>
+            <td >
                 <div className='income-delete'
                 >
                     <RiDeleteBin4Line className='delete'

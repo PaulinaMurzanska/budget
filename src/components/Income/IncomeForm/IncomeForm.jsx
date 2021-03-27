@@ -16,7 +16,7 @@ const IncomeForm = ({title}) => {
             </div>
             <div className='income-fields'>
                 <div className='income-field'>
-                    <Label for='id'>Your income name: </Label>
+                    <Label for='id'>Income name: </Label>
                     <Field
                         component={FormInput}
                         id='name'
@@ -36,9 +36,9 @@ const IncomeForm = ({title}) => {
                     />
                 </div>
                 <div className='income-field'>
-                    <Label for='id'>Date of income: </Label>
+                    <Label for='id'>Date: </Label>
                     <Field
-                        // component={FormInput}
+                        className="date-input"
                         id='timestamp'
                         placeholder={moment(Date.now()).format('MM-DD-YYYY')}
                         type='date'

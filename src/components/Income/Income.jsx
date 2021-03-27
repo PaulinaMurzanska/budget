@@ -11,16 +11,15 @@ import axios from "axios";
 import {Api} from "Services/Api";
 import SimpleButton from "SharedComponents/SimpleButton";
 import AppDatepicker from "components/Income/IncomeDatepicker";
+import ScrollToTop from "react-scroll-to-top";
+import InProgress from "SharedComponents/InProgress";
 
 
 class Income extends React.PureComponent {
 
     onIncomeDelete = (event) => {
-        console.log("delete triggered");
         const idToDelete = parseInt(event.target.id);
-        console.log(idToDelete);
         const incomeToDelete = this.props.incomes.find(obj => obj.id === idToDelete);
-        console.log(incomeToDelete);
 
         const index = this.props.incomes.findIndex((income) => income.id === idToDelete);
         if (index !== -1) this.props.incomes.splice(index, 1);
@@ -30,62 +29,54 @@ class Income extends React.PureComponent {
                 this.props.history.push(path);
                 this.setState(this.state);
             })
-
-
     }
 
-
     render() {
+
 
         const {
             handleStartDate, handleEndDate, handleFilter,
             incomes, handleSort, handleSortDate, startDate, endDate, handleUpdate,
             incomesErrorMessage, onSubmit, initialValues,
-            handleCreate, handleIsCreated,
+            handleCreate, handleIsCreated,inProgress
         } = this.props;
+        console.log(inProgress);
         const dateFrom = moment(startDate).format("MMM Do YY");
         const dateTo = moment(endDate).format("MMM Do YY");
-
 
         const numbers = incomes.map((income) => income.amount);
         const names = incomes.map((income) => income.name);
 
         const displayLength = incomes.length;
 
-
         return (
             <Container maxWidth="lg">
+                 <ScrollToTop smooth color="#387f34"/>
                 <div className="income-container">
                     <div className='search-bar'>
                         <div className='income-datepicker'>
-
                             <AppDatepicker
-
                                 handleStartDate={handleStartDate}
                                 handleEndDate={handleEndDate}
                                 startDate={startDate}
                                 endDate={endDate}
                             />
-
-
                         </div>
                         <div className="search-icon">
                             <MdYoutubeSearchedFor
-
                                 onClick={function (event) {
                                     handleFilter();
                                     handleIsCreated()
                                 }}
-
                             />
                         </div>
-
                     </div>
-                    <h4>{incomesErrorMessage}</h4>
-
+                    <InProgress
+                    inProgress={inProgress}
+                    />
                     {
-                        displayLength === 0 && (
-                            <div>
+                        displayLength === 0 && inProgress===false && (
+                            <div className='no-data'>
                                 <p>No data matching selected period <i><u>{dateFrom} {dateTo}.</u></i>  Please select different
                                     dates.</p>
                                 <SimpleButton
@@ -116,14 +107,11 @@ class Income extends React.PureComponent {
                                         initialValues={initialValues}
                                         onSubmit={onSubmit}
                                         handleCreate={handleCreate}
-
                                     />
                                 </div>
                             </div>
                         )
                     }
-
-
                 </div>
             </Container>
         )

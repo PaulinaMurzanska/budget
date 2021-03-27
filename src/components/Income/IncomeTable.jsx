@@ -1,23 +1,23 @@
 import React from "react";
 import IncomeItem from "components/Income/IncomeItem";
-import {Table} from "reactstrap";
 import "./IncomeTable.scss";
 import {BiSort} from "react-icons/bi";
 import SimpleButton from "SharedComponents/SimpleButton";
 import {ROUTE_INCOME_FORM} from "Constants/Routes";
+import {Table} from "reactstrap";
 
 const IncomeTable = ({incomes, handleSort, handleSortDate, handleUpdate, onDelete,handleCreate}) => {
 
 
     return (
 
-        <table className='income-table-exact'>
+        <Table  striped className='income-table-exact'>
             <thead>
             <tr>
                 <th
                     id='name'
                     onClick={handleSort}
-                >Source of income
+                >Income name
                     <BiSort style={{marginLeft: "15px", fontSize: ".7rem"}}/>
                 </th>
                 <th id='amount'
@@ -25,7 +25,7 @@ const IncomeTable = ({incomes, handleSort, handleSortDate, handleUpdate, onDelet
                 >Amount [EUR]
                     <BiSort style={{marginLeft: "15px", fontSize: ".7rem"}}/>
                 </th>
-                <th id='timestamp' onClick={handleSort}>Date of income
+                <th id='timestamp' onClick={handleSort}>Date
                     <BiSort style={{marginLeft: "15px", fontSize: ".7rem"}}/>
                 </th>
                 <th colSpan={2}>
@@ -51,7 +51,7 @@ const IncomeTable = ({incomes, handleSort, handleSortDate, handleUpdate, onDelet
             }
 
             </tbody>
-        </table>
+        </Table>
 
 
     )

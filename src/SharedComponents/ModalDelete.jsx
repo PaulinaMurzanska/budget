@@ -4,7 +4,7 @@ import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {Container} from "@material-ui/core";
 import ModalButtons from "SharedComponents/ModalButtons";
 
-const ModalDelete = ({name, id, onDelete, errorMessage}) => {
+const ModalDelete = ({name, id, onDelete,}) => {
     const [modal, setModal] = useState(false);
     const toggle = () => {
         setModal(!modal)
@@ -13,6 +13,8 @@ const ModalDelete = ({name, id, onDelete, errorMessage}) => {
         <div className='income-delete'
         >
             <RiDeleteBin4Line className='delete'
+
+
                               onClick={toggle}
 
 

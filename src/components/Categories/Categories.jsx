@@ -1,23 +1,26 @@
 import React from "react";
-import {Table} from "reactstrap";
+import {Alert, FormGroup, Table, UncontrolledAlert} from "reactstrap";
 import CategoryItem from "components/Categories/CategoryItem";
 import "./Categories.scss";
-import {generatePath, withRouter} from "react-router-dom";
-import {ROUTE_CATEGORY, ROUTE_INCOME} from "Constants/Routes";
+import {generatePath, Link, withRouter} from "react-router-dom";
+import {ROUTE_CATEGORY, ROUTE_CATEGORY_FORM, ROUTE_INCOME} from "Constants/Routes";
 import axios from "axios";
 import {Api} from "Services/Api";
+import {Container} from "@material-ui/core";
+import SimpleButton from "SharedComponents/SimpleButton";
 
 class Categories extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             errorMessage: undefined,
-            copy:[],
+            copy: [],
+            visible: true,
+            isDeleted: undefined,
 
 
         }
     }
-
 
 
     onCategoryDelete = (event) => {
@@ -28,7 +31,7 @@ class Categories extends React.Component {
         console.log(categoryToDelete);
         const copy = [...this.props.categories];
         this.setState({
-            copy:copy,
+            copy: copy,
         })
 
         const index = this.props.categories.findIndex((category) => category.id === idToDelete);
@@ -38,14 +41,19 @@ class Categories extends React.Component {
             .then(response => {
                 console.log(response);
                 this.props.history.push(path);
+                window.location.reload();
+                this.setState({
+                    isDeleted: true,
+                })
             })
             .catch((error) => {
                 const errorMessage = "you cant delete this category";
-                const copy =[...this.props.categories]
+                const copy = [...this.props.categories]
                 this.props.history.push(path);
 
                 this.setState({
                     errorMessage: errorMessage,
+                    isDeleted: false,
 
 
                 })
@@ -55,42 +63,79 @@ class Categories extends React.Component {
     }
 
 
+
+
     render() {
         console.log(this.props);
         const {categories, handleCategoryUpdate} = this.props;
-        const {errorMessage,isCreatedOrUpdated,copy} = this.state;
+        const {errorMessage, isCreatedOrUpdated, copy, isDeleted} = this.state;
+        const dataToDisplay = errorMessage === undefined ? categories : copy;
+        console.log(isDeleted);
+        const dataToDisplay2 = isDeleted? categories : copy
+        const dataToDisplay3 = ()=>{
+            if(isDeleted===undefined){
+               return categories;
+            }
+            if(isDeleted===true){
+                return categories
+            }
+            if(isDeleted===false){
+                return copy
+            }
+        };
+        const data=dataToDisplay3();
 
-        console.log(copy);
+
+
+
         console.log(categories);
-
-        const dataToDisplay = errorMessage===undefined ? categories : copy;
+        console.log(copy);
         console.log(errorMessage);
-        console.log(dataToDisplay);
+        console.log(dataToDisplay2);
 
         return (
             <React.Fragment>
-                <p>{errorMessage}</p>
-                <Table className="category-table">
-                    <thead>
-                    <tr>
-                        <th>Spending category name</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <Container>
+
+
+                    {/*<Alert color="danger" isOpen={visible} toggle={this.onDismiss}>{errorMessage}</Alert>*/}
+                    <SimpleButton
+                        label="Add new Category"
+                        path={ROUTE_CATEGORY_FORM}
+                    />
                     {
-                        dataToDisplay.map((category, index) =>
-                            <CategoryItem
-                                category={category}
-                                key={category.id}
-                                handleCategoryUpdate={handleCategoryUpdate}
-                                onDelete={this.onCategoryDelete}
-                                erroMessage={errorMessage}
-                                isCreatedOrUpdated={isCreatedOrUpdated}
-                            />
-                        )
+                        errorMessage !== undefined &&
+                        <UncontrolledAlert color="danger">
+                            This category cannot be deleted as it has assigned expenses.This category can be only
+                            updated.
+                        </UncontrolledAlert>
                     }
-                    </tbody>
-                </Table>
+
+
+                    <Table className="category-table">
+                        <thead>
+                        <tr>
+                            <th>Spendings categories</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            data.map((category, index) =>
+                                <CategoryItem
+                                    category={category}
+                                    key={category.id}
+                                    handleCategoryUpdate={handleCategoryUpdate}
+                                    onDelete={this.onCategoryDelete}
+                                    erroMessage={errorMessage}
+                                    isCreatedOrUpdated={isCreatedOrUpdated}
+                                />
+                            )
+                        }
+                        </tbody>
+                    </Table>
+
+                </Container>
+
             </React.Fragment>
         )
     }

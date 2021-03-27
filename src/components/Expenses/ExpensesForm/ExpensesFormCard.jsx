@@ -3,7 +3,9 @@ import {Form, Formik} from 'formik';
 import {Container} from "@material-ui/core";
 import ExpensesForm from "components/Expenses/ExpensesForm/ExpensesForm";
 import Buttons from "SharedComponents/Buttons";
-import {ROUTE_EXPENSES, ROUTE_INCOME} from "Constants/Routes";
+import {ROUTE_CATEGORY, ROUTE_CATEGORY_FORM, ROUTE_EXPENSES, ROUTE_INCOME} from "Constants/Routes";
+import SimpleButton from "SharedComponents/SimpleButton";
+import {FormGroup} from "reactstrap";
 
 
 class ExpensesFormCard extends React.Component {
@@ -27,7 +29,7 @@ class ExpensesFormCard extends React.Component {
             <Container>
                 <Formik {...formikProps}>
                     {({isValid}) => (
-                        <Form>
+                        <Form className='expenses-form'>
                             <ExpensesForm
                                 title={title}
                                 categories={categories}
@@ -36,12 +38,13 @@ class ExpensesFormCard extends React.Component {
                                 route={ROUTE_EXPENSES}
                                 cancelLabel="Cancel"
                                 submitDisabled={!isValid}
-                                submitLabel={key === undefined ? 'Create new income' : 'Save changes'}
+                                submitLabel={key === undefined ? 'Create new expense' : 'Save changes'}
                             />
                         </Form>
                     )}
 
                 </Formik>
+
             </Container>
         )
     }

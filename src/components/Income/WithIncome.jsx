@@ -6,7 +6,7 @@ import {ROUTE_INCOME} from "Constants/Routes";
 import moment from "moment";
 
 
-const fetch_delay_simulator = 500;
+const fetch_delay_simulator = 5000;
 const delayFetch = (ms, func) => {
     return new Promise((resolve, reject) => setTimeout(() => func(resolve, reject), ms));
 }
@@ -108,6 +108,7 @@ const withIncome = (WrappedComponent) => {
                     endDate={endDate}
                     incomeInProgress={incomeInProgress}
                     incomesSuccess={incomesSuccess}
+                    inProgress={incomeInProgress}
 
                 />
             )

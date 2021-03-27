@@ -13,7 +13,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import {NavItem, NavLink, DropdownItem} from "reactstrap";
 import {Link} from "react-router-dom";
-import {ROUTE_DASHBOARD, ROUTE_EXPENSES, ROUTE_INCOME} from "Constants/Routes";
+import {ROUTE_CATEGORY, ROUTE_DASHBOARD, ROUTE_EXPENSES, ROUTE_INCOME} from "Constants/Routes";
 import AppNavItem from "SharedComponents/AppNavItem";
 import {faChartLine} from "@fortawesome/free-solid-svg-icons";
 import logo from "images/logo 2.png";
@@ -77,6 +77,12 @@ const Header = ({onLogout, pageName}) => {
                         <GiPayMoney/>
                     </div>
                     <AppNavItem path={ROUTE_EXPENSES} name="Expenses"/>
+                </div>
+                 <div className='menu-item'>
+                    <div className="menu-icon">
+                        <GiPayMoney/>
+                    </div>
+                    <AppNavItem path={ROUTE_CATEGORY} name="Category"/>
                 </div>
 
 

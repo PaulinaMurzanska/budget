@@ -11,9 +11,10 @@ import {BiAddToQueue} from "react-icons/bi";
 import CategoriesSelectOptions from "SharedComponents/CategoriesSelectOptions";
 import ExpensesPieCategoryChart from "components/Expenses/ExpensesPieCategoryChart";
 import {ROUTE_EXPENSES, ROUTE_EXPENSES_FORM, ROUTE_INCOME} from "Constants/Routes";
-import {generatePath, Link,withRouter} from "react-router-dom";
+import {generatePath, Link, withRouter} from "react-router-dom";
 import axios from "axios";
 import {Api} from "Services/Api";
+import ScrollToTop from "react-scroll-to-top";
 
 
 class Expenses extends React.Component {
@@ -76,6 +77,7 @@ class Expenses extends React.Component {
 
         return (
             <Container maxWidth="lg">
+                <ScrollToTop smooth color="#387f34"/>
                 <div className="expenses-container">
                     <div className='search-bar'>
                         <div className='expenses-datepicker'>

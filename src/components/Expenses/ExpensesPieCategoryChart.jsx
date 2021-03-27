@@ -37,7 +37,7 @@ const ExpensesPieCategoryChart = ({numbers, names}) => {
             series={series}
             type="donut"
             height="auto"
-            width="90%"
+            width="100%"
 
 
         />

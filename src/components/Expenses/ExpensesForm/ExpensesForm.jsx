@@ -7,8 +7,11 @@ import moment from "moment";
 import CategorySelectField from "components/Expenses/ExpensesForm/CategorySelectField";
 import {ROUTE_CATEGORY, ROUTE_CATEGORY_FORM, ROUTE_CATEGORY_FORM_UPDATE} from "Constants/Routes";
 import {Link} from "react-router-dom";
+import './Expenses.scss';
+import SimpleButton from "SharedComponents/SimpleButton";
+import {Container} from "@material-ui/core";
 
-const ExpensesForm = ({title, categories,handleCategoryUpdate}) => {
+const ExpensesForm = ({title, categories, handleCategoryUpdate}) => {
     return (
         <FormGroup>
             <div className='form-header'>
@@ -17,8 +20,8 @@ const ExpensesForm = ({title, categories,handleCategoryUpdate}) => {
                 />
             </div>
             <div className='expenses-fields'>
-                <div className='income-field'>
-                    <Label for='id'>Your expense name: </Label>
+                <div className='expenses-field'>
+                    <Label for='id'>Expense name: </Label>
                     <Field
                         component={FormInput}
                         id='name'
@@ -28,7 +31,7 @@ const ExpensesForm = ({title, categories,handleCategoryUpdate}) => {
                         required
                     />
                 </div>
-                <div className='income-field'>
+                <div className='expenses-field'>
                     <Label for='id'>Amount: </Label>
                     <Field
                         component={FormInput}
@@ -39,10 +42,10 @@ const ExpensesForm = ({title, categories,handleCategoryUpdate}) => {
                         required
                     />
                 </div>
-                <div className='income-field'>
-                    <Label for='id'>Date of income: </Label>
+                <div className='expenses-field'>
+                    <Label for='id'>Date: </Label>
                     <Field
-                        // component={FormInput}
+                        className="date-input"
                         id='timestamp'
                         placeholder={moment(Date.now()).format('MM-DD-YYYY')}
                         type='date'
@@ -51,23 +54,21 @@ const ExpensesForm = ({title, categories,handleCategoryUpdate}) => {
 
                     />
                 </div>
-                <div className='income-field'>
-                    <CategorySelectField
-                        categories={categories}
-                    />
 
-                </div>
-
-
+                <CategorySelectField
+                    categories={categories}
+                />
             </div>
-            <button>
-                <Link to={ROUTE_CATEGORY_FORM}>add new category</Link>
-            </button>
-            <button  >
-                <Link to={ROUTE_CATEGORY}>update category</Link>
-            </button>
-
-
+            <div className='category-buttons'>
+                <SimpleButton
+                    label="new category"
+                    path={ROUTE_CATEGORY_FORM}
+                />
+                <SimpleButton
+                    label="manage category"
+                    path={ROUTE_CATEGORY}
+                />
+            </div>
         </FormGroup>
     )
 }

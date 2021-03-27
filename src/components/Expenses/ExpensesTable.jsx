@@ -4,11 +4,13 @@ import ExpensesTableRow from "components/Expenses/ExpensesTableRow";
 import "./ExpensesTable.scss";
 import {BiSort} from "react-icons/bi";
 import IncomeItem from "components/Income/IncomeItem";
+import SimpleButton from "SharedComponents/SimpleButton";
+import {ROUTE_EXPENSES_FORM, ROUTE_INCOME_FORM} from "Constants/Routes";
 
 
-const ExpensesTable = ({expenses, categories, handleSort,handleUpdate,onDelete}) => {
+const ExpensesTable = ({expenses, categories, handleSort, handleUpdate, onDelete}) => {
     return (
-        <Table className='expenses-exact-table'>
+        <Table striped className='expenses-exact-table'>
             <thead>
             <tr>
                 <th id='name'
@@ -28,6 +30,13 @@ const ExpensesTable = ({expenses, categories, handleSort,handleUpdate,onDelete})
                 <th id='timestamp' onClick={handleSort}
                 >date
                     <BiSort style={{marginLeft: "15px", fontSize: ".7rem"}}/>
+                </th>
+                <th colSpan={2}>
+                    <SimpleButton
+                        path={ROUTE_EXPENSES_FORM}
+                        label="New expense"
+                        // onClick={handleCreate}
+                    />
                 </th>
             </tr>
             </thead>

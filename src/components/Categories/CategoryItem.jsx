@@ -5,7 +5,7 @@ import {ROUTE_CATEGORY_FORM_UPDATE, ROUTE_INCOME_FORM_UPDATE} from "Constants/Ro
 import {AiOutlineEdit} from "react-icons/ai";
 import ModalDelete from "SharedComponents/ModalDelete";
 
-const CategoryItem = ({category, handleCategoryUpdate, onDelete, errorMessage,isCreatedOrUpdated,handleDelIcone}) => {
+const CategoryItem = ({category, handleCategoryUpdate, onDelete, errorMessage,checkClick}) => {
     const {name, id} = category;
 
     return (
@@ -13,7 +13,6 @@ const CategoryItem = ({category, handleCategoryUpdate, onDelete, errorMessage,is
 
             <tr>
                 <td>{name}</td>
-                <td>{id}</td>
                 <td id={id}>
                     <div className="category-update">
                         <NavLink className="update"
@@ -40,6 +39,7 @@ const CategoryItem = ({category, handleCategoryUpdate, onDelete, errorMessage,is
                             id={id}
                             onDelete={onDelete}
                             errorMessage={errorMessage}
+                            checkClick={checkClick}
                         />
 
 

@@ -69,6 +69,17 @@
     }
 
   }
+  .no-data{
+    padding: 30px;
+    text-align: center;
+    font-size: 1.5rem;
+    .simple-button{
+      width: 130px;
+      a{
+        font-size: 1rem;
+      }
+    }
+  }
 
   .chart-table-section {
     display: flex;
@@ -78,7 +89,7 @@
 
     .income-table {
       width: 45%;
-      padding: 20px;
+      //padding: 20px;
       flex-direction: column;
       @media(max-width: 850px) {
         width: 100%;

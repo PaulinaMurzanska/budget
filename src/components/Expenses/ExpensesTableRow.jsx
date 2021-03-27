@@ -45,7 +45,7 @@ const ExpensesTableRow = ({expense, categories,handleUpdate,onDelete}) => {
                     </div>
                 </td>
                 <td>
-                <div className='income-delete'
+                <div className='expenses-delete'
                 >
                     <RiDeleteBin4Line className='delete'
                                       onClick={toggle}
