@@ -7,6 +7,7 @@ import {AiOutlineEdit} from "react-icons/ai";
 import {RiDeleteBin4Line} from "react-icons/ri";
 import {Container} from "@material-ui/core";
 import ModalButtons from "SharedComponents/ModalButtons";
+import ModalDelete from "SharedComponents/ModalDelete";
 
 
 const getCategoryName = (categories, category) => {
@@ -18,10 +19,10 @@ const getCategoryName = (categories, category) => {
 }
 
 
-const ExpensesTableRow = ({expense, categories,handleUpdate,onDelete}) => {
+const ExpensesTableRow = ({expense, categories, handleUpdate, onDelete}) => {
     const {name, category, amount, timestamp, id} = expense;
     const date = moment(timestamp).format("MMM Do YY");
-     const [modal, setModal] = useState(false);
+    const [modal, setModal] = useState(false);
     const toggle = () => {
         setModal(!modal)
     };
@@ -45,8 +46,7 @@ const ExpensesTableRow = ({expense, categories,handleUpdate,onDelete}) => {
                     </div>
                 </td>
                 <td>
-                <div className='expenses-delete'
-                >
+                    <div className='expenses-delete'>
                     <RiDeleteBin4Line className='delete'
                                       onClick={toggle}
 
@@ -83,9 +83,9 @@ const ExpensesTableRow = ({expense, categories,handleUpdate,onDelete}) => {
 
 
             </td>
-            </tr>
-        </React.Fragment>
-    )
+        </tr>
+</React.Fragment>
+)
 
 }
 export default ExpensesTableRow;

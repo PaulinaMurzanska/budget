@@ -47,7 +47,9 @@ class MainBody extends React.PureComponent {
                         <IncomePage/>
                     </Route>
                     <Route path={ROUTE_CATEGORY}>
-                        <Header onLogout={onLogout}/>
+                        <Header onLogout={onLogout}
+                           pageName="Categories"
+                        />
                         <CategoriesPage
                         />
                     </Route>

@@ -27,13 +27,6 @@ const CategoryItem = ({category, handleCategoryUpdate, onDelete, errorMessage,ch
                     </div>
                 </td>
                 <td>
-                    {/*{*/}
-                    {/*  isCreatedOrUpdated===true && <p>można usunąc wyświetl modal</p>*/}
-                    {/*}*/}
-                    {/*{*/}
-                    {/*   isCreatedOrUpdated===false && <p> nie można usunąc wyświetl inny komunikat</p>*/}
-                    {/*}*/}
-
                         <ModalDelete
                             name={name}
                             id={id}
@@ -41,8 +34,6 @@ const CategoryItem = ({category, handleCategoryUpdate, onDelete, errorMessage,ch
                             errorMessage={errorMessage}
                             checkClick={checkClick}
                         />
-
-
                 </td>
             </tr>
         </React.Fragment>

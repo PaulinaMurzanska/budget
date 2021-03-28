@@ -142,6 +142,7 @@ class IncomePage extends React.PureComponent {
         const {
             incomes, handleIncomesFilter, handleSelectedEndDate,isFiltered,incomesSuccess,
             handleSelectedStartDate,startDate, endDate, incomesFilteredInFetch,inProgress,
+            incomesFetchErrorMessage,
         } = this.props;
 
         const preSort = ()=>{
@@ -225,6 +226,8 @@ class IncomePage extends React.PureComponent {
                         handleIsCreated={this.handleIsCreated}
                         incomeToChartDisplay={incomesToDisplayToSort}
                         inProgress={inProgress}
+                        incomesFetchErrorMessage={incomesFetchErrorMessage}
+                        incomesSuccess={incomesSuccess}
 
                     />
                 </Route>

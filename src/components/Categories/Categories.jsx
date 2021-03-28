@@ -8,6 +8,7 @@ import axios from "axios";
 import {Api} from "Services/Api";
 import {Container} from "@material-ui/core";
 import SimpleButton from "SharedComponents/SimpleButton";
+import FormHeader from "SharedComponents/FormHeader";
 
 class Categories extends React.Component {
     constructor(props) {
@@ -17,11 +18,8 @@ class Categories extends React.Component {
             copy: [],
             visible: true,
             isDeleted: undefined,
-
-
         }
     }
-
 
     onCategoryDelete = (event) => {
         console.log(event.target);
@@ -33,7 +31,6 @@ class Categories extends React.Component {
         this.setState({
             copy: copy,
         })
-
         const index = this.props.categories.findIndex((category) => category.id === idToDelete);
         if (index !== -1) this.props.categories.splice(index, 1);
         const path = generatePath(ROUTE_CATEGORY);
@@ -54,55 +51,31 @@ class Categories extends React.Component {
                 this.setState({
                     errorMessage: errorMessage,
                     isDeleted: false,
-
-
                 })
             })
-
-
     }
-
-
-
 
     render() {
         console.log(this.props);
-        const {categories, handleCategoryUpdate} = this.props;
+        const {categories, handleCategoryUpdate, setCancelRoute} = this.props;
         const {errorMessage, isCreatedOrUpdated, copy, isDeleted} = this.state;
-        const dataToDisplay = errorMessage === undefined ? categories : copy;
-        console.log(isDeleted);
-        const dataToDisplay2 = isDeleted? categories : copy
-        const dataToDisplay3 = ()=>{
-            if(isDeleted===undefined){
-               return categories;
+
+        const dataToDisplay = () => {
+            if (isDeleted === undefined) {
+                return categories;
             }
-            if(isDeleted===true){
+            if (isDeleted === true) {
                 return categories
             }
-            if(isDeleted===false){
+            if (isDeleted === false) {
                 return copy
             }
         };
-        const data=dataToDisplay3();
-
-
-
-
-        console.log(categories);
-        console.log(copy);
-        console.log(errorMessage);
-        console.log(dataToDisplay2);
-
+        const data = dataToDisplay();
         return (
             <React.Fragment>
                 <Container>
-
-
-                    {/*<Alert color="danger" isOpen={visible} toggle={this.onDismiss}>{errorMessage}</Alert>*/}
-                    <SimpleButton
-                        label="Add new Category"
-                        path={ROUTE_CATEGORY_FORM}
-                    />
+                  <p className="category-title">Manage Categories</p>
                     {
                         errorMessage !== undefined &&
                         <UncontrolledAlert color="danger">
@@ -112,10 +85,17 @@ class Categories extends React.Component {
                     }
 
 
-                    <Table className="category-table">
+                    <Table striped className="category-table">
                         <thead>
                         <tr>
                             <th>Spendings categories</th>
+                            <th colSpan={2}>
+                                <SimpleButton
+                                    label="Add new Category"
+                                    path={ROUTE_CATEGORY_FORM}
+                                    onClick={setCancelRoute}
+                                />
+                            </th>
                         </tr>
                         </thead>
                         <tbody>

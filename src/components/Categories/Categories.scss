@@ -1,6 +1,15 @@
+@import"../../scss/variables";
+.category-title{
+  font-size: 1.5rem;
+  color:$projectNavyColor;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 20px;
+}
 .category-table{
+
   border-spacing: 10px;
-  margin: 0 auto;
+  margin: 20px auto;
   width: 100%;
   text-align: center;
   @media(max-width: 850px) {
@@ -15,10 +24,34 @@
   }
 
   td {
-    background-color: rgba(220, 217, 217, 0.29);
     padding: 5px 15px;
     font-size: .7rem;
     color: #636363;
+    &:last-child{
+      padding-top: 10px;
+    }
 
+  }
+}
+
+.category-update {
+  display: flex;
+  align-items: center;
+}
+.delete-wrap {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+
+  .delete {
+    //color: $projectNavyColor;
+    font-size: 1.3rem;
+    color: red;
+
+
+    &:hover {
+      color: $projectOrangeColor;
+      transform: scale(1.1);
+    }
   }
 }

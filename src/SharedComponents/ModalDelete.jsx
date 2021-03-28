@@ -3,6 +3,7 @@ import {RiDeleteBin4Line} from "react-icons/ri";
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {Container} from "@material-ui/core";
 import ModalButtons from "SharedComponents/ModalButtons";
+import "components/Categories/Categories.scss";
 
 const ModalDelete = ({name, id, onDelete,}) => {
     const [modal, setModal] = useState(false);
@@ -10,43 +11,36 @@ const ModalDelete = ({name, id, onDelete,}) => {
         setModal(!modal)
     };
     return (
-        <div className='income-delete'
+        <div className='delete-wrap'
         >
             <RiDeleteBin4Line className='delete'
-
-
                               onClick={toggle}
-
-
             />
             <Modal isOpen={modal} toggle={toggle} className="delete-modal">
                 <Container className="modal-container">
 
-                            <div>
-                                <ModalHeader toggle={toggle}>You are about to delete <span className="name-to-delete">
+                    <div>
+                        <ModalHeader toggle={toggle}>You are about to delete <span className="name-to-delete">
                             {name}</span>
-                                </ModalHeader>
-                                <ModalBody>
-                                    Are you sure ?
-                                    This action will be irreversible.
-                                </ModalBody>
-                                <ModalFooter>
+                        </ModalHeader>
+                        <ModalBody>
+                            Are you sure ?
+                            This action will be irreversible.
+                        </ModalBody>
+                        <ModalFooter>
 
-                                    <ModalButtons
-                                        id={id}
-                                        onClick={onDelete}
-                                        toggle={toggle}
-                                        label1="Delete"
-                                        label2='Cancel'
+                            <ModalButtons
+                                id={id}
+                                onClick={onDelete}
+                                toggle={toggle}
+                                label1="Delete"
+                                label2='Cancel'
 
-                                    />
-
-
-                                </ModalFooter>
-                            </div>
+                            />
 
 
-
+                        </ModalFooter>
+                    </div>
 
 
                 </Container>

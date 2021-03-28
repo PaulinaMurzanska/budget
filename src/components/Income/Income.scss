@@ -67,18 +67,30 @@
       }
 
     }
-
   }
-  .no-data{
+
+  .no-data {
     padding: 30px;
     text-align: center;
     font-size: 1.5rem;
-    .simple-button{
-      width: 130px;
-      a{
-        font-size: 1rem;
+    p{
+      color: rgba(234, 5, 25, 0.69);
+    }
+
+    .no-data-buttons {
+      display: flex;
+      justify-content: center;
+      .simple-button {
+        width: 130px;
+        a {
+          font-size: 1rem;
+        }
+        &:first-child{
+          margin-right: 20px;
+        }
       }
     }
+
   }
 
   .chart-table-section {
@@ -94,14 +106,12 @@
       @media(max-width: 850px) {
         width: 100%;
         padding: 0;
-                margin-top: 20px;
+        margin-top: 20px;
       };
 
     }
 
     .income-chart {
-      //overflow: hidden;
-      //border: 2px solid red;
       width: 45%;
       padding: 20px;
 

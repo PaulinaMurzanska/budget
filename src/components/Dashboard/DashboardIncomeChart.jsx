@@ -41,7 +41,7 @@ class DashboardIncomeChart extends React.Component {
 
         return (
             <React.Fragment>
-                <p>dashboard income chart</p>
+
                 <Chart
                     options={chartOptions}
                     series={series}

@@ -1,23 +1,80 @@
 @import "../../scss/variables";
 
 .my-container {
-  border: 1px solid red;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin-top: 20px;
-  grid-gap: 5px;
-
-  @media(max-width: 850px) {
-    grid-template-columns: repeat(1, 1fr);
-
+  h3 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: $projectNavyColor;
+    font-weight: normal;
+    letter-spacing: 1px;
   }
-  .section {
-    border: 1px solid green;
-    height: 50vh;
-    padding: 20px;
-    overflow: hidden;
-    @media(max-width: 850px){
-      height: 30vh;
+
+  .section-balance {
+    width: 100%;
+    padding: 30px;
+    margin-top: 10px;
+    @media(max-width: 850px) {
+      padding: 10px;
+    }
+
+    .balance-tab {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(220, 217, 217, 0.29);
+      font-size: 2rem;
+      color: $projectOrangeColor;
+    }
+    &:hover {
+      box-shadow: $projectBoxShadow;
+    }
+  }
+
+
+
+  .charts {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+
+    .section {
+      width: 48%;
+      padding: 30px;
+      @media(max-width: 850px) {
+        width: 100%;
+        padding: 10px;
+      }
+      &:hover {
+        box-shadow: $projectBoxShadow;
+      }
+      a {
+        text-decoration: none;
+        p {
+          font-size: 0.7rem;
+          color: $projectOrangeColor;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+        .income-chart {
+          background-color: rgba(220, 217, 217, 0.29);
+        }
+      }
+    }
+    hr {
+      border: 1px solid $projectOrangeColor;
+      height: 2px;
+    }
+  }
+   .manage-category {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(220, 217, 217, 0.29);
+    margin-bottom: 30px;
+    &:hover {
+      box-shadow: $projectBoxShadow;
     }
   }
 }

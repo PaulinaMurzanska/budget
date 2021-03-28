@@ -2,13 +2,13 @@ import React from "react";
 import {Form, Formik} from 'formik';
 import {Container} from "@material-ui/core";
 import Buttons from "SharedComponents/Buttons";
-import {ROUTE_EXPENSES, ROUTE_INCOME} from "Constants/Routes";
+import {ROUTE_DASHBOARD, ROUTE_EXPENSES, ROUTE_EXPENSES_FORM, ROUTE_INCOME} from "Constants/Routes";
 import CategoryForm from "components/Categories/CategoryForm/CategoryForm";
-
+import"./CategoryForm.scss";
 
 class CategoryFormCard extends React.Component {
     render() {
-        const {categories, initialValues, title} = this.props;
+        const {categories, initialValues, title,path,} = this.props;
         const key = initialValues.id;
 
         const onSubmit = (values) => {
@@ -32,7 +32,7 @@ class CategoryFormCard extends React.Component {
                             />
                             <div className='form-buttons'>
                                 <Buttons
-                                    route={ROUTE_EXPENSES}
+                                    route={path}
                                     cancelLabel="Cancel"
                                     submitDisabled={!isValid}
                                     submitLabel={key === undefined ? 'Create new category' : 'Save changes'}

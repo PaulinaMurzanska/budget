@@ -1,12 +1,9 @@
 import React from "react";
 import axios from "axios";
 import {Api} from "Services/Api";
-import {withRouter, generatePath} from "react-router-dom";
-import {ROUTE_INCOME} from "Constants/Routes";
-import moment from "moment";
 
 
-const fetch_delay_simulator = 5000;
+const fetch_delay_simulator = 100;
 const delayFetch = (ms, func) => {
     return new Promise((resolve, reject) => setTimeout(() => func(resolve, reject), ms));
 }
@@ -23,9 +20,8 @@ const withIncome = (WrappedComponent) => {
             endDate: Date.now(),
             isFiltered: false,
             filteredIncomes: [],
-
+            incomesFetchErrorMessage: "",
         }
-
         fetchIncome = () => {
             this.setState({incomeInProgress: true});
             return delayFetch(fetch_delay_simulator, (resolve, reject) => {
@@ -42,11 +38,15 @@ const withIncome = (WrappedComponent) => {
                         resolve();
                     })
                     .catch((error) => {
-                        this.setState({incomesSuccess: false});
+                        this.setState({
+                            incomesSuccess: false,
+                            incomesFetchErrorMessage: "External server error.Please, try again later."
+                        });
                         reject();
                     })
-            }).finally(() => {
-                this.setState({incomeInProgress: false});
+                    .finally(() => {
+                        this.setState({incomeInProgress: false});
+                    })
             })
         }
         handleSelectedStartDate = (e) => {
@@ -91,8 +91,12 @@ const withIncome = (WrappedComponent) => {
 
 
         render() {
-            const {isFiltered, incomesFilteredInFetch, filteredIncomes, startDate, endDate, incomeInProgress,
-                incomesSuccess,incomes} = this.state;
+            const {
+                isFiltered, incomesFilteredInFetch, filteredIncomes, startDate, endDate, incomeInProgress,
+                incomesSuccess, incomes,incomesFetchErrorMessage
+            } = this.state;
+
+
             const incomesToDisplay = isFiltered ? filteredIncomes : incomesFilteredInFetch;
             return (
                 <WrappedComponent
@@ -109,6 +113,7 @@ const withIncome = (WrappedComponent) => {
                     incomeInProgress={incomeInProgress}
                     incomesSuccess={incomesSuccess}
                     inProgress={incomeInProgress}
+                    incomesFetchErrorMessage={incomesFetchErrorMessage}
 
                 />
             )

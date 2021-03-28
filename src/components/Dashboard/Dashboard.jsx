@@ -6,6 +6,11 @@ import WithExpenses from "components/Expenses/WithExpenses";
 import withIncome from "components/Income/WithIncome";
 import {Container} from "@material-ui/core";
 import "./Dashboard.scss";
+import DashboardExpensesChart from "components/Dashboard/DashboardExpensesChart";
+import SimpleButton from "SharedComponents/SimpleButton";
+import {ROUTE_CATEGORY, ROUTE_EXPENSES, ROUTE_INCOME} from "Constants/Routes";
+import {Link} from "react-router-dom";
+import ScrollToTop from "react-scroll-to-top";
 
 class Dashboard extends React.PureComponent {
     constructor(props) {
@@ -28,25 +33,50 @@ class Dashboard extends React.PureComponent {
             <React.Fragment>
                 <Container>
                     <div className='my-container'>
-                        <div className="section">
-                            <Balance
-                                balance={balance}
-                            />
+                        <ScrollToTop smooth color="rgba(231, 130, 0, 0.91)"/>
+
+                        <div className="section-balance">
+                            <h3>balance</h3>
+                            <div className="balance-tab">
+                                {balance} EUR
+                            </div>
                         </div>
-                        <div className="section">
-                               <DashboardIncomeChart/>
+                        <hr/>
+                        <div className='charts'>
+                            <div className="section">
+                                <Link to={ROUTE_INCOME}>
+                                    <h3>Incomes</h3>
+                                    <p>data for last 30 days</p>
+                                    <div className='income-chart'>
+                                        <DashboardIncomeChart/>
+                                    </div>
+                                </Link>
+
+                            </div>
+                            <hr/>
+                            <div className="section">
+                                <Link to={ROUTE_EXPENSES}>
+                                    <h3>expenses</h3>
+                                    <p>data for last 30 days</p>
+                                    <DashboardExpensesChart/>
+                                </Link>
+
+                            </div>
                         </div>
+
+                        <hr/>
                         <div className="section">
-                            <p>expenses</p>
-                        </div>
-                        <div className="section">
-                            <p>idk yet</p>
+                            <h3>manage categories</h3>
+                            <div className='manage-category'>
+                                <SimpleButton
+                                    label="manage expenses categories"
+                                    path={ROUTE_CATEGORY}
+                                />
+                            </div>
+
                         </div>
                     </div>
                 </Container>
-
-
-
 
 
             </React.Fragment>

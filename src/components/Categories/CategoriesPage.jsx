@@ -6,7 +6,7 @@ import {
     ROUTE_CATEGORY_FORM,
     ROUTE_CATEGORY_FORM_UPDATE,
     ROUTE_EXPENSES_FORM,
-    ROUTE_INCOME
+    ROUTE_INCOME, ROUTE_INCOME_FORM
 } from "Constants/Routes";
 import Categories from "components/Categories/Categories";
 import CategoryFormCard from "components/Categories/CategoryForm/CategoryFormCard";
@@ -23,6 +23,7 @@ class CategoriesPage extends React.Component {
             selectedCategoryToUpdate: [],
             categoryIdToUpdate: undefined,
             categoryErrorMessage: '',
+            originPathCategory:false,
 
         }
     }
@@ -96,15 +97,19 @@ class CategoriesPage extends React.Component {
             });
 
     };
+      setCancelRoute=(e)=>{
+        this.setState({
+            originPathCategory:true
+        })
+    }
 
 
     render() {
 
         const {categories,} = this.props;
-        const {categoryIdToUpdate, selectedCategoryToUpdate, isCreatedOrUpdated, categoriesToDisplay} = this.state;
+        const {categoryIdToUpdate, selectedCategoryToUpdate, isCreatedOrUpdated, categoriesToDisplay,originPathCategory} = this.state;
         const {name, id} = selectedCategoryToUpdate;
-
-        console.log(isCreatedOrUpdated);
+        const pathToDisplay = originPathCategory ? ROUTE_CATEGORY : ROUTE_EXPENSES_FORM;
 
         const initialValuesToUpdate = {
             id: id,
@@ -124,8 +129,8 @@ class CategoriesPage extends React.Component {
                         categories={dataToDisplay}
                         handleCategoryUpdate={this.handleCategoryUpdate}
                         isCreatedOrUpdated={isCreatedOrUpdated}
+                        setCancelRoute={this.setCancelRoute}
                     />
-
                 </Route>
                 <Route exact path={ROUTE_CATEGORY_FORM}>
                     <CategoryFormCard
@@ -133,8 +138,8 @@ class CategoriesPage extends React.Component {
                         initialValues={initialValues}
                         title='Create new Category'
                         onSubmit={this.onSubmitCategoryCreate}
+                        path={pathToDisplay}
                     />
-
                 </Route>
                 <Route exact path={ROUTE_CATEGORY_FORM_UPDATE}>
                     <CategoryFormCard
@@ -142,8 +147,8 @@ class CategoriesPage extends React.Component {
                         initialValues={initialValues}
                         title='Update Category'
                         onSubmit={this.onSubmitCategoryUpdate}
+                        path={ROUTE_CATEGORY}
                     />
-
                 </Route>
             </Switch>
         )

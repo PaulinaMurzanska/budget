@@ -15,7 +15,7 @@ const CategoryForm = ({title}) => {
             </div>
             <div className='category-fields'>
                 <div className='category-field'>
-                    <Label for='id'>Your Category name: </Label>
+                    <Label for='id'>Category name: </Label>
                     <Field
                         component={FormInput}
                         id='category'

@@ -30,6 +30,9 @@ class Income extends React.PureComponent {
                 this.setState(this.state);
             })
     }
+    setDefaultDates=(e)=>{
+        window.location.reload();
+    }
 
     render() {
 
@@ -37,10 +40,11 @@ class Income extends React.PureComponent {
         const {
             handleStartDate, handleEndDate, handleFilter,
             incomes, handleSort, handleSortDate, startDate, endDate, handleUpdate,
-            incomesErrorMessage, onSubmit, initialValues,
-            handleCreate, handleIsCreated,inProgress
+            incomesErrorMessage, onSubmit, initialValues,incomesSuccess,incomesFetchErrorMessage,
+            handleCreate, handleIsCreated, inProgress,
         } = this.props;
         console.log(inProgress);
+        console.log(incomesSuccess);
         const dateFrom = moment(startDate).format("MMM Do YY");
         const dateTo = moment(endDate).format("MMM Do YY");
 
@@ -51,7 +55,7 @@ class Income extends React.PureComponent {
 
         return (
             <Container maxWidth="lg">
-                 <ScrollToTop smooth color="#387f34"/>
+                <ScrollToTop smooth color="rgba(231, 130, 0, 0.91)"/>
                 <div className="income-container">
                     <div className='search-bar'>
                         <div className='income-datepicker'>
@@ -72,23 +76,37 @@ class Income extends React.PureComponent {
                         </div>
                     </div>
                     <InProgress
-                    inProgress={inProgress}
+                        inProgress={inProgress}
                     />
                     {
-                        displayLength === 0 && inProgress===false && (
+                        displayLength === 0 && inProgress === false && incomesSuccess===true &&
                             <div className='no-data'>
-                                <p>No data matching selected period <i><u>{dateFrom} {dateTo}.</u></i>  Please select different
+                                <p>No data matching selected period <b>{dateFrom} {dateTo}.</b> Please select
+                                    different
                                     dates.</p>
-                                <SimpleButton
+                                <div className='no-data-buttons'>
+                                      <SimpleButton
                                     path={ROUTE_INCOME_FORM}
                                     label="New income"
                                     onClick={handleCreate}
                                 />
+                                <SimpleButton
+                                    label="Last 30 days"
+                                    onClick={this.setDefaultDates}
+                                />
+                                </div>
+
+
                             </div>
+
+                    }
+                    {
+                        incomesSuccess===false && (
+                           <p> {incomesFetchErrorMessage}</p>
                         )
                     }
                     {
-                        displayLength > 0 && (
+                        incomesSuccess===true &&(
                             <div className='chart-table-section'>
                                 <div className='income-chart'>
                                     <IncomeChart
