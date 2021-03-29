@@ -13,16 +13,18 @@ const LoginPageContainer = React.memo(({onSubmit, visible}) => {
         {'d-none': !visible}
     );
     return (
-            <Container maxWidth="lg" className="main-container">
-                <div className="login-form-wrapper">
-                    <div className="logo">
-                        <img src={logo} alt='home budget'/>
-                    </div>
-                    <div className="login-details">
-                        <LoginForm onSubmit={onSubmit}/>
-                    </div>
+        <Container maxWidth="lg" className="main-container">
+            <div className="login-form-wrapper">
+                <div className="logo">
+                    <img src={logo} alt='home budget'/>
                 </div>
-            </Container>
+                <div className="login-details">
+                    <LoginForm onSubmit={onSubmit}/>
+                </div>
+                <p>No account yet ?</p>
+                <a href="http://127.0.0.1:8000/members/register/">Register here</a>
+            </div>
+        </Container>
     );
 });
 

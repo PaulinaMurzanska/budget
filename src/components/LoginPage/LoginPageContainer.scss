@@ -17,6 +17,16 @@
   .login-form-wrapper {
     display: block;
     text-align: center;
+    p{
+      margin-top: 15px;
+      text-transform: uppercase;
+      color: $projectNavyColor;
+      letter-spacing: 1px;
+    }
+    a{
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
 
     .logo {
       width: 40%;
@@ -78,7 +88,7 @@
             input {
               width: 40%;
               height: 25px;
-              padding: 7px;
+              padding: 15px;
               text-align: center;
               font-size: 1.5rem;
               color: $darkGrayFieldsColor;
@@ -87,11 +97,11 @@
               border-bottom: 2px solid $projectNavyColor;
               @media (max-width: 900px) {
                 width: 80%;
-                padding: 10px;
+                padding: 15px;
               }
               @media (max-width: 400px) {
                 width: 90%;
-                padding: 12px;
+                padding: 15px;
               }
             }
           }
