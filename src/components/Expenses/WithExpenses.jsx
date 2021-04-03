@@ -29,6 +29,7 @@ const WithExpenses = (WrappedComponent) => {
                 return axios.get(Api.EXPENSES)
                     .then((response) => {
                         const data = response.data;
+                        console.log(data);
                         const expenses = data.map((item) => ({
                             name: item.name, id: item.id,
                             amount: item.amount, timestamp: item.timestamp, category: item.category

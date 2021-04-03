@@ -41,16 +41,13 @@ class DashboardIncomeChart extends React.Component {
 
         return (
             <React.Fragment>
-
-                <Chart
-                    options={chartOptions}
-                    series={series}
-                    type="donut"
-                    height='auto'
-                    width='100%'
-
-                />
-
+                        <Chart
+                            options={chartOptions}
+                            series={series}
+                            type="donut"
+                            height='auto'
+                            width='100%'
+                        />
             </React.Fragment>
 
         )

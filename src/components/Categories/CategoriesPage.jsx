@@ -33,7 +33,7 @@ class CategoriesPage extends React.Component {
     }
 
     onSubmitCategoryCreate = (category) => {
-        const path = generatePath(ROUTE_EXPENSES_FORM);
+        const path = generatePath(ROUTE_CATEGORY);
         axios.post(Api.CATEGORY, category)
             .then((response) => {
                 const data = response.data;

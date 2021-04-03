@@ -1,16 +1,25 @@
 import React from "react";
 import Chart from "react-apexcharts";
 import WithExpenses from "components/Expenses/WithExpenses";
+import withCategories from "components/Categories/WithCategories";
 
 class DashboardExpensesChart extends React.Component {
     componentDidMount() {
-        this.props.fetchExpenses()
+        this.props.fetchExpenses();
+        this.props.fetchCategories();
     }
 
     render() {
-        const{expenses}=this.props;
-        const chartLabels = expenses.map((item)=>item.name);
-        const chartValues =expenses.map((item)=>item.amount);
+        const {expenses, categories} = this.props;
+        const chartLabels = categories.map((item) => item.name);
+        const chartValues = [];
+        for (let i = 0; i < categories.length; i++) {
+            const barPre = expenses.filter(item => item.category === categories[i].id);
+            const barMap = barPre.map(item => item.amount);
+            const barSum = barMap.reduce((a, b) => a + b, 0);
+            chartValues.push(barSum);
+        }
+        console.log(chartValues);
 
         const options = {
             chart: {
@@ -60,4 +69,4 @@ class DashboardExpensesChart extends React.Component {
     }
 }
 
-export default WithExpenses(DashboardExpensesChart);
+export default withCategories(WithExpenses(DashboardExpensesChart));

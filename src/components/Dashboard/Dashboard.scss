@@ -26,11 +26,11 @@
       font-size: 2rem;
       color: $projectOrangeColor;
     }
+
     &:hover {
       box-shadow: $projectBoxShadow;
     }
   }
-
 
 
   .charts {
@@ -45,34 +45,50 @@
         width: 100%;
         padding: 10px;
       }
+
       &:hover {
         box-shadow: $projectBoxShadow;
       }
+
       a {
         text-decoration: none;
+
         p {
           font-size: 0.7rem;
           color: $projectOrangeColor;
           text-transform: uppercase;
           letter-spacing: 1px;
         }
-        .income-chart {
-          background-color: rgba(220, 217, 217, 0.29);
-        }
+
+      }
+
+      .no-data {
+        height: 60px;
+        border: 1px solid $projectOrangeColor;
       }
     }
+
     hr {
       border: 1px solid $projectOrangeColor;
       height: 2px;
     }
   }
-   .manage-category {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(220, 217, 217, 0.29);
-    margin-bottom: 30px;
+
+  .section-category {
+    padding: 30px;
+    @media(max-width: 850px) {
+      padding: 10px;
+    }
+
+    .manage-category {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(220, 217, 217, 0.29);
+      margin-bottom: 30px;
+    }
+
     &:hover {
       box-shadow: $projectBoxShadow;
     }
