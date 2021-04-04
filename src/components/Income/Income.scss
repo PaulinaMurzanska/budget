@@ -72,9 +72,13 @@
   .no-data {
     padding: 30px;
     text-align: center;
-    font-size: 1.5rem;
+
     p{
-      color: rgba(234, 5, 25, 0.69);
+      color:$projectOrangeColor;
+      text-transform:uppercase;
+         font-size: 1rem;
+      margin-bottom:30px;
+
     }
 
     .no-data-buttons {

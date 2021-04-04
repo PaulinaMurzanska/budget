@@ -8,12 +8,13 @@ import "./ExpensesTable.scss";
 import ExpensesChart from "components/Expenses/ExpensesChart";
 import CategoriesSelectOptions from "SharedComponents/CategoriesSelectOptions";
 import ExpensesPieCategoryChart from "components/Expenses/ExpensesPieCategoryChart";
-import {ROUTE_EXPENSES, ROUTE_EXPENSES_FORM, } from "Constants/Routes";
+import {ROUTE_EXPENSES, ROUTE_EXPENSES_FORM, ROUTE_INCOME_FORM,} from "Constants/Routes";
 import {generatePath, withRouter} from "react-router-dom";
 import axios from "axios";
 import {Api} from "Services/Api";
 import ScrollToTop from "react-scroll-to-top";
 import SimpleButton from "SharedComponents/SimpleButton";
+import moment from "moment";
 
 
 class Expenses extends React.Component {
@@ -50,7 +51,8 @@ class Expenses extends React.Component {
             categories, handleSort, handleIsCreated, handleUpdate
         } = this.props;
         const filteredByCategory = expenses.filter(item => item.category === selectedCategoryId);
-
+        const dateFrom = moment(startDate).format("MMM Do YY");
+        const dateTo = moment(endDate).format("MMM Do YY");
         const dataToTableDisplay = selectedCategoryId === undefined ? expenses : filteredByCategory;
         const chartLabels = categories.map((category) => category.name);
         const chartValues = [];
@@ -64,10 +66,12 @@ class Expenses extends React.Component {
             const barSum = barMap.reduce((a, b) => a + b, 0);
             chartValues.push(barSum);
         }
+        const displayLength = expenses.length;
 
         return (
             <Container maxWidth="lg">
                 <ScrollToTop smooth color="rgba(231, 130, 0, 0.91)"/>
+
                 <div className="expenses-container">
                     <div className='search-bar'>
                         <div className='expenses-datepicker'>
@@ -89,47 +93,73 @@ class Expenses extends React.Component {
                             />
                         </div>
                     </div>
-                    <div className='chart-browser-section'>
-                        <div className='chart-section'>
-                            {
-                                selectedCategoryId === undefined &&
-                                <ExpensesChart
-                                    chartLabels={chartLabels}
-                                    chartValues={chartValues}
-                                />
-                            }
-                            {
-                                selectedCategoryId !== undefined &&
-                                <ExpensesPieCategoryChart
-                                    numbers={chartNumbersIfCategorySelected}
-                                    names={chartLabelsIfCategorySelected}
-                                />
-                            }
+                    {
+                        displayLength === 0 && (
+                            <div className='no-data'>
+                                <p>No data matching selected period <b>{dateFrom} - {dateTo}.</b> Please select
+                                    different
+                                    dates, or create new expense.</p>
+                                <div className='no-data-buttons'>
+                                    <SimpleButton
+                                        path={ROUTE_EXPENSES_FORM}
+                                        label="New expense"
+                                        // onClick={handleCreate}
+                                    />
+                                </div>
 
 
-                        </div>
-                        <div className='browser-section'>
-                            <SimpleButton
-                            path={ROUTE_EXPENSES_FORM}
-                            label="new expense"
-                            />
-                            <div className="search-section">
-                                <CategoriesSelectOptions
-                                    onChange={this.handleSelectCategory}
-                                    title="Search by category"
-                                />
                             </div>
-                        </div>
-                    </div>
-                    <div className='table-section'>
-                        <ExpensesTable
-                            expenses={dataToTableDisplay}
-                            categories={categories}
-                            handleSort={handleSort}
-                            handleUpdate={handleUpdate}
-                            onDelete={this.onExpenseDelete}
-                        />
-                    </div>
+                        )
+                    }
+                    {
+                        displayLength > 0 && (
+                            <div>
+                                <div className='chart-browser-section'>
+                                    <div className='chart-section'>
+                                        {
+                                            selectedCategoryId === undefined &&
+                                            <ExpensesChart
+                                                chartLabels={chartLabels}
+                                                chartValues={chartValues}
+                                            />
+                                        }
+                                        {
+                                            selectedCategoryId !== undefined &&
+                                            <ExpensesPieCategoryChart
+                                                numbers={chartNumbersIfCategorySelected}
+                                                names={chartLabelsIfCategorySelected}
+                                            />
+                                        }
+
+
+                                    </div>
+                                    <div className='browser-section'>
+                                        <SimpleButton
+                                            path={ROUTE_EXPENSES_FORM}
+                                            label="new expense"
+                                        />
+                                        <div className="search-section">
+                                            <CategoriesSelectOptions
+                                                onChange={this.handleSelectCategory}
+                                                title="Search by category"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='table-section'>
+                                    <ExpensesTable
+                                        expenses={dataToTableDisplay}
+                                        categories={categories}
+                                        handleSort={handleSort}
+                                        handleUpdate={handleUpdate}
+                                        onDelete={this.onExpenseDelete}
+                                    />
+                                </div>
+                            </div>
+                        )
+                    }
+
+
                 </div>
             </Container>
         )

@@ -81,9 +81,9 @@ class Income extends React.PureComponent {
                     {
                         displayLength === 0 && inProgress === false && incomesSuccess===true &&
                             <div className='no-data'>
-                                <p>No data matching selected period <b>{dateFrom} {dateTo}.</b> Please select
+                                <p>No data matching selected period <b>{dateFrom} - {dateTo}.</b> Please select
                                     different
-                                    dates.</p>
+                                    dates, or create new income.</p>
                                 <div className='no-data-buttons'>
                                       <SimpleButton
                                     path={ROUTE_INCOME_FORM}
@@ -106,7 +106,7 @@ class Income extends React.PureComponent {
                         )
                     }
                     {
-                        incomesSuccess===true &&(
+                        incomesSuccess===true && displayLength > 0 &&(
                             <div className='chart-table-section'>
                                 <div className='income-chart'>
                                     <IncomeChart
