@@ -1,14 +1,14 @@
 import React from "react";
-import {Alert, FormGroup, Table, UncontrolledAlert} from "reactstrap";
+import {Table, UncontrolledAlert} from "reactstrap";
 import CategoryItem from "components/Categories/CategoryItem";
 import "./Categories.scss";
-import {generatePath, Link, withRouter} from "react-router-dom";
-import {ROUTE_CATEGORY, ROUTE_CATEGORY_FORM, ROUTE_INCOME} from "Constants/Routes";
+import {generatePath,withRouter} from "react-router-dom";
+import {ROUTE_CATEGORY, ROUTE_CATEGORY_FORM, } from "Constants/Routes";
 import axios from "axios";
 import {Api} from "Services/Api";
 import {Container} from "@material-ui/core";
 import SimpleButton from "SharedComponents/SimpleButton";
-import FormHeader from "SharedComponents/FormHeader";
+import ScrollToTop from "react-scroll-to-top";
 
 class Categories extends React.Component {
     constructor(props) {
@@ -20,13 +20,13 @@ class Categories extends React.Component {
             isDeleted: undefined,
         }
     }
+    handleAlert =()=>{
+         window.location.reload();
+    }
 
     onCategoryDelete = (event) => {
-        console.log(event.target);
         const idToDelete = parseInt(event.target.id);
-        console.log(idToDelete);
         const categoryToDelete = this.props.categories.find(obj => obj.id === idToDelete);
-        console.log(categoryToDelete);
         const copy = [...this.props.categories];
         this.setState({
             copy: copy,
@@ -36,7 +36,6 @@ class Categories extends React.Component {
         const path = generatePath(ROUTE_CATEGORY);
         axios.delete(Api.CATEGORY + categoryToDelete.id + '/', categoryToDelete)
             .then(response => {
-                console.log(response);
                 this.props.history.push(path);
                 window.location.reload();
                 this.setState({
@@ -47,7 +46,6 @@ class Categories extends React.Component {
                 const errorMessage = "you cant delete this category";
                 const copy = [...this.props.categories]
                 this.props.history.push(path);
-
                 this.setState({
                     errorMessage: errorMessage,
                     isDeleted: false,
@@ -56,7 +54,6 @@ class Categories extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         const {categories, handleCategoryUpdate, setCancelRoute} = this.props;
         const {errorMessage, isCreatedOrUpdated, copy, isDeleted} = this.state;
 
@@ -75,16 +72,15 @@ class Categories extends React.Component {
         return (
             <React.Fragment>
                 <Container>
-                  <p className="category-title">Manage Categories</p>
+                    <ScrollToTop smooth color="rgba(231, 130, 0, 0.91)"/>
+                    <p className="category-title">Manage Categories</p>
                     {
                         errorMessage !== undefined &&
-                        <UncontrolledAlert color="danger">
+                        <UncontrolledAlert color="danger" onClick={this.handleAlert}>
                             This category cannot be deleted as it has assigned expenses.This category can be only
                             updated.
                         </UncontrolledAlert>
                     }
-
-
                     <Table striped className="category-table">
                         <thead>
                         <tr>
@@ -115,10 +111,8 @@ class Categories extends React.Component {
                     </Table>
 
                 </Container>
-
             </React.Fragment>
         )
     }
 }
-
 export default withRouter(Categories);

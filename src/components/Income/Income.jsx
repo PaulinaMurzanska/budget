@@ -30,7 +30,10 @@ class Income extends React.PureComponent {
                 this.setState(this.state);
             })
     }
-    setDefaultDates=(e)=>{
+    setDefaultDates = (e) => {
+        window.location.reload();
+    }
+    handleReload = () => {
         window.location.reload();
     }
 
@@ -40,8 +43,8 @@ class Income extends React.PureComponent {
         const {
             handleStartDate, handleEndDate, handleFilter,
             incomes, handleSort, handleSortDate, startDate, endDate, handleUpdate,
-            incomesErrorMessage, onSubmit, initialValues,incomesSuccess,incomesFetchErrorMessage,
-            handleCreate, handleIsCreated, inProgress,
+            incomesErrorMessage, onSubmit, initialValues, incomesSuccess, incomesFetchErrorMessage,
+            handleCreate, handleIsCreated, inProgress
         } = this.props;
         console.log(inProgress);
         console.log(incomesSuccess);
@@ -79,13 +82,29 @@ class Income extends React.PureComponent {
                         inProgress={inProgress}
                     />
                     {
-                        displayLength === 0 && inProgress === false && incomesSuccess===true &&
-                            <div className='no-data'>
-                                <p>No data matching selected period <b>{dateFrom} - {dateTo}.</b> Please select
-                                    different
-                                    dates, or create new income.</p>
-                                <div className='no-data-buttons'>
-                                      <SimpleButton
+                        incomesErrorMessage !== "" && (
+                            <div className='error-create'>
+                                <p>{incomesErrorMessage}</p>
+                                <div className='error-buttons'>
+                                    <SimpleButton
+                                        label="refresh"
+                                        onClick={this.handleReload}
+                                    />
+                                </div>
+
+
+                            </div>
+                        )
+                    }
+
+                    {
+                        displayLength === 0 && inProgress === false && incomesSuccess === true && incomesErrorMessage === "" &&
+                        <div className='no-data'>
+                            <p>No data matching selected period <b>{dateFrom} - {dateTo}.</b> Please select
+                                different
+                                dates, or create new income.</p>
+                            <div className='no-data-buttons'>
+                                <SimpleButton
                                     path={ROUTE_INCOME_FORM}
                                     label="New income"
                                     onClick={handleCreate}
@@ -94,19 +113,21 @@ class Income extends React.PureComponent {
                                     label="Last 30 days"
                                     onClick={this.setDefaultDates}
                                 />
-                                </div>
-
-
                             </div>
+
+
+                        </div>
 
                     }
                     {
-                        incomesSuccess===false && (
-                           <p> {incomesFetchErrorMessage}</p>
+                        incomesSuccess === false && (
+                            <div className='fetch-error'>
+                                <p> {incomesFetchErrorMessage}</p>
+                            </div>
                         )
                     }
                     {
-                        incomesSuccess===true && displayLength > 0 &&(
+                        incomesSuccess === true && displayLength > 0 && (
                             <div className='chart-table-section'>
                                 <div className='income-chart'>
                                     <IncomeChart

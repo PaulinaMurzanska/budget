@@ -76,6 +76,15 @@
       margin: 20px 0;
     }
   }
+  .fetch-error{
+    margin:30px auto;
+    text-align: left;
+    p{
+      font-size: 1rem;
+      color:$projectOrangeColor;
+      text-transform: uppercase;
+    }
+  }
 
   .chart-browser-section {
     display: flex;

@@ -26,7 +26,8 @@ const ApiGenericStatus = Object.freeze({
 
 class Api {
     // static baseUrl = process.env.REACT_APP_PLANTS_API_URL;
-    static baseUrl = "http://127.0.0.1:8000";
+    static baseUrl = "https://fast-dawn-10983.herokuapp.com";
+    // static baseUrl = "http://127.0.0.1:8000";
 
 
     // static timeout = process.env.REACT_APP_PLANTS_API_TIMEOUT;
@@ -35,6 +36,7 @@ class Api {
     static INCOME= '/income/';
     static EXPENSES='/expenses/';
     static CATEGORY= '/category/';
+    static PROFILE='/profile/';
 
     /**
      * @private

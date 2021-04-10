@@ -1,7 +1,7 @@
 import React from "react";
 import {NavLink} from "reactstrap";
 import {Link} from "react-router-dom";
-import {ROUTE_CATEGORY_FORM_UPDATE, ROUTE_INCOME_FORM_UPDATE} from "Constants/Routes";
+import {ROUTE_CATEGORY_FORM_UPDATE} from "Constants/Routes";
 import {AiOutlineEdit} from "react-icons/ai";
 import ModalDelete from "SharedComponents/ModalDelete";
 

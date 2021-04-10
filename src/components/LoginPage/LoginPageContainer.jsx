@@ -22,7 +22,7 @@ const LoginPageContainer = React.memo(({onSubmit, visible}) => {
                     <LoginForm onSubmit={onSubmit}/>
                 </div>
                 <p>No account yet ?</p>
-                <a href="http://127.0.0.1:8000/members/register/">Register here</a>
+                <a href="https://fast-dawn-10983.herokuapp.com/members/register/">Register here</a>
             </div>
         </Container>
     );

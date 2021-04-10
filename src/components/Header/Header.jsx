@@ -5,17 +5,9 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
-import {NavItem, NavLink, DropdownItem} from "reactstrap";
-import {Link} from "react-router-dom";
-import {ROUTE_CATEGORY, ROUTE_DASHBOARD, ROUTE_EXPENSES, ROUTE_INCOME} from "Constants/Routes";
+import {ROUTE_CATEGORY, ROUTE_DASHBOARD, ROUTE_EXPENSES, ROUTE_INCOME, } from "Constants/Routes";
 import AppNavItem from "SharedComponents/AppNavItem";
-import {faChartLine} from "@fortawesome/free-solid-svg-icons";
 import logo from "images/logo 2.png";
 import "./Header.scss";
 import {AiOutlineLineChart} from "react-icons/ai";
@@ -23,13 +15,14 @@ import {GiTakeMyMoney, GiPayMoney} from "react-icons/gi";
 import {RiAccountBoxLine} from "react-icons/ri";
 import {FiLogOut} from "react-icons/fi";
 import moment from "moment";
+import User from "components/User/User";
 
 const useStyles = makeStyles({
-    list: {
-        width: 250,
-    },
+    // list: {
+    //     width: 300,
+    // },
     fullList: {
-        width: 'auto',
+        width: '100%',
     },
 });
 
@@ -78,7 +71,7 @@ const Header = ({onLogout, pageName}) => {
                     </div>
                     <AppNavItem path={ROUTE_EXPENSES} name="Expenses"/>
                 </div>
-                 <div className='menu-item'>
+                <div className='menu-item'>
                     <div className="menu-icon">
                         <GiPayMoney/>
                     </div>
@@ -93,7 +86,10 @@ const Header = ({onLogout, pageName}) => {
                     <div className="menu-icon">
                         <RiAccountBoxLine/>
                     </div>
-                    <span>Account</span>
+                    <div className='user'>
+                          <User/>
+                    </div>
+
                 </div>
                 <div className='account-item' onClick={onLogout}>
                     <div className="menu-icon">
@@ -107,7 +103,6 @@ const Header = ({onLogout, pageName}) => {
     );
     const icon = <MenuIcon style={{color: "#e78200", fontSize: "3rem"}}/>;
     const date = moment(new Date().getTime()).format('MMMM Do YY');
-    console.log(date);
 
     return (
         <div className='menu-top-wrap'>
@@ -124,9 +119,13 @@ const Header = ({onLogout, pageName}) => {
 
             </div>
             <div className='horizontal-tab-label'>
-               <span>{pageName}</span>
+                <span>{pageName}</span>
                 <p>today </p>
                 <p>{date}</p>
+                <div className='username'>
+                    <User/>
+                </div>
+
             </div>
         </div>
 

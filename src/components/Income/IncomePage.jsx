@@ -8,11 +8,8 @@ import moment from "moment";
 import axios from "axios";
 import {Api} from "Services/Api";
 
-const errorCreate =" An error occured while creating new income. It may be caused by one of the following causes:" +
-    "1. You haven't completed all required fields.Try again."+
-    "2. An internal server error occured. Check your Internet connection."+
-    "3. An external server occured. Try to reload the page one or several times."
-
+const errorCreate = " An error occured while creating new income. It may be caused by internal or external server problem" +
+    "Check your internet connection, and reload the page."
 
 class IncomePage extends React.PureComponent {
     constructor(props) {
@@ -41,9 +38,9 @@ class IncomePage extends React.PureComponent {
         this.props.fetchIncome()
 
     }
-    handleIsCreated=()=>{
-        console.log("is created handler trigered");
-        this.setState({isCreatedOrUpdated:false})
+
+    handleIsCreated = () => {
+        this.setState({isCreatedOrUpdated: false})
     }
 
     handleSort = (event) => {
@@ -58,8 +55,9 @@ class IncomePage extends React.PureComponent {
     }
 
     onSubmitIncomeCreate = (income) => {
+        income.timestamp = moment(income.timestamp).format();
+        console.log(income);
         const path = generatePath(ROUTE_INCOME);
-
         axios.post(Api.INCOME, income)
             .then((response) => {
                 const data = response.data;
@@ -83,18 +81,12 @@ class IncomePage extends React.PureComponent {
 
     handleUpdate = (event) => {
         const targetId = parseInt(event.currentTarget.id);
-        const createdOrUpdated =this.state.isCreatedOrUpdated;
+        const createdOrUpdated = this.state.isCreatedOrUpdated;
         const incomesToDisplay = this.state.incomesToDisplay;
-        const incomes= this.props.incomes;
-           console.log(createdOrUpdated);
-
-        console.log(incomesToDisplay);
-        console.log(incomes);
-
+        const incomes = this.props.incomes;
         const incomeToUpdate = createdOrUpdated ?
-              incomesToDisplay.find(obj =>obj.id === targetId) :
-            incomes.find(obj=>obj.id===targetId);
-        console.log(incomeToUpdate);
+            incomesToDisplay.find(obj => obj.id === targetId) :
+            incomes.find(obj => obj.id === targetId);
         this.setState({
             selectedIncomeToUpdate: incomeToUpdate,
             incomeIdToUpdate: targetId,
@@ -104,22 +96,19 @@ class IncomePage extends React.PureComponent {
 
     onSubmitMyIncomeUpdate = (income) => {
         const path = generatePath(ROUTE_INCOME);
-
+        income.timestamp = moment(income.timestamp).format();
         axios.put(Api.INCOME + income.id + '/', income)
             .then((response) => {
                 const data = response.data;
                 const income = data;
-                console.log(this.state.isCreatedOrUpdated );
                 const incomesCopy = this.state.isCreatedOrUpdated ?
                     [...this.state.incomesToDisplay] :
                     [...this.props.incomes];
-                console.log(incomesCopy);
                 const getIndex = incomesCopy.findIndex(item => item.id === income.id);
-                console.log(getIndex);
                 incomesCopy[getIndex] = income;
                 this.setState({
                     incomesToDisplay: incomesCopy,
-                    isCreatedOrUpdated:true,
+                    isCreatedOrUpdated: true,
 
                 });
                 this.props.history.push(path);
@@ -135,35 +124,39 @@ class IncomePage extends React.PureComponent {
 
 
     render() {
+
         const {
             sortDirection, selectedIncomeToUpdate, incomeIdToUpdate,
-            incomesToDisplay, incomesErrorMessage,isCreatedOrUpdated
+            incomesToDisplay, incomesErrorMessage, isCreatedOrUpdated
         } = this.state;
         const {
-            incomes, handleIncomesFilter, handleSelectedEndDate,isFiltered,incomesSuccess,
-            handleSelectedStartDate,startDate, endDate, incomesFilteredInFetch,inProgress,
+            incomes, handleIncomesFilter, handleSelectedEndDate, isFiltered, incomesSuccess,
+            handleSelectedStartDate, startDate, endDate, incomesFilteredInFetch, inProgress,
             incomesFetchErrorMessage,
         } = this.props;
-
-        const preSort = ()=>{
-            if(isCreatedOrUpdated===true){
+        console.log(incomes);
+        const preSort = () => {
+            if (isCreatedOrUpdated === true) {
                 return incomesToDisplay;
             }
-            if(isCreatedOrUpdated===false){
+            if (isCreatedOrUpdated === false) {
                 return incomes;
             }
-            if(isCreatedOrUpdated===true && isFiltered===true){
+            if (isCreatedOrUpdated === true && isFiltered === true) {
                 return incomesToDisplay;
             }
-            if(isCreatedOrUpdated===false && isFiltered===true){
+            if (isCreatedOrUpdated === false && isFiltered === true) {
                 return incomes
             }
-            if(isCreatedOrUpdated===false && isFiltered===false){
+            if (isCreatedOrUpdated === false && isFiltered === false) {
+                return incomes
+            }
+            if (incomesErrorMessage !== "") {
                 return incomes
             }
         };
 
-        const incomesToDisplayToSort=preSort();
+        const incomesToDisplayToSort = preSort();
 
         const multiplier = sortDirection ? 1 : -1;
         const sortedIncomes = incomesToDisplayToSort.sort((item1, item2) => {
@@ -246,10 +239,7 @@ class IncomePage extends React.PureComponent {
                         initialValues={initialValues}
                         onSubmit={this.onSubmitMyIncomeUpdate}
                     />
-
                 </Route>
-
-
             </Switch>
 
         )

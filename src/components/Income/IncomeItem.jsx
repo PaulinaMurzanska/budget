@@ -2,20 +2,13 @@ import React, {useState} from "react";
 import moment from "moment";
 import {AiOutlineEdit} from "react-icons/ai";
 import {Link} from "react-router-dom";
-import {ROUTE_INCOME, ROUTE_INCOME_FORM_UPDATE} from "Constants/Routes";
+import {ROUTE_INCOME_FORM_UPDATE} from "Constants/Routes";
 import {RiDeleteBin4Line} from "react-icons/ri";
-import {
-    Button,
-    ModalHeader, ModalBody, ModalFooter, Modal, NavItem, NavLink
+import {ModalHeader, ModalBody, ModalFooter, Modal,NavLink
 } from "reactstrap";
 import "./IncomeTable.scss";
-import SimpleButton from "SharedComponents/SimpleButton";
 import ModalButtons from "SharedComponents/ModalButtons";
 import {Container} from "@material-ui/core";
-import {faEdit} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
-
 
 const IncomeItem = ({income, onDelete, handleUpdate}) => {
 
@@ -25,7 +18,6 @@ const IncomeItem = ({income, onDelete, handleUpdate}) => {
     const toggle = () => {
         setModal(!modal)
     };
-
 
     return (
         <tr>
@@ -39,7 +31,6 @@ const IncomeItem = ({income, onDelete, handleUpdate}) => {
                        to={ROUTE_INCOME_FORM_UPDATE}
                        id={id}
                         onClick={handleUpdate}
-
                     >
                         <AiOutlineEdit/>
                     </NavLink>
@@ -50,8 +41,6 @@ const IncomeItem = ({income, onDelete, handleUpdate}) => {
                 >
                     <RiDeleteBin4Line className='delete'
                                       onClick={toggle}
-
-
                     />
                     <Modal isOpen={modal} toggle={toggle} className="delete-modal">
                         <Container className="modal-container">
@@ -70,19 +59,11 @@ const IncomeItem = ({income, onDelete, handleUpdate}) => {
                                     toggle={toggle}
                                     label1="Delete"
                                     label2='Cancel'
-
                                 />
-
-
                             </ModalFooter>
-
                         </Container>
-
                     </Modal>
-
                 </div>
-
-
             </td>
         </tr>
     )

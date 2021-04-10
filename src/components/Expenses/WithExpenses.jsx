@@ -3,7 +3,7 @@ import axios from "axios";
 import {Api} from "Services/Api";
 
 
-const fetch_delay_simulator = 500;
+const fetch_delay_simulator = 100;
 const delayFetch = (ms, func) => {
     return new Promise((resolve, reject) => setTimeout(() => func(resolve, reject), ms));
 }
@@ -20,11 +20,17 @@ const WithExpenses = (WrappedComponent) => {
             expensesFilteredInFetch: [],
             isFiltered: false,
             filteredExpenses: [],
+            message:"",
+            expensesFetchErrorMessage:"",
         }
 
         fetchExpenses = () => {
             console.log('fetch expenses triggered');
-            this.setState({expensesInProgress: true});
+            this.setState({
+                expensesInProgress: true,
+                message:"hello",
+            });
+            console.log(this.state.message);
             return delayFetch(fetch_delay_simulator, (resolve, reject) => {
                 return axios.get(Api.EXPENSES)
                     .then((response) => {
@@ -40,11 +46,15 @@ const WithExpenses = (WrappedComponent) => {
                         resolve();
                     })
                     .catch((error) => {
-                        this.setState({expensesSuccess: false});
+                        this.setState({
+                            expensesSuccess: false,
+                            expensesFetchErrorMessage:"External server error. Please, try again later."
+                        });
                         reject();
                     })
-            }).finally(() => {
-                this.setState({expensesInProgress: false});
+                    .finally(() => {
+                        this.setState({expensesInProgress: false});
+                    })
             })
         }
         handleSelectedStartDate = (e) => {
@@ -86,7 +96,7 @@ const WithExpenses = (WrappedComponent) => {
         render() {
             const {
                 expensesInProgress, expenses, expensesSuccess, startDate, endDate, expensesFilteredInFetch,
-                isFiltered, filteredExpenses
+                isFiltered, filteredExpenses,expensesFetchErrorMessage,
             } = this.state;
             const expensesToDisplay = isFiltered ? filteredExpenses : expensesFilteredInFetch;
             return (
@@ -101,6 +111,9 @@ const WithExpenses = (WrappedComponent) => {
                     handleEndDate={this.handleSelectedEndDate}
                     handleStartDate={this.handleSelectedStartDate}
                     handleFilter={this.handleExpensesFilter}
+                    inProgress={expensesInProgress}
+                    expensesSuccess={expensesSuccess}
+                    expensesFetchErrorMessage={expensesFetchErrorMessage}
 
 
                 />

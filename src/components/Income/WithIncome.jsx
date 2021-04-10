@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import {Api} from "Services/Api";
 
-
 const fetch_delay_simulator = 100;
 const delayFetch = (ms, func) => {
     return new Promise((resolve, reject) => setTimeout(() => func(resolve, reject), ms));
@@ -12,7 +11,6 @@ const monthInMilSec = 2582000000;
 const withIncome = (WrappedComponent) => {
     return class extends React.Component {
         state = {
-            incomeInProgress: false,
             incomes: [],
             incomesFilteredInFetch: [],
             incomesSuccess: undefined,
@@ -21,6 +19,7 @@ const withIncome = (WrappedComponent) => {
             isFiltered: false,
             filteredIncomes: [],
             incomesFetchErrorMessage: "",
+            incomeInProgress:false,
         }
         fetchIncome = () => {
             this.setState({incomeInProgress: true});
@@ -50,30 +49,22 @@ const withIncome = (WrappedComponent) => {
             })
         }
         handleSelectedStartDate = (e) => {
-            console.log('start date triggered');
             const startDate = e.target.value;
             const startDateFormat = new Date(startDate).getTime();
             this.setState({
                 startDate: startDateFormat,
-
             })
         }
 
         handleSelectedEndDate = (e) => {
-            console.log('end date triggered');
-
             const endDate = e.target.value;
             const endDateFormat = new Date(endDate).getTime();
             this.setState({
                 endDate: endDateFormat,
-
-
             })
         }
 
         handleIncomesFilter = (e) => {
-            console.log('filter triggered');
-
             const newIncomes = this.state.incomes;
             const endDate = new Date(this.state.endDate).getTime();
             const startDate = new Date(this.state.startDate).getTime();
@@ -89,13 +80,11 @@ const withIncome = (WrappedComponent) => {
             })
         }
 
-
         render() {
             const {
                 isFiltered, incomesFilteredInFetch, filteredIncomes, startDate, endDate, incomeInProgress,
                 incomesSuccess, incomes,incomesFetchErrorMessage
             } = this.state;
-
 
             const incomesToDisplay = isFiltered ? filteredIncomes : incomesFilteredInFetch;
             return (
@@ -114,7 +103,6 @@ const withIncome = (WrappedComponent) => {
                     incomesSuccess={incomesSuccess}
                     inProgress={incomeInProgress}
                     incomesFetchErrorMessage={incomesFetchErrorMessage}
-
                 />
             )
         }

@@ -18,7 +18,6 @@ const ModalDelete = ({name, id, onDelete,}) => {
             />
             <Modal isOpen={modal} toggle={toggle} className="delete-modal">
                 <Container className="modal-container">
-
                     <div>
                         <ModalHeader toggle={toggle}>You are about to delete <span className="name-to-delete">
                             {name}</span>
@@ -28,27 +27,18 @@ const ModalDelete = ({name, id, onDelete,}) => {
                             This action will be irreversible.
                         </ModalBody>
                         <ModalFooter>
-
                             <ModalButtons
                                 id={id}
                                 onClick={onDelete}
                                 toggle={toggle}
                                 label1="Delete"
                                 label2='Cancel'
-
                             />
-
-
                         </ModalFooter>
                     </div>
-
-
                 </Container>
-
             </Modal>
-
         </div>
-
     )
 }
 export default ModalDelete;

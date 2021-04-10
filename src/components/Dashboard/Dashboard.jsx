@@ -1,10 +1,7 @@
 import React from "react";
-import IncomeChart from "components/Income/MyChart";
 import DashboardIncomeChart from "components/Dashboard/DashboardIncomeChart";
-import Balance from "components/Balance";
 import WithExpenses from "components/Expenses/WithExpenses";
 import withIncome from "components/Income/WithIncome";
-import withCategories from "components/Categories/WithCategories";
 import {Container} from "@material-ui/core";
 import "./Dashboard.scss";
 import DashboardExpensesChart from "components/Dashboard/DashboardExpensesChart";
@@ -75,7 +72,7 @@ class Dashboard extends React.PureComponent {
                             </div>
 
                             <div className="section">
-                                <Link to={ROUTE_EXPENSES}>
+                                <Link  to={ROUTE_EXPENSES}>
                                     <h3>expenses</h3>
                                     <p>data for last 30 days</p>
                                     <div className="expenses-chart ">
@@ -94,7 +91,6 @@ class Dashboard extends React.PureComponent {
                                                     />
                                                 </div>
                                             )
-
                                         }
                                     </div>
 

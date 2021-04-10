@@ -8,9 +8,7 @@ import {Table} from "reactstrap";
 
 const IncomeTable = ({incomes, handleSort, handleSortDate, handleUpdate, onDelete,handleCreate}) => {
 
-
     return (
-
         <Table  striped className='income-table-exact'>
             <thead>
             <tr>
@@ -34,7 +32,6 @@ const IncomeTable = ({incomes, handleSort, handleSortDate, handleUpdate, onDelet
                     label="New income"
                     onClick={handleCreate}
                 />
-
                 </th>
             </tr>
             </thead>
@@ -49,11 +46,8 @@ const IncomeTable = ({incomes, handleSort, handleSortDate, handleUpdate, onDelet
                     />
                 )
             }
-
             </tbody>
         </Table>
-
-
     )
 }
 export default IncomeTable;

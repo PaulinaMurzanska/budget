@@ -19,9 +19,7 @@ const IncomeChart = ({numbers, names}) => {
                 }
             }
         }
-
     }
-
 
     return (
         <Chart
@@ -30,10 +28,8 @@ const IncomeChart = ({numbers, names}) => {
             type="donut"
             height="auto"
             width="100%"
-
         />
 
     )
 }
-
 export default IncomeChart;

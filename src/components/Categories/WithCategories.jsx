@@ -1,20 +1,18 @@
 import React from "react";
 import axios from "axios";
 import {Api} from "Services/Api";
-
 const fetch_delay_simulator = 500;
 const delayFetch = (ms, func) => {
     return new Promise((resolve, reject) => setTimeout(() => func(resolve, reject), ms));
 }
 
-const withCategories=(WrappedComponent)=>{
-    return class extends React.Component{
-        state={
-            categoryInProgress:false,
-            categoriesSuccess:undefined,
-            categories:[],
+const withCategories = (WrappedComponent) => {
+    return class extends React.Component {
+        state = {
+            categoryInProgress: false,
+            categoriesSuccess: undefined,
+            categories: [],
         }
-
 
 
         fetchCategories = () => {
@@ -28,22 +26,23 @@ const withCategories=(WrappedComponent)=>{
 
                         }));
                         const categoriesSuccess = true;
-                        this.setState({categories, categoriesSuccess, });
+                        this.setState({categories, categoriesSuccess,});
                         resolve();
                     })
                     .catch((error) => {
                         this.setState({categoriesSuccess: false});
                         reject();
                     })
-            }).finally(() => {
-                this.setState({categoryInProgress: false});
+                    .finally(() => {
+                        this.setState({categoryInProgress: false});
+                    })
             })
         }
 
 
         render() {
-            const{categories,categoriesSuccess,categoryInProgress }=this.state;
-            return(
+            const {categories, categoriesSuccess, categoryInProgress} = this.state;
+            return (
                 <WrappedComponent
                     {...this.state}
                     {...this.props}

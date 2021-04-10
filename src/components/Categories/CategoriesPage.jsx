@@ -6,7 +6,6 @@ import {
     ROUTE_CATEGORY_FORM,
     ROUTE_CATEGORY_FORM_UPDATE,
     ROUTE_EXPENSES_FORM,
-    ROUTE_INCOME, ROUTE_INCOME_FORM
 } from "Constants/Routes";
 import Categories from "components/Categories/Categories";
 import CategoryFormCard from "components/Categories/CategoryForm/CategoryFormCard";
@@ -24,7 +23,6 @@ class CategoriesPage extends React.Component {
             categoryIdToUpdate: undefined,
             categoryErrorMessage: '',
             originPathCategory:false,
-
         }
     }
 
@@ -43,7 +41,6 @@ class CategoriesPage extends React.Component {
                 this.setState({
                     categoriesToDisplay: categoriesCopy,
                     isCreatedOrUpdated: true,
-
                 });
                 this.props.history.push(path);
             })
@@ -52,7 +49,6 @@ class CategoriesPage extends React.Component {
                 this.setState({
                     categoryErrorMessage: "error creating category",
                     isCreatedOrUpdated: true,
-
                 });
             });
     };
@@ -68,7 +64,6 @@ class CategoriesPage extends React.Component {
         this.setState({
             selectedCategoryToUpdate: categoryToUpdate,
             categoryIdToUpdate: targetId,
-
         });
     };
     onSubmitCategoryUpdate = (category) => {
@@ -105,7 +100,6 @@ class CategoriesPage extends React.Component {
 
 
     render() {
-
         const {categories,} = this.props;
         const {categoryIdToUpdate, selectedCategoryToUpdate, isCreatedOrUpdated, categoriesToDisplay,originPathCategory} = this.state;
         const {name, id} = selectedCategoryToUpdate;
@@ -154,5 +148,4 @@ class CategoriesPage extends React.Component {
         )
     }
 }
-
 export default withRouter(withCategories(CategoriesPage));

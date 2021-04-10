@@ -40,9 +40,7 @@ class ExpensesPage extends React.Component {
 
 
     handleSort = (event) => {
-        console.log('handle sort trigered');
         const sortBy = event.target.id;
-        console.log(sortBy);
         this.setState({
             sortBy: sortBy,
             sortDirection: !this.state.sortDirection,
@@ -52,7 +50,8 @@ class ExpensesPage extends React.Component {
         this.setState({isCreatedOrUpdated: false})
     }
     onSubmitExpenseCreated = (expense) => {
-        console.log("on submit triggered");
+        expense.timestamp = moment(expense.timestamp).format();
+        console.log(expense);
         const path = generatePath(ROUTE_EXPENSES);
         axios.post(Api.EXPENSES, expense)
             .then((response) => {
@@ -76,7 +75,6 @@ class ExpensesPage extends React.Component {
     }
 
     handleUpdate = (event) => {
-        console.log(event.currentTarget);
         const targetId = parseInt(event.currentTarget.id);
         const createdOrUpdated = this.state.isCreatedOrUpdated;
         const expensesToDisplay = this.state.expensesToDisplay;
@@ -91,7 +89,7 @@ class ExpensesPage extends React.Component {
     };
     onSubmitExpenseUpdated = (expense) => {
         const path = generatePath(ROUTE_EXPENSES);
-
+        expense.timestamp = moment(expense.timestamp).format();
         axios.put(Api.EXPENSES + expense.id + '/', expense)
             .then((response) => {
                 const data = response.data;
@@ -122,7 +120,7 @@ class ExpensesPage extends React.Component {
 
         const {
             endDate, startDate, handleStartDate, handleEndDate, handleFilter, expenses,
-            categories, isFiltered, handleCategoryUpdate
+            categories, isFiltered, handleCategoryUpdate, inProgress, expensesSuccess, expensesFetchErrorMessage
 
         } = this.props;
         const {
@@ -209,6 +207,9 @@ class ExpensesPage extends React.Component {
                         handleSort={this.handleSort}
                         handleIsCreated={this.handleIsCreated}
                         handleUpdate={this.handleUpdate}
+                        inProgress={inProgress}
+                        expensesSuccess={expensesSuccess}
+                        expensesFetchErrorMessage={expensesFetchErrorMessage}
 
                     />
                 </Route>

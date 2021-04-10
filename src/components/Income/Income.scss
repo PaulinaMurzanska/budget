@@ -69,27 +69,66 @@
     }
   }
 
+  .fetch-error {
+    margin: 30px auto;
+    text-align: left;
+    padding: 10px;
+
+    p {
+      font-size: 1rem;
+      color: $projectOrangeColor;
+      text-transform: uppercase;
+    }
+  }
+
+  .error-create {
+    margin: 30px auto;
+    text-align: left;
+    padding: 10px;
+
+    p {
+      font-size: 1rem;
+      color: $projectOrangeColor;
+      text-transform: uppercase;
+    }
+
+    .error-buttons {
+      display: flex;
+      justify-content: center;
+
+      button {
+        width: 120px;
+        margin-top: 20px;
+        margin-right: 15px;
+
+      }
+    }
+  }
+
   .no-data {
     padding: 30px;
     text-align: center;
 
-    p{
-      color:$projectOrangeColor;
-      text-transform:uppercase;
-         font-size: 1rem;
-      margin-bottom:30px;
+    p {
+      color: $projectOrangeColor;
+      text-transform: uppercase;
+      font-size: 1rem;
+      margin-bottom: 30px;
 
     }
 
     .no-data-buttons {
       display: flex;
       justify-content: center;
+
       .simple-button {
         width: 130px;
+
         a {
           font-size: 1rem;
         }
-        &:first-child{
+
+        &:first-child {
           margin-right: 20px;
         }
       }

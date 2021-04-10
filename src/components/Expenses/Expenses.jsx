@@ -15,6 +15,7 @@ import {Api} from "Services/Api";
 import ScrollToTop from "react-scroll-to-top";
 import SimpleButton from "SharedComponents/SimpleButton";
 import moment from "moment";
+import InProgress from "SharedComponents/InProgress";
 
 
 class Expenses extends React.Component {
@@ -48,8 +49,11 @@ class Expenses extends React.Component {
         const {selectedCategoryId} = this.state;
         const {
             endDate, startDate, handleStartDate, handleEndDate, handleFilter, expenses,
-            categories, handleSort, handleIsCreated, handleUpdate
+            categories, handleSort, handleIsCreated, handleUpdate, inProgress, expensesSuccess,
+            expensesFetchErrorMessage
         } = this.props;
+        console.log(this.props);
+
         const filteredByCategory = expenses.filter(item => item.category === selectedCategoryId);
         const dateFrom = moment(startDate).format("MMM Do YY");
         const dateTo = moment(endDate).format("MMM Do YY");
@@ -93,8 +97,11 @@ class Expenses extends React.Component {
                             />
                         </div>
                     </div>
+                    <InProgress
+                        inProgress={inProgress}
+                    />
                     {
-                        displayLength === 0 && (
+                        displayLength === 0 && inProgress === false && expensesSuccess === true && (
                             <div className='no-data'>
                                 <p>No data matching selected period <b>{dateFrom} - {dateTo}.</b> Please select
                                     different
@@ -112,7 +119,15 @@ class Expenses extends React.Component {
                         )
                     }
                     {
-                        displayLength > 0 && (
+                        expensesSuccess === false && (
+                            <div className='fetch-error'>
+                                <p>{expensesFetchErrorMessage}</p>
+
+                            </div>
+                        )
+                    }
+                    {
+                        displayLength > 0 && expensesSuccess === true && (
                             <div>
                                 <div className='chart-browser-section'>
                                     <div className='chart-section'>

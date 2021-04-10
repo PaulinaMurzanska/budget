@@ -23,6 +23,8 @@ const IncomeForm = ({title}) => {
                         placeholder="Salary"
                         type='text'
                         name="name"
+                        required
+
                     />
                 </div>
                 <div className='income-field'>
@@ -33,6 +35,7 @@ const IncomeForm = ({title}) => {
                         placeholder="1000"
                         type='number'
                         name="amount"
+                        required
                     />
                 </div>
                 <div className='income-field'>
@@ -43,6 +46,7 @@ const IncomeForm = ({title}) => {
                         placeholder={moment(Date.now()).format('MM-DD-YYYY')}
                         type='date'
                         name="timestamp"
+                        required
 
                     />
                 </div>
