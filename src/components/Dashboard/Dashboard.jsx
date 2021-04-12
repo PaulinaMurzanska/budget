@@ -19,11 +19,10 @@ class Dashboard extends React.PureComponent {
     componentDidMount() {
         this.props.fetchIncome();
         this.props.fetchExpenses();
-
     }
 
     render() {
-        const {expensesTotal, incomesTotal, incomes} = this.props;
+        const {expensesTotal, incomesTotal, incomes, expenses} = this.props;
         const incomeAmount = incomesTotal.map(item => item.amount);
         const incomeTotalToBalance = incomeAmount.reduce((a, b) => a + b, 0);
         const outcomeAmount = expensesTotal.map(item => item.amount);
@@ -43,63 +42,59 @@ class Dashboard extends React.PureComponent {
                         <hr/>
                         <div className='charts'>
                             <div className="section">
-                                <Link to={ROUTE_INCOME}>
-                                    <h3>Incomes</h3>
-                                    <p>data for last 30 days</p>
-                                    <div className='income-chart'>
-                                        {
-                                            incomes.length > 0 && (
+                                <h3>Incomes</h3>
+                                <p>data for last 30 days</p>
+                                {
+                                    incomes.length > 0 && (
+                                        <Link to={ROUTE_INCOME}>
+
+                                            <div className='income-chart'>
                                                 <DashboardIncomeChart/>
-                                            )
-                                        }
-                                        {
-                                            incomes.length === 0 && (
-                                                <div className='no-data'>
-                                                    <p> no data to display</p>
-                                                    <SimpleButton
-                                                        label='Add new income'
-                                                        path={ROUTE_INCOME_FORM}
-                                                    />
-                                                </div>
-                                            )
-                                        }
-
-                                    </div>
-
-
-                                </Link>
-
+                                            </div>
+                                        </Link>
+                                    )
+                                }
+                                {
+                                    incomes.length === 0 && (
+                                        <div className='no-data'>
+                                            <p> no data to display</p>
+                                            <SimpleButton
+                                                label='Add new income'
+                                                path={ROUTE_INCOME_FORM}
+                                            />
+                                        </div>
+                                    )
+                                }
                             </div>
-
                             <div className="section">
-                                <Link  to={ROUTE_EXPENSES}>
-                                    <h3>expenses</h3>
-                                    <p>data for last 30 days</p>
-                                    <div className="expenses-chart ">
-                                        {
-                                            incomes.length > 0 && (
-                                                <DashboardExpensesChart/>
-                                            )
-                                        }
-                                        {
-                                            incomes.length === 0 && (
-                                                <div className='no-data'>
-                                                    <p>no data to display </p>
-                                                    <SimpleButton
-                                                        label='Add new expense'
-                                                        path={ROUTE_EXPENSES_FORM}
-                                                    />
-                                                </div>
-                                            )
-                                        }
-                                    </div>
+                                <h3>expenses</h3>
+                                <p>data for last 30 days</p>
+                                {
+                                    expenses.length > 0 &&
+                                    (
+                                        <Link to={ROUTE_EXPENSES}>
 
-                                </Link>
+                                            <div className="expenses-chart ">
+                                                <DashboardExpensesChart/>
+                                            </div>
+
+                                        </Link>
+                                    )
+                                }
+                                {
+                                    expenses.length === 0 && (
+                                        <div className='no-data'>
+                                            <p>no data to display </p>
+                                            <SimpleButton
+                                                label='Add new expense'
+                                                path={ROUTE_EXPENSES_FORM}
+                                            />
+                                        </div>
+                                    )
+                                }
 
                             </div>
                         </div>
-
-
                         <hr/>
                         <div className="section-category">
                             <h3>manage categories</h3>
@@ -109,12 +104,9 @@ class Dashboard extends React.PureComponent {
                                     path={ROUTE_CATEGORY}
                                 />
                             </div>
-
                         </div>
                     </div>
                 </Container>
-
-
             </React.Fragment>
         )
     }

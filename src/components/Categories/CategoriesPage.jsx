@@ -22,7 +22,7 @@ class CategoriesPage extends React.Component {
             selectedCategoryToUpdate: [],
             categoryIdToUpdate: undefined,
             categoryErrorMessage: '',
-            originPathCategory:false,
+            originPathCategory: false,
         }
     }
 
@@ -92,19 +92,19 @@ class CategoriesPage extends React.Component {
             });
 
     };
-      setCancelRoute=(e)=>{
+    setCancelRoute = (e) => {
         this.setState({
-            originPathCategory:true
+            originPathCategory: true,
+            categoryIdToUpdate:undefined,
         })
     }
 
 
     render() {
         const {categories,} = this.props;
-        const {categoryIdToUpdate, selectedCategoryToUpdate, isCreatedOrUpdated, categoriesToDisplay,originPathCategory} = this.state;
+        const {categoryIdToUpdate, selectedCategoryToUpdate, isCreatedOrUpdated, categoriesToDisplay, originPathCategory} = this.state;
         const {name, id} = selectedCategoryToUpdate;
         const pathToDisplay = originPathCategory ? ROUTE_CATEGORY : ROUTE_EXPENSES_FORM;
-
         const initialValuesToUpdate = {
             id: id,
             name: name,
@@ -116,11 +116,24 @@ class CategoriesPage extends React.Component {
         }
         const initialValues = categoryIdToUpdate === undefined ? initialValuesToCreate : initialValuesToUpdate;
         const dataToDisplay = isCreatedOrUpdated ? categoriesToDisplay : categories;
+        const sortedDataToDisplay =dataToDisplay.sort((item1,item2)=>{
+            const sortBy='name';
+            const a = item1[sortBy].toLowerCase();
+            const b = item2[sortBy].toLowerCase();
+            if( a > b){
+                return 1;
+            }
+            if(b > a){
+                return -1;
+            }
+            return 0;
+
+        });
         return (
             <Switch>
                 <Route exact path={ROUTE_CATEGORY}>
                     <Categories
-                        categories={dataToDisplay}
+                        categories={sortedDataToDisplay}
                         handleCategoryUpdate={this.handleCategoryUpdate}
                         isCreatedOrUpdated={isCreatedOrUpdated}
                         setCancelRoute={this.setCancelRoute}
@@ -148,4 +161,5 @@ class CategoriesPage extends React.Component {
         )
     }
 }
+
 export default withRouter(withCategories(CategoriesPage));

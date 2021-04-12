@@ -2,38 +2,34 @@ import React from "react";
 import axios from "axios";
 import {Api} from "Services/Api";
 
-class User extends React.Component {
-    state = {
-        user: {},
-    }
+const withUser = (WrappedComponent) => {
+    return class extends React.Component {
+        state = {
+            user: {},
+        }
 
-    componentDidMount() {
-        this.fetchUserData();
-    }
+        fetchUserData = () => {
+            return axios.get(Api.PROFILE)
+                .then((response) => {
+                    const data = response.data;
+                    this.setState({user: data})
+                })
 
-    fetchUserData = () => {
-        return axios.get(Api.PROFILE)
-            .then((response) => {
-                const data = response.data;
-                console.log(data);
-                this.setState({user: data})
-            })
+        }
+        render() {
+            const {user} = this.state;
+            const {username} = user;
+            console.log(username);
 
-    }
-
-    render() {
-        const {user} = this.state;
-        const {username} = user;
-
-        return (
-            <React.Fragment>
-                <p> You are logged in as </p>
-                <p>{username}</p>
-            </React.Fragment>
-
-
-        )
+            return (
+                <WrappedComponent
+                    {...this.state}
+                    {...this.props}
+                    fetchUserData={this.fetchUserData}
+                    username={username}
+                />
+            )
+        }
     }
 }
-
-export default User;
+export default withUser;

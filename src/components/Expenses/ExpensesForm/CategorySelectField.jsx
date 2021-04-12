@@ -7,14 +7,10 @@ import "../ExpensesForm/Expenses.scss";
 class CategorySelectField extends React.Component {
     constructor(props) {
         super(props);
-
     }
-
     render() {
         const {categories} = this.props;
-
         return (
-
             <FormGroup>
                 <div className='expenses-field'>
                     <Label className='category-select-label' for="category">Category</Label>
@@ -29,7 +25,6 @@ class CategorySelectField extends React.Component {
                         </option>
                     </Field>
                 </div>
-
             </FormGroup>
         )
     }

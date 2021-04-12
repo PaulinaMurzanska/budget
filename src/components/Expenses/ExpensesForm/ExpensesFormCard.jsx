@@ -3,28 +3,23 @@ import {Form, Formik} from 'formik';
 import {Container} from "@material-ui/core";
 import ExpensesForm from "components/Expenses/ExpensesForm/ExpensesForm";
 import Buttons from "SharedComponents/Buttons";
-import {ROUTE_CATEGORY, ROUTE_CATEGORY_FORM, ROUTE_EXPENSES, ROUTE_INCOME} from "Constants/Routes";
-import SimpleButton from "SharedComponents/SimpleButton";
-import {FormGroup} from "reactstrap";
+import { ROUTE_EXPENSES} from "Constants/Routes";
 
 
 class ExpensesFormCard extends React.Component {
     render() {
         const {initialValues, title, categories,} = this.props;
         const key = initialValues.id;
-        console.log(initialValues);
 
         const onSubmit = (values) => {
             const expense = values;
             this.props.onSubmit(expense);
-            console.log(expense);
         };
         const formikProps = {
             key,
             initialValues,
             onSubmit,
         };
-
         return (
             <Container>
                 <Formik {...formikProps}>

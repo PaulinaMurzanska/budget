@@ -25,17 +25,14 @@ const WithExpenses = (WrappedComponent) => {
         }
 
         fetchExpenses = () => {
-            console.log('fetch expenses triggered');
             this.setState({
                 expensesInProgress: true,
                 message:"hello",
             });
-            console.log(this.state.message);
             return delayFetch(fetch_delay_simulator, (resolve, reject) => {
                 return axios.get(Api.EXPENSES)
                     .then((response) => {
                         const data = response.data;
-                        console.log(data);
                         const expenses = data.map((item) => ({
                             name: item.name, id: item.id,
                             amount: item.amount, timestamp: item.timestamp, category: item.category
@@ -71,8 +68,6 @@ const WithExpenses = (WrappedComponent) => {
             const endDateFormat = new Date(endDate).getTime();
             this.setState({
                 endDate: endDateFormat,
-
-
             })
         }
 
@@ -92,13 +87,13 @@ const WithExpenses = (WrappedComponent) => {
             })
         }
 
-
         render() {
             const {
                 expensesInProgress, expenses, expensesSuccess, startDate, endDate, expensesFilteredInFetch,
                 isFiltered, filteredExpenses,expensesFetchErrorMessage,
             } = this.state;
             const expensesToDisplay = isFiltered ? filteredExpenses : expensesFilteredInFetch;
+
             return (
                 <WrappedComponent
                     {...this.state}
@@ -114,8 +109,6 @@ const WithExpenses = (WrappedComponent) => {
                     inProgress={expensesInProgress}
                     expensesSuccess={expensesSuccess}
                     expensesFetchErrorMessage={expensesFetchErrorMessage}
-
-
                 />
             )
         }

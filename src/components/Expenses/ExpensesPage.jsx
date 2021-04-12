@@ -1,16 +1,13 @@
 import React from "react";
 import {generatePath, Route, Switch, withRouter} from "react-router-dom";
-import {ROUTE_EXPENSES, ROUTE_EXPENSES_FORM, ROUTE_EXPENSES_FORM_UPDATE, ROUTE_INCOME} from "Constants/Routes";
+import {ROUTE_EXPENSES, ROUTE_EXPENSES_FORM, ROUTE_EXPENSES_FORM_UPDATE} from "Constants/Routes";
 import Expenses from "components/Expenses/Expenses";
 import WithExpenses from "components/Expenses/WithExpenses";
 import withCategories from "components/Categories/WithCategories";
-import Income from "components/Income/Income";
 import ExpensesFormCard from "components/Expenses/ExpensesForm/ExpensesFormCard";
 import moment from "moment";
 import axios from "axios";
 import {Api} from "Services/Api";
-import CategoriesPage from "components/Categories/CategoriesPage";
-
 
 class ExpensesPage extends React.Component {
     constructor(props) {
@@ -38,7 +35,6 @@ class ExpensesPage extends React.Component {
         this.props.fetchCategories();
     }
 
-
     handleSort = (event) => {
         const sortBy = event.target.id;
         this.setState({
@@ -49,9 +45,9 @@ class ExpensesPage extends React.Component {
     handleIsCreated = () => {
         this.setState({isCreatedOrUpdated: false})
     }
+
     onSubmitExpenseCreated = (expense) => {
         expense.timestamp = moment(expense.timestamp).format();
-        console.log(expense);
         const path = generatePath(ROUTE_EXPENSES);
         axios.post(Api.EXPENSES, expense)
             .then((response) => {
@@ -71,7 +67,6 @@ class ExpensesPage extends React.Component {
                     expensesErrorMessage: "error creating new expenses"
                 })
             })
-
     }
 
     handleUpdate = (event) => {
@@ -114,17 +109,20 @@ class ExpensesPage extends React.Component {
                 });
             });
     };
+    handleResetId = ()=>{
+        this.setState({
+            expenseIdToUpdate:undefined,
+        })
+    }
 
     render() {
-
-
         const {
             endDate, startDate, handleStartDate, handleEndDate, handleFilter, expenses,
-            categories, isFiltered, handleCategoryUpdate, inProgress, expensesSuccess, expensesFetchErrorMessage
+            categories, isFiltered, inProgress, expensesSuccess, expensesFetchErrorMessage
 
         } = this.props;
         const {
-            sortBy, sortDirection, expensesToDisplay, isCreatedOrUpdated, selectedExpenseToUpdate,
+            sortDirection, expensesToDisplay, isCreatedOrUpdated, selectedExpenseToUpdate,
             expenseIdToUpdate
         } = this.state;
 
@@ -180,6 +178,7 @@ class ExpensesPage extends React.Component {
             id: id,
             amount: amount,
             timestamp: timestamp,
+            category:category,
         }
 
         const initialValuesToCreate = {
@@ -190,8 +189,6 @@ class ExpensesPage extends React.Component {
             category: "",
         };
         const initialValues = expenseIdToUpdate === undefined ? initialValuesToCreate : initialValuesToUpdate;
-        console.log(initialValues);
-
 
         return (
             <Switch>
@@ -210,6 +207,7 @@ class ExpensesPage extends React.Component {
                         inProgress={inProgress}
                         expensesSuccess={expensesSuccess}
                         expensesFetchErrorMessage={expensesFetchErrorMessage}
+                        handleResetId={this.handleResetId}
 
                     />
                 </Route>

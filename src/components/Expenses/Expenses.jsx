@@ -8,7 +8,7 @@ import "./ExpensesTable.scss";
 import ExpensesChart from "components/Expenses/ExpensesChart";
 import CategoriesSelectOptions from "SharedComponents/CategoriesSelectOptions";
 import ExpensesPieCategoryChart from "components/Expenses/ExpensesPieCategoryChart";
-import {ROUTE_EXPENSES, ROUTE_EXPENSES_FORM, ROUTE_INCOME_FORM,} from "Constants/Routes";
+import {ROUTE_EXPENSES, ROUTE_EXPENSES_FORM} from "Constants/Routes";
 import {generatePath, withRouter} from "react-router-dom";
 import axios from "axios";
 import {Api} from "Services/Api";
@@ -50,9 +50,8 @@ class Expenses extends React.Component {
         const {
             endDate, startDate, handleStartDate, handleEndDate, handleFilter, expenses,
             categories, handleSort, handleIsCreated, handleUpdate, inProgress, expensesSuccess,
-            expensesFetchErrorMessage
+            expensesFetchErrorMessage,handleResetId
         } = this.props;
-        console.log(this.props);
 
         const filteredByCategory = expenses.filter(item => item.category === selectedCategoryId);
         const dateFrom = moment(startDate).format("MMM Do YY");
@@ -80,7 +79,6 @@ class Expenses extends React.Component {
                     <div className='search-bar'>
                         <div className='expenses-datepicker'>
                             <AppDatepicker
-
                                 handleStartDate={handleStartDate}
                                 handleEndDate={handleEndDate}
                                 startDate={startDate}
@@ -93,7 +91,6 @@ class Expenses extends React.Component {
                                     handleFilter();
                                     handleIsCreated()
                                 }}
-
                             />
                         </div>
                     </div>
@@ -113,8 +110,6 @@ class Expenses extends React.Component {
                                         // onClick={handleCreate}
                                     />
                                 </div>
-
-
                             </div>
                         )
                     }
@@ -122,7 +117,6 @@ class Expenses extends React.Component {
                         expensesSuccess === false && (
                             <div className='fetch-error'>
                                 <p>{expensesFetchErrorMessage}</p>
-
                             </div>
                         )
                     }
@@ -145,8 +139,6 @@ class Expenses extends React.Component {
                                                 names={chartLabelsIfCategorySelected}
                                             />
                                         }
-
-
                                     </div>
                                     <div className='browser-section'>
                                         <SimpleButton
@@ -168,17 +160,15 @@ class Expenses extends React.Component {
                                         handleSort={handleSort}
                                         handleUpdate={handleUpdate}
                                         onDelete={this.onExpenseDelete}
+                                        handleResetId={handleResetId}
                                     />
                                 </div>
                             </div>
                         )
                     }
-
-
                 </div>
             </Container>
         )
     }
 }
-
 export default withRouter(Expenses);

@@ -19,7 +19,6 @@ class DashboardExpensesChart extends React.Component {
             const barSum = barMap.reduce((a, b) => a + b, 0);
             chartValues.push(barSum);
         }
-        console.log(chartValues);
 
         const options = {
             chart: {

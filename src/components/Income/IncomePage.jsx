@@ -56,7 +56,6 @@ class IncomePage extends React.PureComponent {
 
     onSubmitIncomeCreate = (income) => {
         income.timestamp = moment(income.timestamp).format();
-        console.log(income);
         const path = generatePath(ROUTE_INCOME);
         axios.post(Api.INCOME, income)
             .then((response) => {
@@ -134,7 +133,7 @@ class IncomePage extends React.PureComponent {
             handleSelectedStartDate, startDate, endDate, incomesFilteredInFetch, inProgress,
             incomesFetchErrorMessage,
         } = this.props;
-        console.log(incomes);
+
         const preSort = () => {
             if (isCreatedOrUpdated === true) {
                 return incomesToDisplay;

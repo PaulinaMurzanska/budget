@@ -4,8 +4,6 @@ import Chart from "react-apexcharts";
 const ExpensesPieCategoryChart = ({numbers, names}) => {
     const series = numbers;
     const labels = names;
-    console.log(series);
-    console.log(labels);
     const chartOptions = {
         labels: labels,
         plotOptions: {
@@ -18,7 +16,6 @@ const ExpensesPieCategoryChart = ({numbers, names}) => {
                             show: true,
                         }
                     },
-
                 }
             }
         },
@@ -26,23 +23,16 @@ const ExpensesPieCategoryChart = ({numbers, names}) => {
             background: 'rgba(220, 217, 217, 0.29)',
 
         }
-
     }
-
-
     return (
         <Chart
             options={chartOptions}
-            // labels={labels}
             series={series}
             type="donut"
             height="auto"
             width="100%"
-
-
         />
 
     )
 }
-
 export default ExpensesPieCategoryChart;

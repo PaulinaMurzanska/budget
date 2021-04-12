@@ -3,12 +3,11 @@ import {Table} from "reactstrap";
 import ExpensesTableRow from "components/Expenses/ExpensesTableRow";
 import "./ExpensesTable.scss";
 import {BiSort} from "react-icons/bi";
-import IncomeItem from "components/Income/IncomeItem";
 import SimpleButton from "SharedComponents/SimpleButton";
 import {ROUTE_EXPENSES_FORM, ROUTE_INCOME_FORM} from "Constants/Routes";
 
 
-const ExpensesTable = ({expenses, categories, handleSort, handleUpdate, onDelete}) => {
+const ExpensesTable = ({expenses, categories, handleSort, handleUpdate, onDelete,handleResetId}) => {
     return (
         <Table striped className='expenses-exact-table'>
             <thead>
@@ -35,7 +34,8 @@ const ExpensesTable = ({expenses, categories, handleSort, handleUpdate, onDelete
                     <SimpleButton
                         path={ROUTE_EXPENSES_FORM}
                         label="New expense"
-                        // onClick={handleCreate}
+                        onClick={handleResetId}
+
                     />
                 </th>
             </tr>
@@ -49,13 +49,11 @@ const ExpensesTable = ({expenses, categories, handleSort, handleUpdate, onDelete
                         categories={categories}
                         handleUpdate={handleUpdate}
                         onDelete={onDelete}
-
                     />
                 )
             }
             </tbody>
         </Table>
     )
-
 }
 export default ExpensesTable;

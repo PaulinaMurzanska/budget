@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
-import {ROUTE_CATEGORY, ROUTE_DASHBOARD, ROUTE_EXPENSES, ROUTE_INCOME, } from "Constants/Routes";
+import {ROUTE_CATEGORY, ROUTE_DASHBOARD, ROUTE_EXPENSES, ROUTE_INCOME,} from "Constants/Routes";
 import AppNavItem from "SharedComponents/AppNavItem";
 import logo from "images/logo 2.png";
 import "./Header.scss";
@@ -18,19 +18,18 @@ import moment from "moment";
 import User from "components/User/User";
 
 const useStyles = makeStyles({
-    // list: {
-    //     width: 300,
-    // },
+
     fullList: {
         width: '100%',
     },
 });
 
-const Header = ({onLogout, pageName}) => {
+const Header = ({onLogout, pageName, username}) => {
     const classes = useStyles();
     const [state, setState] = React.useState({
         left: false,
     });
+
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -77,8 +76,6 @@ const Header = ({onLogout, pageName}) => {
                     </div>
                     <AppNavItem path={ROUTE_CATEGORY} name="Category"/>
                 </div>
-
-
             </List>
             <Divider/>
             <List className="account-list">
@@ -87,7 +84,7 @@ const Header = ({onLogout, pageName}) => {
                         <RiAccountBoxLine/>
                     </div>
                     <div className='user'>
-                          <User/>
+                        <p>You are logged in as {username}</p>
                     </div>
 
                 </div>
@@ -123,7 +120,7 @@ const Header = ({onLogout, pageName}) => {
                 <p>today </p>
                 <p>{date}</p>
                 <div className='username'>
-                    <User/>
+                    <p>You are logged in as {username}</p>
                 </div>
 
             </div>

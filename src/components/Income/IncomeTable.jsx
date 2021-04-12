@@ -6,7 +6,7 @@ import SimpleButton from "SharedComponents/SimpleButton";
 import {ROUTE_INCOME_FORM} from "Constants/Routes";
 import {Table} from "reactstrap";
 
-const IncomeTable = ({incomes, handleSort, handleSortDate, handleUpdate, onDelete,handleCreate}) => {
+const IncomeTable = ({incomes, handleSort,handleUpdate, onDelete,handleCreate}) => {
 
     return (
         <Table  striped className='income-table-exact'>

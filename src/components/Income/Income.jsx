@@ -6,7 +6,7 @@ import IncomeTable from "components/Income/IncomeTable";
 import moment from "moment";
 import {MdYoutubeSearchedFor} from "react-icons/md";
 import {ROUTE_INCOME, ROUTE_INCOME_FORM} from "Constants/Routes";
-import {generatePath, Link, withRouter} from "react-router-dom";
+import {generatePath, withRouter} from "react-router-dom";
 import axios from "axios";
 import {Api} from "Services/Api";
 import SimpleButton from "SharedComponents/SimpleButton";
@@ -14,13 +14,11 @@ import AppDatepicker from "components/Income/IncomeDatepicker";
 import ScrollToTop from "react-scroll-to-top";
 import InProgress from "SharedComponents/InProgress";
 
-
 class Income extends React.PureComponent {
 
     onIncomeDelete = (event) => {
         const idToDelete = parseInt(event.target.id);
         const incomeToDelete = this.props.incomes.find(obj => obj.id === idToDelete);
-
         const index = this.props.incomes.findIndex((income) => income.id === idToDelete);
         if (index !== -1) this.props.incomes.splice(index, 1);
         const path = generatePath(ROUTE_INCOME);
@@ -38,22 +36,16 @@ class Income extends React.PureComponent {
     }
 
     render() {
-
-
         const {
             handleStartDate, handleEndDate, handleFilter,
             incomes, handleSort, handleSortDate, startDate, endDate, handleUpdate,
             incomesErrorMessage, onSubmit, initialValues, incomesSuccess, incomesFetchErrorMessage,
             handleCreate, handleIsCreated, inProgress
         } = this.props;
-        console.log(inProgress);
-        console.log(incomesSuccess);
         const dateFrom = moment(startDate).format("MMM Do YY");
         const dateTo = moment(endDate).format("MMM Do YY");
-
         const numbers = incomes.map((income) => income.amount);
         const names = incomes.map((income) => income.name);
-
         const displayLength = incomes.length;
 
         return (
@@ -81,6 +73,9 @@ class Income extends React.PureComponent {
                     <InProgress
                         inProgress={inProgress}
                     />
+                    <p className='setDefaultDates'
+                       onClick={this.setDefaultDates}
+                    >show last 30 days</p>
                     {
                         incomesErrorMessage !== "" && (
                             <div className='error-create'>
@@ -96,7 +91,6 @@ class Income extends React.PureComponent {
                             </div>
                         )
                     }
-
                     {
                         displayLength === 0 && inProgress === false && incomesSuccess === true && incomesErrorMessage === "" &&
                         <div className='no-data'>
@@ -112,12 +106,10 @@ class Income extends React.PureComponent {
                                 <SimpleButton
                                     label="Last 30 days"
                                     onClick={this.setDefaultDates}
+                                    path={ROUTE_INCOME}
                                 />
                             </div>
-
-
                         </div>
-
                     }
                     {
                         incomesSuccess === false && (
